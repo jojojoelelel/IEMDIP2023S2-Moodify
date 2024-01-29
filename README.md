@@ -30,9 +30,9 @@ NOTE: You can check what is your current branch name by running git status.
 # GitHub Workflow - Pushing your code to the remote repository
 As much as possible please make sure your code runs correctly before pushing to the repository.
 
-Pull main branch (make sure it is most updated) → Create a new local branch → Make your code changes → Push to new branch in interns' repository → Review/Proof that it works → Create a pull request
+Pull main branch (make sure it is most updated) → Create a new local branch → Make your code changes → Push to new branch in repository → Review/Proof that it works → Create a pull request
 
-## Ensure that you are on the **main** branch of the interns' repository by running `git status`, and have pulled the latest changes from the remote : 
+## Ensure that you are on the **main** branch of the repository by running `git status`, and have pulled the latest changes from the remote : 
 `git pull`
 
 ## Create a new branch locally :
