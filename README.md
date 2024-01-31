@@ -5,6 +5,9 @@ NodeJS, JDK, Android Studio, FireBase
 
 # Getting started
 ## Installing requirements
+
+**React Native** : https://reactnative.dev/docs/environment-setup?guide=native
+
 **JDK** : https://www3.ntu.edu.sg/home/ehchua/programming/howto/jdk_howto.html
 
 **NodeJS** : https://nodejs.org/en/download
