@@ -1,17 +1,32 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({navigation}) => {
   return (
     <ImageBackground
-      source={require('../../assets/images/signin_background.jpg')} // Replace with your actual background image path
-      style={styles.background}
-    >
+      source={require('../../assets/images/sign-in-bg.jpg')} // Replace with your actual background image path
+      style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>SIGN IN</Text>
-        <TextInput placeholder="E-Mail" style={styles.input} keyboardType="email-address" />
-        <TextInput placeholder="Password" style={styles.input} secureTextEntry />
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+        <TextInput
+          placeholder="E-Mail"
+          style={styles.input}
+          keyboardType="email-address"
+        />
+        <TextInput
+          placeholder="Password"
+          style={styles.input}
+          secureTextEntry
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
           <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -30,7 +45,10 @@ const SignInScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-          <Text style={styles.signUpText}>Don't have an account? <Text style={styles.signUpButtonText}>Sign Up</Text></Text>
+          <Text style={styles.signUpText}>
+            Don't have an account?{' '}
+            <Text style={styles.signUpButtonText}>Sign Up</Text>
+          </Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
