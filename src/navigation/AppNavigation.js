@@ -5,6 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 //Import the screens here
 import GettingStarted from '../screens/SignUpScreen/GettingStarted';
 import SignInScreen from '../screens/SignUpScreen/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
+import ForgotPasswordScreen from '../screens/SignUpScreen/ForgotPasswordScreen';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
 
 const Stack = createStackNavigator();
@@ -14,6 +16,11 @@ const AppNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name="GettingStarted" component={GettingStarted} />
       <Stack.Screen name="SignInScreen" component={SignInScreen} />
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen
+        name="ForgotPasswordScreen"
+        component={ForgotPasswordScreen}
+      />
 
       {/* Add more screens as needed */}
     </Stack.Navigator>

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import CustomButton from '../../components/CustomButton';
 
 const GettingStarted = ({navigation}) => {
   return (
@@ -29,11 +30,11 @@ const GettingStarted = ({navigation}) => {
         <Text style={styles.title}>WELCOME TO MOODIFY APP</Text>
         <Text style={styles.subtitle}>All-in-one music sharing platform</Text>
       </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('SignInScreen')} // Replace 'NextScreenName' with the name of your next screen
-        style={styles.button}>
-        <Text style={styles.buttonText}>GET STARTED</Text>
-      </TouchableOpacity>
+      <CustomButton
+        title="GETTING STARTED"
+        onPress={() => navigation.navigate('SignInScreen')}
+        style={styles.button}
+      />
     </View>
   );
 };
@@ -48,12 +49,12 @@ const styles = StyleSheet.create({
     height: '50%', // Adjust as needed
   },
   image: {
-    width: '100%', // Adjust as needed
+    width: '100%',
     height: '100%',
     resizeMode: 'cover', // Or 'contain' based on your design
   },
   textContainer: {
-    marginVertical: 10,
+    marginVertical: 30,
     // justifyContent: 'flex-end',
     flex: 1,
   },
@@ -71,9 +72,9 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#1DB954', // Spotify green color
-    borderRadius: 20,
-    marginBottom: 20,
+    backgroundColor: '#CBFB5E', // Spotify green color
+    borderRadius: 5,
+    marginBottom: 100,
   },
   buttonText: {
     fontSize: 16,
