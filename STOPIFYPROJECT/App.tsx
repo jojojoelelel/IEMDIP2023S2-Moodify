@@ -6,7 +6,8 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,104 +16,137 @@ import {
   Text,
   useColorScheme,
   View,
+  TouchableOpacity,
+  Image,
+  Flatlist
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import PlaylistItem from './PlaylistItem'
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Tab = createMaterialTopTabNavigator(); // Corrected this line
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+function PlaylistsScreen() {
+  const playlists = [
+    {
+      id: '1',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '2',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '3',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '4',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '5',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '6',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '7',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    {
+      id: '8',
+      title: 'Chill Hits',
+      creator: 'Spotify',
+      imageUrl: 'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+    },
+    // Add more playlists here...
+  ];
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <FlatList
+      data={playlists}
+      renderItem={({ item }) => (
+        <PlaylistItem
+          title={item.title}
+          creator={item.creator}
+          imageUrl={item.imageUrl}
+        />
+      )}
+      keyExtractor={item => item.id}
+      style={styles.listContainer}
+    />
+  );
+}
+
+function ArtistsScreen() {
+  return (
+    <View style={styles.screenContainer}>
+      <Text>Artists</Text>
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+function AlbumsScreen() {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <View style={styles.screenContainer}>
+      <Text>Albums</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Spotify Library</Text>
+      </View>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Playlists" component={PlaylistsScreen} />
+          <Tab.Screen name="Artists" component={ArtistsScreen} />
+          <Tab.Screen name="Albums" component={AlbumsScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  header: {
+    height: 60,
+    backgroundColor: '#1DB954',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  headerText: {
+    color: 'white',
+    fontSize: 20,
   },
-  highlight: {
-    fontWeight: '700',
+  screenContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  listContainer: {
+    flex: 1,
   },
 });
-
-export default App;
