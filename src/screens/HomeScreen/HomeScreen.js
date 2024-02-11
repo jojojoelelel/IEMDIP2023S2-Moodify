@@ -3,6 +3,10 @@ import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import AlbumCard from '../../components/AlbumCard';
 import TrackItem from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+// Inside your component's render method
+<Ionicons name="ios-person" size={30} color="#4F8EF7" />;
 
 const HomeScreen = () => {
   // Example data - replace with real data

@@ -41,7 +41,7 @@ const SignInScreen = ({navigation}) => {
         </TouchableOpacity>
         <CustomButton
           title="SIGN IN"
-          onPress={() => navigation.navigate('HomeScreen')}
+          onPress={() => navigation.navigate('ChatBotScreen')}
           style={styles.button}
         />
         <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>

@@ -7,6 +7,7 @@ import GettingStarted from '../screens/SignUpScreen/GettingStarted';
 import SignInScreen from '../screens/SignUpScreen/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ForgotPasswordScreen from '../screens/SignUpScreen/ForgotPasswordScreen';
+import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
 
 const Stack = createStackNavigator();
@@ -21,6 +22,7 @@ const AppNavigator = () => {
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
       />
+      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
 
       {/* Add more screens as needed */}
     </Stack.Navigator>
