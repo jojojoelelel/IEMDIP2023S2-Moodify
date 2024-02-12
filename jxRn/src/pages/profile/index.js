@@ -1,240 +1,255 @@
-import React, { Component, useState }  from 'react';
-import {StyleSheet,FlatList, Text, View, Dimensions, Image, Button, TouchableOpacity, ImageBackground, TextInput, ScrollView} from 'react-native';
-import PropTypes from 'prop-types';
-import {pxToDp} from '../../utils/stylesKits';
+
+import React, { useState } from 'react';
+import { Stack,StyleSheet, FlatList, Text, View, Dimensions, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView, Alert } from 'react-native';
+import { pxToDp } from '../../utils/stylesKits';
+import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      alignSelf: 'center',
-    },
-    circleContainer:{
-        flexDirection:'column',
-        width:pxToDp(60),
-        height:pxToDp(180),
-        alignSelf: 'flex-end',
-        marginRight:'5%'
-    },
-    box: {
-      width: '30.4%',
-      aspectRatio: 1, // Ensures a square box
-      margin: '1.3%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderWidth: 3,
-      borderColor: '#000',
-      alignSelf:'center',
-      marginVertical: 8,
-    },
-    circle:{
-        height: pxToDp(53.5),
-        width: pxToDp(53.5),
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf:'center',
-        backgroundColor:'purple',
-        marginBottom:10
-        
-    }
-  });
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
+  },
+  circleContainer: {
+    flexDirection: 'column',
+    width: pxToDp(60),
+    height: pxToDp(180),
+    alignSelf: 'flex-end',
+    marginRight: '5%'
+  },
+  box: {
+    width: '30.4%',
+    aspectRatio: 1, // Ensures a square box
+    margin: '1.3%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginVertical: 5,
+    marginRight: 7
+  },
+  circle: {
+    height: pxToDp(47),
+    width: pxToDp(47),
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#A4EC0A',
+    marginBottom: 10,
+    marginTop: 2
+  },
+  imageBackground: {
+    width: '78.4%',
+    height: '75%', // Ensures a square box
+    margin: '1.3%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginVertical: 8,
+    marginLeft: 20,
+    marginTop: 30 // Center the icon within the box
+  },
+});
 
-const boxNames = ["MyPlaylist", "Album", "Diary", "Downloads", "Profile Info", "Setting", "Deluxe", "Notifications", "About"];
+const boxNames = ["MyPlaylist", "Album", "Diary", "Downloads", "Profile Info", "Setting", "Deluxe", "About", "Logout"];
 const boxData = boxNames.map((name, index) => ({ key: `Box ${index + 1}`, name }));
 const circleNames = ["Following", "Follower", "Hours"];
-circleVar=[1,2,3];
+circleVar = [1, 2, 3]; // to be replaced by database numbers
 const circleData = circleNames.map((name, index) => ({
-    key: `Circle ${index + 1}`,
-    name: name,
-    variable: circleVar[index]}));
-const tempBoxHandler = () => {
-    alert('function is null')
-    // TO-DO#1: logic for each cell to be added here
+  key: `Circle ${index + 1}`,
+  name: name,
+  variable: circleVar[index]
+}));
+
+const ProfileInfo = () => {
+  const navigation = useNavigation();
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState('Andy');
+  const [profilePhoto, setProfilePhoto] = useState(require('../../../icon/profile.jpg'));
+
+  const tempBoxHandler = (item) => {
+    switch (item.name) {
+      case "Album":
+        navigation.navigate('AB');
+        break;
+      case "MyPlaylist":
+        navigation.navigate('PL');
+        break;
+
+      case "Profile Info":
+        navigation.navigate('PI');
+        break;
+      default:
+        alert("Null");
+        break;
+    }
+    // TO-DO#1: logic for each cell to be added here [DONE]
+  };
+
+  const tempCircleHandler = (item) => {
+    switch (item.name) {
+      case "Following":
+        navigation.navigate('AB'); //for testing purpose
+        break;
+      case "Follower":
+        navigation.navigate('PL'); //for testing purpose
+        break;
+      default:
+        alert("Null");
+        break;
+    }
+    // TO-DO#1: logic for each cell to be added here [DONE]
+  };
+
+
+  const getIconSource = (name) => {
+    switch (name) {
+      case "MyPlaylist":
+        return require('../../../icon/playlist.png');
+      case "Album":
+        return require('../../../icon/album.png');
+      case "Diary":
+        return require('../../../icon/diary.png');
+      case "Profile Info":
+        return require('../../../icon/changeprofile.png');
+      case "Setting":
+        return require('../../../icon/settings.png');
+      case "Logout":
+        return require('../../../icon/logout.png');
+      case "Downloads":
+        return require('../../../icon/download.png');
+      case "Logout":
+        return require('../../../icon/logout.png');
+      case "About":
+        return require('../../../icon/about.png');
+      default:
+        // Default icon if no match found
+        return require('../../../icon/deluxe.png');
+    }
   };
 
   const renderBox = ({ item }) => (
-    <TouchableOpacity onPress={() => tempBoxHandler()} style={styles.box}>
-      <View>
-        <Text>{item.name}</Text>
+    <TouchableOpacity onPress={() => tempBoxHandler(item)} style={styles.box}>
+      <ImageBackground source={getIconSource(item.name)} style={styles.imageBackground}></ImageBackground>
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ marginTop: -15, fontSize: 13, color: 'white' }}>{item.name}</Text>
       </View>
     </TouchableOpacity>
   );
-  
+
   const renderCircle = ({ item }) => (
-    <TouchableOpacity onPress={() => tempBoxHandler()} style={styles.circle}>
-      <View>
-        <Text style={{color:'white',marginBottom:0.4,fontSize:23,textAlign:'center',fontWeight:'bold'}}>{item.variable}</Text>
-        <Text style={{color:'white',marginTop:0.2,fontSize:10,textAlign:'center'}}>{item.name}</Text>
+    <TouchableOpacity onPress={() => tempCircleHandler(item)} style={styles.circle}>
+      <View style={{ marginBottom: 5 }}>
+        <Text style={{ color: 'black', bottom: -10, fontSize: 23, textAlign: 'center', fontWeight: 'bold' }}>{item.variable}</Text>
       </View>
+      <View><Text style={{ color: 'white', top: 10, fontSize: 11, textAlign: 'center' }}>{item.name}</Text></View>
     </TouchableOpacity>
   );
 
-const screenWidth = Math.round(Dimensions.get('window').width);
-const screenHeight = Math.round(Dimensions.get('window').height);
-export default class ProfileInfo extends Component {
-   constructor() {
-       super();
-       this.state = {
-           isEditing:             false,
+  return (
+    <ImageBackground source={require('../../../image/background.png')} style={{ flex: 1 }}>
+      <View style={{ height: '100%', alignItems: 'center' }}>
+        <View style={{
+          height: pxToDp(200),
+          width: '95%',
+          backgroundColor: 'rgba(0,0,0,0.7)',
+          marginTop: '15%',
+          padding: 12,
+          elevation: 5,
+          borderRadius: 10,
+          shadowColor: '#303133',
+          flexDirection: 'column'
+        }}>
 
-           name:                   'Andy',
-           profilePhoto:            require('../../../icon/profile.jpg'),
-       }
-   }
+          <FlatList
+            data={circleData}
+            renderItem={renderCircle}
+            keyExtractor={(item) => item.key}
+            numColumns={1}
+            contentContainerStyle={styles.circleContainer}
+            style={{ height: pxToDp(300), alignSelf: 'flat-end' }} />
+          <View style={{
+            height: '55%',
+            width: '80%',
+            marginLeft: '10%',
+            flexDirection: 'column',
+            marginTop: '-35%'
+          }}>
 
-   render() {
-       return(
-           <View style={{
-               height: '100%',
-               alignItems: 'center',
-               backgroundColor: 'pink',
-           }}>
-               <View style={{
-                   height: pxToDp(200),
-                   width: '95%',
-                   backgroundColor: 'white',
-                   marginTop: '15%',
-                   padding: 12,
-                   elevation: 5,
-                   borderRadius: 10,
-                   shadowColor: '#303133',
-                   flexDirection:'column'
-               }}>
-                    
-                    <FlatList
-                        data={circleData}
-                        renderItem={renderCircle}
-                        keyExtractor={(item) => item.key}
-                        numColumns={1}
-                        contentContainerStyle={styles.circleContainer}
-                        style={{ height: pxToDp(300), alignSelf: 'flat-end' }}/>
-                   <View style={{
-                       height: '55%',
-                       width: '80%',
-                       marginLeft: '10%',
-                       flexDirection: 'column',
-                       marginTop: '-35%'
-                   }}>
-                        
-                        <TouchableOpacity onPress={this.changeProfilePhotoButton}
-                           style={{
-                               alignSelf: 'flex-start',
-                               marginLeft: '18%',
-                               flexDirection: 'row',
-                               marginTop:'-10%',}}>
-                            <Image source={this.state.profilePhoto} style={{
-                                height: pxToDp(80),
-                                width: pxToDp(80),
-                                borderRadius: 120,
-                            }}/>
-                       </TouchableOpacity>
-                       
-                       <View style={{
-                           marginTop: '3%',
-                           
-                       }}>
-                           <TextInput
-                               placeholder={this.state.name}
-                               editable={true}
-                               selectionColor={'blue'}
-                               onChangeText={
-                                   text => this.setState({
-                                       name: text
-                                   })
-                               }
-                               value={this.state.name}
-                               style={{
-                                   width: '70%',
-                                   backgroundColor:'grey',
-                                   textAlign:'center',
-                                   alignSelf:'flex-start'
-                               }}
-                           />
-                       </View>
-                   </View>
-                   <View style={{
-                       width: '80%',                      
-                       marginTop: '5%',
-                       alignSelf:'center',
-                       opacity: 0.3,
-                       backgroundColor: '#606266',
-                   }} />
-               </View>
-               <View style={{
-                   height: '50%',
-                   width: '95%',
-                   padding: 10,
-                   marginTop: '5%',
-                   elevation: 5,
-                   borderRadius: 10,
-                   shadowColor: '#303133',
-                   backgroundColor: 'white',
-               }}>
-                       <View style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                       }}>
+            <TouchableOpacity onPress={this.changeProfilePhotoButton}
+              style={{
+                alignSelf: 'flex-start',
+                marginLeft: '18%',
+                flexDirection: 'row',
+                marginTop: '-10%',
+              }}>
+              <Image source={profilePhoto} style={{
+                height: pxToDp(80),
+                width: pxToDp(80),
+                borderRadius: 120,
+              }} />
+            </TouchableOpacity>
 
-                            <FlatList
-                            data={boxData}
-                            renderItem={renderBox}
-                            keyExtractor={(item) => item.key}
-                            numColumns={3}
-                            contentContainerStyle={styles.container}
-                            />
-                       </View>
-                       <View style={{
-                           width: '90%',
-                           alignSelf:'center',
-                           opacity: 0.3,
-                           backgroundColor: '#606266',
-                       }} />
-                       <View style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                       }}>
-                       </View>
-                       <View/>
-                       <View style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                       }}>
-                       </View>
-                       <View/>
-                       <View style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                       }}>                         
-                       </View>
-                       <View/>
-                       <View style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                       }}>                      
-                       </View>
-                       <View/>
-                       <View style={{
-                           flexDirection: 'row',
-                           alignItems: 'center',
-                       }}>
-                       </View>
-                       <View/>
-                   <View style={{
-                       height: '10%',
-                   }}></View>
-                   <View style={{
-                       flexDirection: 'row',
-                       alignItems: 'center',
-                   }}>
-                   </View>
-                   <View style={{
-                       height: '5%',
-                   }}></View>
-               </View>
-           </View>
-       )
-   }
+            <View style={{
+              marginTop: '3%',
+            }}>
+              <TextInput
+                placeholder={'Andy'}
+                editable={true}
+                onChangeText={text => setName(text)}
+                value={name}
+                style={{
+                  width: '70%',
+                  textAlign: 'center',
+                  alignSelf: 'flex-start',
+                  color:'black',
+                  backgroundColor: '#A4EC0A',
+                }}
+              />
+            </View>
+          </View>
+          <View style={{
+            width: '80%',
+            marginTop: '5%',
+            alignSelf: 'center',
+            opacity: 0.3,
+            backgroundColor: '#606266',
+          }} />
+       
+
+ </View>
+        <View style={{
+          height: '50%',
+          width: '95%',
+          padding: 10,
+          marginTop: '5%',
+          elevation: 5,
+          borderRadius: 10,
+          shadowColor: '#303133',
+          backgroundColor: 'rgba(0,0,0,0.7)',
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+            <FlatList
+              data={boxData}
+              renderItem={renderBox}
+              keyExtractor={(item) => item.key}
+              numColumns={3}
+              contentContainerStyle={styles.container}
+            />
+          </View>
+          <View style={{
+            width: '90%',
+            alignSelf: 'center',
+            opacity: 0.3,
+            backgroundColor: '#606266',
+          }} />
+        </View>
+      </View>
+    </ImageBackground>
+  )
 };
 
-
+export default ProfileInfo;
