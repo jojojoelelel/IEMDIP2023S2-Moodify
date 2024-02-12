@@ -7,7 +7,8 @@
 
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,10 +19,11 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Flatlist
+  FlatList
 } from 'react-native';
 
 import PlaylistItem from './PlaylistItem'
+import MusicPlayerBar from './src/components/MusicPlayerBar'; //Testing music player bar component
 
 const Tab = createMaterialTopTabNavigator(); // Corrected this line
 
@@ -110,43 +112,65 @@ function AlbumsScreen() {
   );
 }
 
+
+
 export default function App() {
+  // Dummy song data for demonstration
+  const currentSong = {
+    songTitle: "Song Title",
+    artistName: "Artist Name",
+    coverImage: "https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png", // Replace with your image URL
+  };
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Spotify Library</Text>
-      </View>
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Playlists" component={PlaylistsScreen} />
-          <Tab.Screen name="Artists" component={ArtistsScreen} />
-          <Tab.Screen name="Albums" component={AlbumsScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <View style={styles.container}>
+    <View style={styles.header}>
+      <Text style={styles.headerText}>Spotify Library</Text>
+    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Playlists" component={PlaylistsScreen} />
+        <Tab.Screen name="Artists" component={ArtistsScreen} />
+        <Tab.Screen name="Albums" component={AlbumsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+    {/* Add the MusicPlayerBar component here and pass the current song data as props */}
+    <MusicPlayerBar
+      songTitle={currentSong.songTitle}
+      artistName={currentSong.artistName}
+      coverImage={currentSong.coverImage}
+      onPlayPausePress={() => {}} // Need to implement this functionality
+    />
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#353535',
   },
   header: {
     height: 60,
     backgroundColor: '#1DB954',
     alignItems: 'center',
     justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000', // Slight border for the header
   },
   headerText: {
     color: 'white',
     fontSize: 20,
+    fontWeight: 'bold', // Spotify uses bold fonts for headers
   },
   screenContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#121212',
   },
   listContainer: {
     flex: 1,
+    backgroundColor: '#121212',
+    paddingHorizontal: 10,
   },
 });
