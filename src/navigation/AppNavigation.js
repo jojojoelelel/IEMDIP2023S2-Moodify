@@ -7,6 +7,10 @@ import GettingStarted from '../screens/SignUpScreen/GettingStarted';
 import SignInScreen from '../screens/SignUpScreen/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ForgotPasswordScreen from '../screens/SignUpScreen/ForgotPasswordScreen';
+import BottomNavigation from './BottomNavigation';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import AccountScreen from '../screens/AccountScreen/AccountScreen';
+import DiscoverScreen from '../screens/DiscoverScreen/DiscoverScreen';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
 
@@ -22,8 +26,16 @@ const AppNavigator = () => {
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
       />
-      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Screen
+        name="Main"
+        component={BottomNavigation}
+        options={{headerShown: false}}
+      />
 
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="AccountScreen" component={AccountScreen} />
+      <Stack.Screen name="DiscoverScreen" component={DiscoverScreen} />
+      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
       {/* Add more screens as needed */}
     </Stack.Navigator>
   );

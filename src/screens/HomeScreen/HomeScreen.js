@@ -1,49 +1,58 @@
+// src/screens/HomeScreen/HomeScreen.js
 import React from 'react';
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import AlbumCard from '../../components/AlbumCard';
-import TrackItem from '../../components/TrackList';
+import TrackList from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-// Inside your component's render method
-<Ionicons name="ios-person" size={30} color="#4F8EF7" />;
+import BottomNavigation from '../../navigation/BottomNavigation';
 
 const HomeScreen = () => {
   // Example data - replace with real data
   const albums = [
-    {id: 1, title: 'Album 1', artist: 'Artist 1', cover: 'cover_url_1'},
+    {id: 1, title: 'Pray For You', artist: 'The Weekend', cover: 'cover_url_1'},
+    {id: 2, title: 'Do It', artist: 'Milian Lau', cover: 'cover_url_2'},
     // Add more albums
   ];
 
   const tracks = [
-    {id: 1, title: 'Track 1', artist: 'Artist 1', duration: '2:30'},
+    {id: 1, title: 'Nice For What', artist: 'Avinci John'},
+    {id: 2, title: 'Where can I get some ?', artist: 'Arian Grande'},
+    {id: 3, title: 'Why do we use it ?', artist: 'Alan Walker'},
     // Add more tracks
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>New Albums</Text>
-      <View style={styles.albumContainer}>
-        {albums.map(album => (
-          <AlbumCard key={album.id} {...album} />
-        ))}
-      </View>
+    <View style={styles.container}>
+      <ScrollView>
+        <Text style={styles.title}>Moodify</Text>
+        {/* New Albums Section */}
+        <View>
+          <Text style={styles.sectionHeader}>New Albums</Text>
+          <ScrollView horizontal>
+            {albums.map(album => (
+              <AlbumCard key={album.id} {...album} />
+            ))}
+          </ScrollView>
+        </View>
 
-      <Text style={styles.header}>Recently Played</Text>
-      <TrackList data={tracks} />
+        {/* Tracks Section */}
+        <View>
+          <Text style={styles.sectionHeader}>Geez Weekly</Text>
+          <TrackList data={tracks} />
+        </View>
 
-      <PlayerControls
-        onPrevious={() => {
-          /* Handle previous */
-        }}
-        onPlayPause={() => {
-          /* Handle play/pause */
-        }}
-        onNext={() => {
-          /* Handle next */
-        }}
-      />
-    </ScrollView>
+        {/* Recently Played Section */}
+        <View>
+          <Text style={styles.sectionHeader}>Recently Music</Text>
+          <TrackList data={tracks} />
+        </View>
+
+        {/* Player Controls (assuming it's a static component at the bottom) */}
+        <PlayerControls />
+      </ScrollView>
+      {/* Bottom navigation will be shown by the BottomNavigation component and does not need to be added here */}
+      <BottomNavigation />
+    </View>
   );
 };
 
@@ -52,17 +61,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
   },
-  header: {
+  title: {
+    fontSize: 28,
     color: '#fff',
-    fontSize: 24,
     fontWeight: 'bold',
     padding: 20,
   },
-  albumContainer: {
-    flexDirection: 'row',
-    paddingBottom: 20,
+  sectionHeader: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingVertical: 10,
+    paddingLeft: 20,
   },
-  // Add more styles as needed
+  // Other styles for AlbumCard, TrackList, PlayerControls, etc.
 });
 
 export default HomeScreen;
