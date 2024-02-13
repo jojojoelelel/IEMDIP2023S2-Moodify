@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Stack,StyleSheet, FlatList, Text, View, Dimensions, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView, Alert } from 'react-native';
-import { pxToDp } from '../../utils/stylesKits';
+import {StyleSheet, FlatList, Text, View, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView, Alert } from 'react-native';
+import { pxToDp } from '../../utils/stylesKits'; //Transform dimensions to fit screen
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignSelf: 'center',
   },
-  circleContainer: {
+  circleContainer: { 
     flexDirection: 'column',
     width: pxToDp(60),
     height: pxToDp(180),
     alignSelf: 'flex-end',
     marginRight: '5%'
   },
-  box: {
+  box: { //style for icon container
     width: '30.4%',
     aspectRatio: 1, // Ensures a square box
     margin: '1.3%',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginRight: 7
   },
-  circle: {
+  circle: { //style for following,follower and hours
     height: pxToDp(47),
     width: pxToDp(47),
     borderRadius: 28,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 2
   },
-  imageBackground: {
+  imageBackground: { //style for icons
     width: '78.4%',
     height: '75%', // Ensures a square box
     margin: '1.3%',
@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     marginTop: 30 // Center the icon within the box
   },
 });
+
+//Circle refers to following, follower, hours' containers, Box refers to icon containers
 
 const boxNames = ["MyPlaylist", "Album", "Diary", "Downloads", "Profile Info", "Setting", "Deluxe", "About", "Logout"];
 const boxData = boxNames.map((name, index) => ({ key: `Box ${index + 1}`, name }));
@@ -83,16 +85,16 @@ const ProfileInfo = () => {
         alert("Null");
         break;
     }
-    // TO-DO#1: logic for each cell to be added here [DONE]
+    // TO-DO#1: logic for each cell to be added here [DONE], add in each screen logic later
   };
 
   const tempCircleHandler = (item) => {
     switch (item.name) {
       case "Following":
-        navigation.navigate('AB'); //for testing purpose
+        navigation.navigate('AB'); //for testing purpose, to be replaced by following list screen
         break;
       case "Follower":
-        navigation.navigate('PL'); //for testing purpose
+        navigation.navigate('PL'); //for testing purpose, to be replaced by follower list screen
         break;
       default:
         alert("Null");
@@ -128,7 +130,7 @@ const ProfileInfo = () => {
     }
   };
 
-  const renderBox = ({ item }) => (
+  const renderBox = ({ item }) => ( //render icons
     <TouchableOpacity onPress={() => tempBoxHandler(item)} style={styles.box}>
       <ImageBackground source={getIconSource(item.name)} style={styles.imageBackground}></ImageBackground>
       <View style={{ marginBottom: 20 }}>
@@ -137,7 +139,7 @@ const ProfileInfo = () => {
     </TouchableOpacity>
   );
 
-  const renderCircle = ({ item }) => (
+  const renderCircle = ({ item }) => ( //render following section
     <TouchableOpacity onPress={() => tempCircleHandler(item)} style={styles.circle}>
       <View style={{ marginBottom: 5 }}>
         <Text style={{ color: 'black', bottom: -10, fontSize: 23, textAlign: 'center', fontWeight: 'bold' }}>{item.variable}</Text>
