@@ -41,7 +41,7 @@ const SignInScreen = ({navigation}) => {
         </TouchableOpacity>
         <CustomButton
           title="SIGN IN"
-          onPress={() => navigation.navigate('DiscoverScreen')}
+          onPress={() => navigation.navigate('Main')}
           style={styles.button}
         />
         <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>

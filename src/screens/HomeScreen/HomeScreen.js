@@ -4,7 +4,9 @@ import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import AlbumCard from '../../components/AlbumCard';
 import TrackList from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
-import BottomNavigation from '../../navigation/BottomNavigation';
+//import BottomNavigation from '../../navigation/BottomNavigation';
+//Remove import of BottomNavigation
+
 
 const HomeScreen = () => {
   // Example data - replace with real data
@@ -51,7 +53,7 @@ const HomeScreen = () => {
         <PlayerControls />
       </ScrollView>
       {/* Bottom navigation will be shown by the BottomNavigation component and does not need to be added here */}
-      <BottomNavigation />
+      {/* BottomNavigation removed from here, it will be shown by the navigation container */}
     </View>
   );
 };
