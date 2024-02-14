@@ -8,9 +8,9 @@ import DiscoverScreen from '../screens/DiscoverScreen/DiscoverScreen';
 import AccountScreen from '../screens/AccountScreen/AccountScreen';
 
 // Screen names
-const homeName = 'Home';
-const discoverName = 'Discover';
-const accountName = 'Account';
+const homeName = 'HomeScreen';
+const discoverName = 'DiscoverScreen';
+const accountName = 'AccountScreen';
 
 const Tab = createBottomTabNavigator();
 
