@@ -2,15 +2,19 @@
 import * as React from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import SearchScreen from './SearchScreen';
 
 // components
 import AlbumCard from '../../components/AlbumCard.js';
 import TrackList from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
-import SearchScreen from '../screens/SearchScreen';
+
 
 export default function HomeScreen({ navigation }) {
-  // Example data - replace with real data
+  // Example data - replace with real data to be added by backend
   const albums = [
     { id: 1, title: 'Album 1', artist: 'Artist 1', cover: 'cover_url_1' },
     { id: 2, title: 'Album 2', artist: 'Artist 2', cover: 'cover_url_2' },
@@ -25,8 +29,9 @@ export default function HomeScreen({ navigation }) {
   ];
 
     const handleSearchPress = () => {
-      // Navigate to the Search screen using navigation prop
-      navigation.navigate('SearchScreen');
+      // Need to navigate to the Search screen properly
+      navigation.navigate('Search');
+
     };
 
   return (
@@ -35,7 +40,7 @@ export default function HomeScreen({ navigation }) {
       <Text
         onPress={() => alert('This is the "Home" screen.')}
         style={styles.text}>Moodify</Text>
-        <TouchableOpacity onPress={handleSearchPress} style={styles.searchIconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.searchIconContainer}>
           <Ionicons name="search" size={24} color="#fff" style={styles.searchIcon} />
         </TouchableOpacity>
         </View>
@@ -108,9 +113,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   }
 });
-
-
-
 
 
 
