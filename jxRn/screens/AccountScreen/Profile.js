@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import {StyleSheet, FlatList, Text, View, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView, Alert } from 'react-native';
-import { pxToDp } from '../../utils/stylesKits'; //Transform dimensions to fit screen
+import { pxToDp } from '../../src/utils/stylesKits'; //Transform dimensions to fit screen
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -67,19 +67,24 @@ const ProfileInfo = () => {
   const navigation = useNavigation();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('Andy');
-  const [profilePhoto, setProfilePhoto] = useState(require('../../../icon/profile.jpg'));
+  const [profilePhoto, setProfilePhoto] = useState(require('../../icon/profile.jpg'));
 
   const tempBoxHandler = (item) => {
     switch (item.name) {
       case "Album":
-        navigation.navigate('AB');
+        navigation.navigate('AB'); //Navigate to Monicka's screen 
         break;
       case "MyPlaylist":
-        navigation.navigate('PL');
+        navigation.navigate('PL'); //Navigate to Monicka's screen
         break;
 
       case "Profile Info":
         navigation.navigate('PI');
+        break;
+
+      case "Logout":
+        navigation.navigate('SignInScreen');
+        //Logic for user logout
         break;
       default:
         alert("Null");
@@ -107,26 +112,26 @@ const ProfileInfo = () => {
   const getIconSource = (name) => {
     switch (name) {
       case "MyPlaylist":
-        return require('../../../icon/playlist.png');
+        return require('../../icon/playlist.png');
       case "Album":
-        return require('../../../icon/album.png');
+        return require('../../icon/album.png');
       case "Diary":
-        return require('../../../icon/diary.png');
+        return require('../../icon/diary.png');
       case "Profile Info":
-        return require('../../../icon/changeprofile.png');
+        return require('../../icon/changeprofile.png');
       case "Setting":
-        return require('../../../icon/settings.png');
+        return require('../../icon/settings.png');
       case "Logout":
-        return require('../../../icon/logout.png');
+        return require('../../icon/logout.png');
       case "Downloads":
-        return require('../../../icon/download.png');
+        return require('../../icon/download.png');
       case "Logout":
-        return require('../../../icon/logout.png');
+        return require('../../icon/logout.png');
       case "About":
-        return require('../../../icon/about.png');
+        return require('../../icon/about.png');
       default:
         // Default icon if no match found
-        return require('../../../icon/deluxe.png');
+        return require('../../icon/deluxe.png');
     }
   };
 
@@ -149,13 +154,13 @@ const ProfileInfo = () => {
   );
 
   return (
-    <ImageBackground source={require('../../../image/background.png')} style={{ flex: 1 }}>
+    <ImageBackground source={require('../../image/background.png')} style={{ flex: 1 }}>
       <View style={{ height: '100%', alignItems: 'center' }}>
         <View style={{
           height: pxToDp(200),
           width: '95%',
           backgroundColor: 'rgba(0,0,0,0.7)',
-          marginTop: '15%',
+          marginTop: '5%',
           padding: 12,
           elevation: 5,
           borderRadius: 10,
@@ -197,7 +202,7 @@ const ProfileInfo = () => {
             }}>
               <TextInput
                 placeholder={'Andy'}
-                editable={true}
+                editable={false}
                 onChangeText={text => setName(text)}
                 value={name}
                 style={{
@@ -221,7 +226,7 @@ const ProfileInfo = () => {
 
  </View>
         <View style={{
-          height: '50%',
+          height: '60%',
           width: '95%',
           padding: 10,
           marginTop: '5%',

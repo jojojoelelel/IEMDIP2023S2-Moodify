@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView, StyleSheet, FlatList, Image, ImageBackground, ScrollView } from 'react-native';
-import { pxToDp } from '../../utils/stylesKits';
+import { pxToDp } from '../../src/utils/stylesKits';
+import { useNavigation } from '@react-navigation/native';
 
 const PIscreen = () => {
   const initialUserData = [
@@ -10,6 +11,12 @@ const PIscreen = () => {
     { label: 'Phone', value: '+1234567890' },
     { label: 'Date of Birth', value: '1990-01-01' },
   ];
+
+  const navigation = useNavigation();
+
+  const backNav = () => {
+    navigation.goBack();
+}
 
   const [userData, setUserData] = useState(initialUserData);
   const [isEditing, setIsEditing] = useState(false);
@@ -42,9 +49,13 @@ const PIscreen = () => {
   );
 
   return (
-    <ImageBackground source={require('../../../image/background.png')} style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Image source={require('../../../icon/profile.jpg')} style={styles.profileImage} />
+    <ImageBackground source={require('../../image/background.png')} style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.container}>
+        <TouchableOpacity onPress={backNav}><Image
+        source={require('../../icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
+        style={{ width: 50, height: 50 }} // Adjust the width and height according to your preference
+      /></TouchableOpacity>
+        <Image source={require('../../icon/profile.jpg')} style={styles.profileImage} />
         <FlatList
           data={userData}
           renderItem={renderItem}
@@ -53,7 +64,7 @@ const PIscreen = () => {
         <TouchableOpacity onPress={handleEditProfile} style={styles.editButton}>
           <Text style={styles.editButtonText}>{isEditing ? 'Save Changes' : 'Update Profile Info'}</Text>
         </TouchableOpacity>
-      </ScrollView>
+        </ScrollView>
     </ImageBackground>
   );
 };
