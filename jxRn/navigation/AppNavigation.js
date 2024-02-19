@@ -1,6 +1,5 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
 
 //Import the screens here
 import GettingStarted from '../screens/SignUpScreen/GettingStarted';
@@ -11,39 +10,29 @@ import ProfileInfo from '../screens/AccountScreen/Profile';
 import BottomNavigation from './BottomNavigation';
 import PIscreen from '../screens/AccountScreen/directProfileInfo';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
-//import NextScreen from '../screens/SignUpScreen/NextScreen';
+import SScreen from '../screens/AccountScreen/directSetting';
+import FollowingScreen from '../screens/AccountScreen/directFollowing';
+import FollowerScreen from '../screens/AccountScreen/directFollower';
+
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false
-    }}>
-      <Stack.Screen name="GettingStarted" component={GettingStarted} />
-      <Stack.Screen name="SignInScreen" component={SignInScreen} />
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="GettingStarted" component={GettingStarted} />
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+        <Stack.Screen name="Main" component={BottomNavigation} options={{ headerShown: false }} />
+        <Stack.Screen name="Profile" component={ProfileInfo} />
+        <Stack.Screen name="PI" component={PIscreen} />
+        <Stack.Screen name="SS" component={SScreen} />
+        <Stack.Screen name="FollowingScreen" component={FollowingScreen} />
+        <Stack.Screen name="FollowerScreen" component={FollowerScreen} />
 
-      <Stack.Screen
-        name="ForgotPasswordScreen"
-        component={ForgotPasswordScreen}
-      />
-      <Stack.Screen
-        name="Main"
-        component={BottomNavigation}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileInfo}
-      />
-      <Stack.Screen
-        name="PI"
-        component={PIscreen}
-        />
-
-    </Stack.Navigator>
+      </Stack.Navigator>
   );
 };
 

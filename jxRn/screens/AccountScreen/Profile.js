@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {StyleSheet, FlatList, Text, View, Image, TouchableOpacity, ImageBackground, TextInput, ScrollView, Alert } from 'react-native';
 import { pxToDp } from '../../src/utils/stylesKits'; //Transform dimensions to fit screen
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'react-native-image-picker';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginVertical: 5,
-    marginRight: 7
+    marginRight: 7,
   },
   circle: { //style for following,follower and hours
     height: pxToDp(47),
@@ -68,6 +69,24 @@ const ProfileInfo = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('Andy');
   const [profilePhoto, setProfilePhoto] = useState(require('../../icon/profile.jpg'));
+  
+  const launchImageLibrary = () => {
+
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+    };
+    
+      ImagePicker.launchImageLibrary(options,(response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          setProfilePhoto({ uri: response.uri });
+        }
+      });
+    };
 
   const tempBoxHandler = (item) => {
     switch (item.name) {
@@ -86,6 +105,13 @@ const ProfileInfo = () => {
         navigation.navigate('SignInScreen');
         //Logic for user logout
         break;
+
+      case "Setting":
+        navigation.navigate('SS');
+        break;
+      
+      case "Diary":
+        break;
       default:
         alert("Null");
         break;
@@ -96,13 +122,12 @@ const ProfileInfo = () => {
   const tempCircleHandler = (item) => {
     switch (item.name) {
       case "Following":
-        navigation.navigate('AB'); //for testing purpose, to be replaced by following list screen
+        navigation.navigate('FollowingScreen'); //for testing purpose, to be replaced by following list screen
         break;
       case "Follower":
-        navigation.navigate('PL'); //for testing purpose, to be replaced by follower list screen
+        navigation.navigate('FollowerScreen'); //for testing purpose, to be replaced by follower list screen
         break;
       default:
-        alert("Null");
         break;
     }
     // TO-DO#1: logic for each cell to be added here [DONE]
@@ -183,7 +208,7 @@ const ProfileInfo = () => {
             marginTop: '-35%'
           }}>
 
-            <TouchableOpacity onPress={this.changeProfilePhotoButton}
+            <TouchableOpacity onPress={launchImageLibrary}
               style={{
                 alignSelf: 'flex-start',
                 marginLeft: '18%',
