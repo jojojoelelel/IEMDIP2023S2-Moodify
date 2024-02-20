@@ -11,6 +11,11 @@ import BottomNavigation from './BottomNavigation';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
 import PlaylistsScreen from '../screens/AccountScreen/MyPlaylistScreen';
 import PlaylistDetailsScreen from '../screens/AccountScreen/PlaylistDetailsScreen';
+import FollowingScreen from '../screens/AccountScreen/directFollowing';
+import FollowerScreen from '../screens/AccountScreen/directFollower';
+import AccountScreen from '../screens/AccountScreen/AccountScreen';
+import PIscreen from '../screens/AccountScreen/directProfileInfo';
+import SScreen from '../screens/AccountScreen/directSetting';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +37,12 @@ const AppNavigator = () => {
       {/* Add more screens as needed */}
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
+      <Stack.Screen name="FollowingScreen" component={FollowingScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="FollowerScreen" component={FollowerScreen} options={{headerShown: false}} />
+      <Stack.Screen name="AccountScreen" component={AccountScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="PIScreen" component={PIscreen} options={{headerShown: false}}/>
+      <Stack.Screen name="SScreen" component={SScreen} options={{headerShown: false}}/>
+
     </Stack.Navigator>
   );
 };
