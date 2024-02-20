@@ -9,6 +9,8 @@ import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ForgotPasswordScreen from '../screens/SignUpScreen/ForgotPasswordScreen';
 import BottomNavigation from './BottomNavigation';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
+import PlaylistsScreen from '../screens/AccountScreen/MyPlaylistScreen';
+import PlaylistDetailsScreen from '../screens/AccountScreen/PlaylistDetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,8 @@ const AppNavigator = () => {
         options={{headerShown: false}}
       />
       {/* Add more screens as needed */}
+      <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
+      <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
     </Stack.Navigator>
   );
 };
