@@ -326,7 +326,7 @@ const Login = ({navigation}) => {
 
     return (
         <View>
-            {/* <Text>Login</Text>
+            <Text>Login</Text>
             <TextInput
                 placeholder='Enter email'
                 onChangeText={(e) => setEmail(e)}
@@ -361,7 +361,7 @@ const Login = ({navigation}) => {
                 <View style={(styles.button)}>
                     <Text>Get User Profile Information</Text>
                 </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => getCurrentUserProfile2()}>
                 <View style={(styles.button)}>
                     <Text>Get current user profile information</Text>
