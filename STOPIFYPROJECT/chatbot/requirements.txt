@@ -1,0 +1,4 @@
+pip install openai
+pip install flask
+pip install torch
+pip install langchain

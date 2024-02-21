@@ -22,9 +22,35 @@ const ChatBotScreen = ({navigation}) => {
   }, []);
 
   const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
-    );
+    if (messages.length > 0) {
+      const message = messages[0].text;
+
+      fetch('http://localhost:5000/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: message }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        const reply = data.reply;
+
+        setMessages(previousMessages =>
+          GiftedChat.append(previousMessages, [{
+            _id: Math.random().toString(36).substr(2, 9),
+            text: reply,
+            createdAt: new Date(),
+            user: {
+              _id: 2,
+            },
+          }])
+        );
+      })
+      .catch(error => {
+        console.error("Error sending message: ", error);
+      });
+    }
   }, []);
 
   return (
