@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 const MusicPlayerBar = ({ songTitle, artistName, coverImage, onPlayPausePress }) => {
   const [isPlaying, setIsPlaying] = useState(true);
@@ -21,7 +21,7 @@ const MusicPlayerBar = ({ songTitle, artistName, coverImage, onPlayPausePress })
       <Text style={styles.artistName}>{artistName}</Text>
     </View>
     <TouchableOpacity onPress={togglePlayPause}>
-      <Icon name={isPlaying ? 'ios-pause' : 'ios-play'} size={30} color="#FFFFFF" />
+      <Ionicon name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'} size={30} color="#FFFFFF" />
     </TouchableOpacity>
   </View>
   );
