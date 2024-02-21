@@ -4,6 +4,7 @@ import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import AlbumCard from '../../components/AlbumCard';
 import TrackList from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 //import BottomNavigation from '../../navigation/BottomNavigation';
 //Remove import of BottomNavigation
 

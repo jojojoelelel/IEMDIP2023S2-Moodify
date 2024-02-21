@@ -1,6 +1,7 @@
 // PlaylistItem.tsx
 import React from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const PlaylistItem = ({ title, creator, imageUrl, onPress }) => {
     return (
