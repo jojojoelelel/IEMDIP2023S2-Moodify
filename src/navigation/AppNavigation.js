@@ -16,6 +16,7 @@ import FollowerScreen from '../screens/AccountScreen/directFollower';
 import AccountScreen from '../screens/AccountScreen/AccountScreen';
 import PIscreen from '../screens/AccountScreen/directProfileInfo';
 import SScreen from '../screens/AccountScreen/directSetting';
+import FullMusicPlayerScreen from '../screens/MusicPlayerScreen/FullMusicPlayerScreen';
 
 const Stack = createStackNavigator();
 
@@ -42,7 +43,7 @@ const AppNavigator = () => {
       <Stack.Screen name="AccountScreen" component={AccountScreen} options={{headerShown: false}}/>
       <Stack.Screen name="PIScreen" component={PIscreen} options={{headerShown: false}}/>
       <Stack.Screen name="SScreen" component={SScreen} options={{headerShown: false}}/>
-
+      <Stack.Screen name="FullMusicPlayerScreen" component={FullMusicPlayerScreen} />
     </Stack.Navigator>
   );
 };
