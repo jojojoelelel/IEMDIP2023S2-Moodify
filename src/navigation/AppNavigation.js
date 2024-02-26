@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+
 
 //Import the screens here
 import GettingStarted from '../screens/SignUpScreen/GettingStarted';
@@ -16,6 +16,9 @@ import FollowerScreen from '../screens/AccountScreen/directFollower';
 import AccountScreen from '../screens/AccountScreen/AccountScreen';
 import PIscreen from '../screens/AccountScreen/directProfileInfo';
 import SScreen from '../screens/AccountScreen/directSetting';
+import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
+import MusicPlayerBar from '../components/MusicPlayerBar';
+import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +45,9 @@ const AppNavigator = () => {
       <Stack.Screen name="AccountScreen" component={AccountScreen} options={{headerShown: false}}/>
       <Stack.Screen name="PIScreen" component={PIscreen} options={{headerShown: false}}/>
       <Stack.Screen name="SScreen" component={SScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
+
 
     </Stack.Navigator>
   );
