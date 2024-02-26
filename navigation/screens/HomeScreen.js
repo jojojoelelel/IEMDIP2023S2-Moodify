@@ -4,7 +4,7 @@ import {StyleSheet, FlatList, Text, View, Image, TouchableOpacity, ImageBackgrou
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import BottomNavigation from '/Users/sneha.m7/Moodify/navigation/BottomNavigation.js';
+import BottomNavigation from './navigation/BottomNavigation.js';
 
 // Other screens in Home
 import SearchScreen from './SearchScreen';
@@ -15,7 +15,7 @@ import ArtistCard from '../../components/ArtistCard.js';
 import AlbumCard from '../../components/AlbumCard.js';
 import TrackList from '../../components/TrackList.js';
 import PlayerControls from '../../components/PlayerControls.js';
-import MusicPlayerBar from '/Users/sneha.m7/Moodify/components/MusicPlayerBar.js';
+import MusicPlayerBar from '../../components/MusicPlayerBar.js';
 
 
 export default function HomeScreen({ navigation }) {
