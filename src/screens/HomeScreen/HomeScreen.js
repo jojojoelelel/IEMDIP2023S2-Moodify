@@ -14,51 +14,51 @@ const HomeScreen = () => {
   const [newReleases, setNewReleases] = useState([]);
   const [recentlyPlayed, setRecentlyPlayed] = useState([]);
 
-  useEffect(() => {
-    // Fetch New Releases
-    const fetchNewReleases = async () => {
-      try {
-        const accessToken = await AsyncStorage.getItem('token');
-        const response = await axios.get(
-          'https://api.spotify.com/v1/browse/new-releases',
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        );
-        setNewReleases(response.data.albums.items);
-      } catch (error) {
-        console.error('Error fetching new releases:', error);
-      }
-    };
+  // useEffect(() => {
+  //   // Fetch New Releases
+  //   const fetchNewReleases = async () => {
+  //     try {
+  //       const accessToken = await AsyncStorage.getItem('token');
+  //       const response = await axios.get(
+  //         'https://api.spotify.com/v1/browse/new-releases',
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //         },
+  //       );
+  //       setNewReleases(response.data.albums.items);
+  //     } catch (error) {
+  //       console.error('Error fetching new releases:', error);
+  //     }
+  //   };
 
-    // Fetch Recently Played
-    const fetchRecentlyPlayed = async () => {
-      try {
-        const accessToken = await AsyncStorage.getItem('token');
-        const response = await axios.get(
-          'https://api.spotify.com/v1/me/player/recently-played',
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        );
-        setRecentlyPlayed(response.data.items);
-      } catch (error) {
-        console.error('Error fetching recently played:', error);
-      }
-    };
+  //   // Fetch Recently Played
+  //   const fetchRecentlyPlayed = async () => {
+  //     try {
+  //       const accessToken = await AsyncStorage.getItem('token');
+  //       const response = await axios.get(
+  //         'https://api.spotify.com/v1/me/player/recently-played',
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //         },
+  //       );
+  //       setRecentlyPlayed(response.data.items);
+  //     } catch (error) {
+  //       console.error('Error fetching recently played:', error);
+  //     }
+  //   };
 
-    fetchNewReleases();
-    fetchRecentlyPlayed();
-  }, []);
+  //   fetchNewReleases();
+  //   fetchRecentlyPlayed();
+  // }, []);
 
   // Example data - replace with real data
   const albums = [
-    {id: 1, title: 'Pray For You', artist: 'The Weekend', cover: 'cover_url_1'},
-    {id: 2, title: 'Do It', artist: 'Milian Lau', cover: 'cover_url_2'},
+    {id: 1, title: 'Pray For You', artist: 'The Weekend'},
+    {id: 2, title: 'Do It', artist: 'Milian Lau'},
     // Add more albums
   ];
 
