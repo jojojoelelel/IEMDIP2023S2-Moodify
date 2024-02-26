@@ -1,66 +1,79 @@
-# This is the GitHub repository for IM3180 Project
-...Description...
-## Software needed:
-NodeJS, JDK, Android Studio, FireBase
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting started
-## Installing requirements
+# Getting Started
 
-**React Native** : https://reactnative.dev/docs/environment-setup?guide=native
+>**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-**JDK** : https://www3.ntu.edu.sg/home/ehchua/programming/howto/jdk_howto.html
+## Step 1: Start the Metro Server
 
-**NodeJS** : https://nodejs.org/en/download
+First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-**Android Studio** : https://www3.ntu.edu.sg/home/ehchua/programming/android/Android_HowTo.html
+To start Metro, run the following command from the _root_ of your React Native project:
 
-**FireBase** : rnfirebase.io
+```bash
+# using npm
+npm start
 
-## GitHub setup
+# OR using Yarn
+yarn start
+```
 
-NOTE: DO NOT push directly into the remote main branch without discussion.
+## Step 2: Start your Application
 
-Git repository URL : https://github.com/jojojoelelel/IM3180.git
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-Setup
-Ensure you have git.
-Ensure that your folder is a git repository. If it is not, you can run `git init` to create it as one.
-Add the repositories as your remote:
-`git remote add origin https://github.com/jojojoelelel/IM3180.git`
+### For Android
 
-NOTE: You can check what is your current branch name by running git status.
+```bash
+# using npm
+npm run android
 
-# GitHub Workflow - Pushing your code to the remote repository
-As much as possible please make sure your code runs correctly before pushing to the repository.
+# OR using Yarn
+yarn android
+```
 
-Pull main branch (make sure it is most updated) → Create a new local branch → Make your code changes → Push to new branch in repository → Review/Proof that it works → Create a pull request
+### For iOS
 
-## Ensure that you are on the **main** branch of the repository by running `git status`, and have pulled the latest changes from the remote : 
-`git pull`
+```bash
+# using npm
+npm run ios
 
-## Create a new branch locally :
-`git checkout -b <branch_name>`
+# OR using Yarn
+yarn ios
+```
 
-Make your changes to the code as needed in this new branch.
+If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-## Stage files to be committed into github :
-`git add .` OR if you want to select specific files `git add <name of file>`
+This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Commit the staged files with message :
-`git commit -m "<your message, usually something to describe the changes>"`
+## Step 3: Modifying your App
 
-## Push the committed changes to remote branch :
-`git push`
+Now that you have successfully run the app, let's modify it.
 
-IF it is the first time pushing this branch to the remote :
-`git push -u origin <branch_name>`
+1. Open `App.tsx` in your text editor of choice and edit some lines.
+2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
-## Create a pull request :
-Title should include the JIRA task ID and a short description. E.g. TASK-123 Implementing AI search 
-1. Objective
-2. File changes
-3. Proof of testing (Screenshots/Recordings)
-4. After reviewing together, merge the branch into main
+   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-# Pull requests and reviews
-Every week, go through all requests together and merge to main.
+## Congratulations! :tada:
+
+You've successfully run and modified your React Native App. :partying_face:
+
+### Now what?
+
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+
+# Troubleshooting
+
+If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+# Learn More
+
+To learn more about React Native, take a look at the following resources:
+
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
