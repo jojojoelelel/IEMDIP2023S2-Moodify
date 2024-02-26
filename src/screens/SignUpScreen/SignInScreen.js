@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,45 +6,57 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import CustomButton from '../../components/CustomButton';
-import CustomForm from '../../components/CustomForm';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {authorize} from 'react-native-app-auth';
 
 const SignInScreen = ({navigation}) => {
-  // State for form fields
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // Define form fields
-  const formFields = [
-    {
-      placeholder: 'E-Mail',
-      value: email,
-      onChangeText: setEmail,
-      keyboardType: 'email-address',
+  // Define the configuration for Spotify authentication
+  const spotifyAuthConfig = {
+    clientId: 'ef923e84a90f48a2a34227a19f432749',
+    clientSecret: 'e235e28428df4b35a4965a43d479d120',
+    redirectUrl: 'moodify-app://callback',
+    scopes: [
+      'user-read-email',
+      'user-library-read',
+      'user-read-recently-played',
+      'user-top-read',
+      'playlist-read-private',
+      'playlist-read-collaborative',
+      'playlist-modify-public',
+      // Add any other scopes as needed
+    ],
+    serviceConfiguration: {
+      authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+      tokenEndpoint: 'https://accounts.spotify.com/api/token',
     },
-    {
-      placeholder: 'Password',
-      value: password,
-      onChangeText: setPassword,
-      secureTextEntry: true,
-    },
-  ];
+  };
+
+  // Function to handle sign in with Spotify
+  const signInWithSpotify = async () => {
+    try {
+      const result = await authorize(spotifyAuthConfig);
+      await AsyncStorage.setItem('token', result.accessToken);
+      if (result.refreshToken) {
+        await AsyncStorage.setItem('refreshToken', result.refreshToken);
+      }
+      // Navigate to the main part of your app
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      console.error('Failed to log in', error.message);
+    }
+  };
+
   return (
     <ImageBackground
-      source={require('../../assets/images/sign-in-bg.jpg')} // Replace with your actual background image path
+      source={require('../../assets/images/sign-in-bg.jpg')}
       style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>SIGN IN</Text>
-        <CustomForm fields={formFields} />
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-          <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
+        {/* The email and password fields are not required for Spotify auth */}
+        <TouchableOpacity style={styles.button} onPress={signInWithSpotify}>
+          <Text style={styles.buttonText}>SIGN IN WITH SPOTIFY</Text>
         </TouchableOpacity>
-        <CustomButton
-          title="SIGN IN"
-          onPress={() => navigation.navigate('Main')}
-          style={styles.button}
-        />
-        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Main')}>
           <Text style={styles.signUpText}>
             Don't have an account?{' '}
             <Text style={styles.signUpButtonText}>Sign Up</Text>
@@ -59,9 +71,9 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: 'center',
+    resizeMode: 'cover', // or 'stretch'
   },
   container: {
-    // alignItems: 'center',
     padding: 20,
   },
   title: {
@@ -69,40 +81,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 20,
-    textAlign: 'left',
-  },
-  input: {
-    width: '100%',
-    marginVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#9f9f9f',
-    // Add other styles for input
-  },
-  forgotPasswordText: {
-    marginTop: 30,
-    textAlign: 'right',
-    color: '#fff',
-    // Add other styles for forgot password text
+    textAlign: 'center',
   },
   button: {
-    marginTop: 30,
-    marginBottom: 30,
-    width: '100%',
-    // Add other styles for button
+    backgroundColor: '#1DB954', // Spotify brand color for the button
+    padding: 15,
+    borderRadius: 30,
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  connectText: {
-    // Styles for the connect text
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   signUpText: {
     color: '#fff',
     textAlign: 'center',
-    // Add other styles for sign up txt
+    marginTop: 30,
   },
   signUpButtonText: {
-    color: '#CBFB5E',
     fontWeight: 'bold',
-    // Add other styles for sign up button text
+    color: '#CBFB5E',
   },
+  // ... any other styles you have
 });
 
 export default SignInScreen;

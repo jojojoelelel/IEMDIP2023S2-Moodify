@@ -1,6 +1,16 @@
 //Component for individual album card
-import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {colors, gStyle, images} from '../constants';
 
 const AlbumCard = ({title, artist, cover, onPress}) => {
   return (

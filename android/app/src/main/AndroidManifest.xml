@@ -16,9 +16,20 @@
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize"
         android:exported="true">
+        <!-- Intent filter for the app launcher -->
         <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+    <!-- Intent filter for Spotify authentication callback -->
+        <intent-filter >
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+        <!-- This data element should be specifically for the Spotify callback -->
+          <data android:scheme="moodify-app"
+              android:host="callback" />
         </intent-filter>
       </activity>
     </application>

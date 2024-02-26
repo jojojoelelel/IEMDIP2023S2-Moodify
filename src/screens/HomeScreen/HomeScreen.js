@@ -1,14 +1,60 @@
 // src/screens/HomeScreen/HomeScreen.js
-import React from 'react';
+import React, {useState, useEffect} from 'react'; // Add useState and useEffect here
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Add this import
 import AlbumCard from '../../components/AlbumCard';
 import TrackList from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 //import BottomNavigation from '../../navigation/BottomNavigation';
 //Remove import of BottomNavigation
 
-
 const HomeScreen = () => {
+  const [newReleases, setNewReleases] = useState([]);
+  const [recentlyPlayed, setRecentlyPlayed] = useState([]);
+
+  useEffect(() => {
+    // Fetch New Releases
+    const fetchNewReleases = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('token');
+        const response = await axios.get(
+          'https://api.spotify.com/v1/browse/new-releases',
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+        setNewReleases(response.data.albums.items);
+      } catch (error) {
+        console.error('Error fetching new releases:', error);
+      }
+    };
+
+    // Fetch Recently Played
+    const fetchRecentlyPlayed = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('token');
+        const response = await axios.get(
+          'https://api.spotify.com/v1/me/player/recently-played',
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+        setRecentlyPlayed(response.data.items);
+      } catch (error) {
+        console.error('Error fetching recently played:', error);
+      }
+    };
+
+    fetchNewReleases();
+    fetchRecentlyPlayed();
+  }, []);
+
   // Example data - replace with real data
   const albums = [
     {id: 1, title: 'Pray For You', artist: 'The Weekend', cover: 'cover_url_1'},
@@ -46,7 +92,7 @@ const HomeScreen = () => {
         {/* Recently Played Section */}
         <View>
           <Text style={styles.sectionHeader}>Recently Music</Text>
-          <TrackList data={tracks} />
+          <TrackList data={recentlyPlayed} />
         </View>
 
         {/* Player Controls (assuming it's a static component at the bottom) */}
