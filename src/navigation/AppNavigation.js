@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+
 
 //Import the screens here
 import GettingStarted from '../screens/SignUpScreen/GettingStarted';
@@ -19,6 +19,8 @@ import SScreen from '../screens/AccountScreen/directSetting';
 import FullMusicPlayerScreen from '../screens/MusicPlayerScreen/FullMusicPlayerScreen';
 import SearchScreen from '../screens/HomeScreen/SearchScreen';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
+import MusicPlayerBar from '../components/MusicPlayerBar';
+import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 
 const Stack = createStackNavigator();
 
@@ -41,36 +43,18 @@ const AppNavigator = () => {
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
       <Stack.Screen
-        name="FollowingScreen"
-        component={FollowingScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="FollowerScreen"
-        component={FollowerScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="AccountScreen"
-        component={AccountScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="PIScreen"
-        component={PIscreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SScreen"
-        component={SScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name="FullMusicPlayerScreen"
         component={FullMusicPlayerScreen}
       />
-      <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="FollowingScreen" component={FollowingScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="FollowerScreen" component={FollowerScreen} options={{headerShown: false}} />
+      <Stack.Screen name="AccountScreen" component={AccountScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="PIScreen" component={PIscreen} options={{headerShown: false}}/>
+      <Stack.Screen name="SScreen" component={SScreen} options={{headerShown: false}}/>
       <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
+
+
     </Stack.Navigator>
   );
 };
