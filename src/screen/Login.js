@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Linking } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import {Auth} from '../services'
@@ -78,34 +78,14 @@ const Login = ({navigation}) => {
             console.error('Error in requestAccessToken => ', error)
         }
 
-        // setaccess_token(requestAccessToken(return_Params));
-
-        // const authOptions = {
-        //     url: 'https://accounts.spotify.com/api/token',
-        //     form: {
-        //         code: return_Params,
-        //         redirect_uri: redirect_uri,
-        //         grant_type: 'authorization_code'
-        //     },
-        //     headers: {
-        //         'content-type': 'application/x-www-form-urlencoded',
-        //         'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-        //     },
-        //     json: true
-        // }
-
-        // axios.post(authOptions.url, authOptions.form, {
-        //     headers: authOptions.headers
-        // })
-        // .then(response => {
-        //     console.log('Response => ', response.data);
-        //     setaccess_token(response.data.access_token);
-        // })  
-        // .catch(error => {
-        //     console.error('Error => ', error);
-        // });
-
     }
+
+    useEffect(() => {
+        console.log('returnParams', return_Params)
+        if(return_Params) {
+            requestAccessToken2();
+        }
+    },[return_Params])
 
     const getUserProfile2 = async () => {
 
@@ -380,11 +360,6 @@ const Login = ({navigation}) => {
             <TouchableOpacity onPress={() => loginToSpotify()}>
                 <View style={(styles.button)}>
                     <Text>Request user authorization</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => requestAccessToken2()}>
-                <View style={(styles.button)}>
-                    <Text>Request access token</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => getUserProfile2()}>
