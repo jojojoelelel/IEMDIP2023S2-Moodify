@@ -94,7 +94,7 @@ const MusicPlayerScreen = () => {
               fill={(songProgress / songs[currentSongIndex].duration) * 100}
               width={10}
               tintColor="#A4EC0A"
-              backgroundColor="rgba(255,255,255,0.5)"
+              backgroundColor="white"
               rotation={0}
               lineCap="round"
               style={styles.circularProgressBar}
