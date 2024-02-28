@@ -1,83 +1,136 @@
 // src/screens/HomeScreen/HomeScreen.js
 import React from 'react';
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+  TextInput,
+  ScrollView,
+  Alert,
+} from 'react-native';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
 import AlbumCard from '../../components/AlbumCard';
 import TrackList from '../../components/TrackList';
-import PlayerControls from '../../components/PlayerControls';
+import SearchScreen from './SearchScreen';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import BottomNavigation from '../../navigation/BottomNavigation';
 //Remove import of BottomNavigation
 
-
-const HomeScreen = () => {
-  // Example data - replace with real data
+export default function HomeScreen({navigation}) {
+  // Example data - replace with real data to be added by backend
   const albums = [
-    {id: 1, title: 'Pray For You', artist: 'The Weekend', cover: 'cover_url_1'},
-    {id: 2, title: 'Do It', artist: 'Milian Lau', cover: 'cover_url_2'},
+    {id: 1, title: 'Album 1', artist: 'Artist 1', cover: 'cover_url_1'},
+    {id: 2, title: 'Album 2', artist: 'Artist 2', cover: 'cover_url_2'},
+    {id: 3, title: 'Album 3', artist: 'Artist 3', cover: 'cover_url_3'},
     // Add more albums
   ];
 
   const tracks = [
-    {id: 1, title: 'Nice For What', artist: 'Avinci John'},
-    {id: 2, title: 'Where can I get some ?', artist: 'Arian Grande'},
-    {id: 3, title: 'Why do we use it ?', artist: 'Alan Walker'},
+    {id: 1, title: 'Track 1', artist: 'Artist 1', duration: '2:30'},
+    {id: 2, title: 'Track 2', artist: 'Artist 2', duration: '2:30'},
+    {id: 3, title: 'Track 3', artist: 'Artist 3', duration: '2:30'},
     // Add more tracks
   ];
 
+  const handleSearchPress = () => {
+    // Need to navigate to the Search screen properly
+    navigation.navigate('Search');
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Text style={styles.title}>Moodify</Text>
-        {/* New Albums Section */}
-        <View>
-          <Text style={styles.sectionHeader}>New Albums</Text>
-          <ScrollView horizontal>
-            {albums.map(album => (
-              <AlbumCard key={album.id} {...album} />
-            ))}
-          </ScrollView>
+      <View style={styles.headerContainer}>
+        <Text
+          onPress={() => alert('This is the "Home" screen.')}
+          style={styles.text}>
+          Moodify
+        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SearchScreen')}
+          style={styles.searchIconContainer}>
+          <Ionicons
+            name="search"
+            size={24}
+            color="#fff"
+            style={styles.searchIcon}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Text style={styles.header}>New Albums</Text>
+        <View style={styles.albumContainer}>
+          {albums.map(album => (
+            <AlbumCard key={album.id} {...album} />
+          ))}
         </View>
 
-        {/* Tracks Section */}
-        <View>
-          <Text style={styles.sectionHeader}>Geez Weekly</Text>
-          <TrackList data={tracks} />
-        </View>
+        <Text style={styles.header}>Geez Weekly</Text>
 
-        {/* Recently Played Section */}
-        <View>
-          <Text style={styles.sectionHeader}>Recently Music</Text>
-          <TrackList data={tracks} />
+        <Text style={styles.header}>Recently Played</Text>
+        <View style={styles.trackContainer}>
+          {tracks.map(tracks => (
+            <TrackList data={tracks} {...tracks} />
+          ))}
         </View>
-
-        {/* Player Controls (assuming it's a static component at the bottom) */}
-        <PlayerControls />
       </ScrollView>
-      {/* Bottom navigation will be shown by the BottomNavigation component and does not need to be added here */}
-      {/* BottomNavigation removed from here, it will be shown by the navigation container */}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingLeft: 20,
   },
-  title: {
-    fontSize: 28,
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center', // Align items vertically
+    paddingRight: 20,
+  },
+  text: {
+    fontSize: 30,
+    fontWeight: 'bold',
     color: '#fff',
+  },
+  searchIconContainer: {
+    marginLeft: 'auto', // Push the icon to the right
+  },
+  searchIcon: {
+    marginLeft: 230,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+  },
+  header: {
+    color: '#fff',
+    fontSize: 24,
     fontWeight: 'bold',
     padding: 20,
   },
-  sectionHeader: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingVertical: 10,
-    paddingLeft: 20,
+  albumContainer: {
+    flexDirection: 'row',
+    paddingBottom: 20,
   },
-  // Other styles for AlbumCard, TrackList, PlayerControls, etc.
+  trackContainer: {
+    width: '95%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    marginTop: '5%',
+    padding: 12,
+    elevation: 5,
+    borderRadius: 10,
+    shadowColor: '#303133',
+    flexDirection: 'column',
+  },
 });
-
-export default HomeScreen;
