@@ -18,6 +18,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import AlbumCard from '../../components/AlbumCard';
 import TrackList from '../../components/TrackList';
+import ArtistCard from '../../components/ArtistCard';
+import MusicPlayerBar from '../../components/MusicPlayerBar';
 import SearchScreen from './SearchScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -72,7 +74,14 @@ export default function HomeScreen({navigation}) {
           ))}
         </View>
 
-        <Text style={styles.header}>Geez Weekly</Text>
+        <Text style={styles.header}>Top Artists</Text>
+        <ScrollView horizontal>
+          <View style={styles.artistContainer}>
+            {albums.map(album => (
+              <ArtistCard key={album.id} {...album} />
+            ))}
+          </View>
+        </ScrollView>
 
         <Text style={styles.header}>Recently Played</Text>
         <View style={styles.trackContainer}>
@@ -81,22 +90,28 @@ export default function HomeScreen({navigation}) {
           ))}
         </View>
       </ScrollView>
+
+      <MusicPlayerBar
+        songTitle="Song Title"
+        artistName="Artist Name"
+        coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
+        onPlayPausePress={() => {}}
+      />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
     justifyContent: 'flex-start',
     paddingTop: 20,
-    paddingLeft: 20,
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center', // Align items vertically
     paddingRight: 20,
+    paddingLeft: 20,
   },
   text: {
     fontSize: 30,
@@ -122,15 +137,21 @@ const styles = StyleSheet.create({
   albumContainer: {
     flexDirection: 'row',
     paddingBottom: 20,
+    paddingLeft: 20,
+  },
+  artistContainer: {
+    flexDirection: 'row',
+    paddingBottom: 20,
+    paddingLeft: 20,
   },
   trackContainer: {
     width: '95%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    marginTop: '5%',
     padding: 12,
     elevation: 5,
     borderRadius: 10,
     shadowColor: '#303133',
     flexDirection: 'column',
+    paddingLeft: 20,
   },
 });

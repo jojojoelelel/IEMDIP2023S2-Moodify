@@ -1,7 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-
 //Import the screens here
 import GettingStarted from '../screens/SignUpScreen/GettingStarted';
 import SignInScreen from '../screens/SignUpScreen/SignInScreen';
@@ -21,6 +20,7 @@ import SearchScreen from '../screens/HomeScreen/SearchScreen';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 import MusicPlayerBar from '../components/MusicPlayerBar';
 import MusicPlayerScreen from '../screens/MusicPlayerScreen';
+import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,15 +46,35 @@ const AppNavigator = () => {
         name="FullMusicPlayerScreen"
         component={FullMusicPlayerScreen}
       />
-      <Stack.Screen name="FollowingScreen" component={FollowingScreen} options={{headerShown: false}}/>
-      <Stack.Screen name="FollowerScreen" component={FollowerScreen} options={{headerShown: false}} />
-      <Stack.Screen name="AccountScreen" component={AccountScreen} options={{headerShown: false}}/>
-      <Stack.Screen name="PIScreen" component={PIscreen} options={{headerShown: false}}/>
-      <Stack.Screen name="SScreen" component={SScreen} options={{headerShown: false}}/>
+      <Stack.Screen
+        name="FollowingScreen"
+        component={FollowingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FollowerScreen"
+        component={FollowerScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PIScreen"
+        component={PIscreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SScreen"
+        component={SScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
       <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
-
-
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
     </Stack.Navigator>
   );
 };
