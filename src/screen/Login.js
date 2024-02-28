@@ -31,6 +31,8 @@ const Login = ({navigation}) => {
     const [return_Params, setreturn_Params] = useState();
     const [access_token, setaccess_token] = useState();
     const [userData, setuserData] = useState();
+    const [playerInfo, setplayerInfo] = useState();
+    const [previewUrl, setpreviewUrl] = useState();
 
     const redirect_uri = 'http://localhost:8081/callback';
     
@@ -107,6 +109,7 @@ const Login = ({navigation}) => {
 
         try {
             const response = await getUserProfile(access_token, 'h76bjnjtq32wksw089gdk2ybl');
+            // const response = await getUserProfile(access_token, 'smedjan');
             setuserData(response)
         } catch (error) {
             console.error('Error in getUserProfile => ', error)
@@ -164,38 +167,38 @@ const Login = ({navigation}) => {
         // })
     }
 
-    const playMusicOnDevice = async () => {
+    // const playMusicOnDevice = async () => {
 
-        const authOptions = {
+    //     const authOptions = {
             
-            url: 'https://api.spotify.com/v1/me/player/play?device_id=56f7db82bbf7b1c85fee5e1bf6d3f29d5ee529f0',
-            data: {
-                'context_uri': 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr',
-                'offset': {
-                    'position': 5
-                },
-                'position_ms': 0
-            },
-            headers: {
-                'Authorization': 'Bearer ' + access_token,
-                'Content-Type': 'application/json',
-            },
-        };
+    //         url: 'https://api.spotify.com/v1/me/player/play?device_id=56f7db82bbf7b1c85fee5e1bf6d3f29d5ee529f0',
+    //         data: {
+    //             'context_uri': 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr',
+    //             'offset': {
+    //                 'position': 5
+    //             },
+    //             'position_ms': 0
+    //         },
+    //         headers: {
+    //             'Authorization': 'Bearer ' + access_token,
+    //             'Content-Type': 'application/json',
+    //         },
+    //     };
 
-        axios.put(authOptions.url, authOptions.data, {
-            headers: authOptions.headers
-        })
-        .then(response => {
-            console.log('PLAY SONG Response => ', response)
-        })
-        .catch(error => {
-            console.error('Error => ', error);
-        });
-    }
+    //     axios.put(authOptions.url, authOptions.data, {
+    //         headers: authOptions.headers
+    //     })
+    //     .then(response => {
+    //         console.log('PLAY SONG Response => ', response)
+    //     })
+    //     .catch(error => {
+    //         console.error('Error => ', error);
+    //     });
+    // }
 
     const startMusic = async (preview_url) => {
-
         const sound = new Sound(preview_url, null, (error) => {
+        setplayerInfo(sound)
             if (error) {
               console.error('Failed to load the sound', error);
               return;
@@ -209,6 +212,20 @@ const Login = ({navigation}) => {
               }
             });
           });
+    }
+
+    const pauseMusic = async () => {
+        console.log('pause')
+            // Pause sound
+            // playerInfo.pause();
+            playerInfo.pause();
+            // sound.pause((success) => {
+            //   if (success) {
+            //     console.log('Sound played successfully');
+            //   } else {
+            //     console.error('Failed to play the sound');
+            //   }
+            // });
     }
 
     const getFollowedArtists2 = async () => {
@@ -255,6 +272,7 @@ const Login = ({navigation}) => {
         try {
             const previewUrl = await getUserSavedTracks(access_token, 5, 5);
             // startMusic(previewUrl);
+            setpreviewUrl(previewUrl)
         } catch (error) {
             console.error('Error in getUserSavedTracks => ', error)
         }
@@ -327,7 +345,7 @@ const Login = ({navigation}) => {
     return (
         <View>
             <Text>Login</Text>
-            <TextInput
+            {/* <TextInput
                 placeholder='Enter email'
                 onChangeText={(e) => setEmail(e)}
                 style={(styles.textinput)}
@@ -346,7 +364,7 @@ const Login = ({navigation}) => {
                 <View style={(styles.button)}>
                     <Text>Create Account</Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={() => loginToSpotify()}>
                 <View style={(styles.button)}>
                     <Text>Request user authorization</Text>
@@ -367,11 +385,11 @@ const Login = ({navigation}) => {
                     <Text>Get current user profile information</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => playMusicOnDevice()}>
+            {/* <TouchableOpacity onPress={() => playMusicOnDevice()}>
                 <View style={(styles.button)}>
                     <Text>Play Music</Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={() => getdeviceID2()}>
                 <View style={(styles.button)}>
                     <Text>Get device ID</Text>
@@ -382,9 +400,14 @@ const Login = ({navigation}) => {
                     <Text>Get saved tracks</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => startMusic()}>
+            <TouchableOpacity onPress={() => startMusic(previewUrl)}>
                 <View style={(styles.button)}>
                     <Text>Start Music Preview</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => pauseMusic()}>
+                <View style={(styles.button)}>
+                    <Text>Pause Music Preview</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => getFollowedArtists2()}>
