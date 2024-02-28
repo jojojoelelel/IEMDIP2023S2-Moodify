@@ -180,11 +180,11 @@ export async function getUserSavedTracks (access_token, limit, offset) {
         const data = response.data
         const previewUrl = getPreviewURL(data)
         // get preview_url of saved tracks
-        // if (data && data.items && data.items.length > 0) {
-        //     const previewUrl = data.items[0].track.preview_url;
-        //     console.log('Preview URL:', previewUrl);
-        //     return previewUrl;
-        // }
+        if (data && data.items && data.items.length > 0) {
+            const previewUrl = data.items[0].track.preview_url;
+            console.log('Preview URL:', previewUrl);
+            return previewUrl;
+        }
         // console.log('Response => ', response)
         console.log('Preview URL: ', previewUrl)
     } catch (error) {
