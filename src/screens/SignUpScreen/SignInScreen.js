@@ -5,14 +5,68 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Linking,
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomForm from '../../components/CustomForm';
+
+import { 
+  requestAccessToken, 
+  requestUserAuthorization, 
+  getCurrentUserProfile, 
+  getDeviceID, 
+  getUserSavedTracks, 
+  getFollowedArtists,
+  checkIfUserFollowsArtistsOrUsers,
+  checkIfUserFollowsPlaylist,
+  checkUserSavedTracks,
+  getUserPlaylist,
+  getArtist,
+  getArtistAlbums,
+  getArtistTopTracks,
+  getTrack,
+  getUserProfile,
+
+} from '../../services/Spotify-web-api';
 
 const SignInScreen = ({navigation}) => {
   // State for form fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [return_Params, setreturn_Params] = useState();
+  const [access_token, setaccess_token] = useState();
+  const [userData, setuserData] = useState();
+
+  const redirect_uri = 'http://localhost:8081/callback';
+    
+  const handleRedirect = (event) => {
+      // Extract the URL from the event
+      const url = event.url;
+  
+      // Check if the URL starts with the custom URI scheme
+      if (url.startsWith(redirect_uri)) {
+          // Extract the query parameters from the URL
+          const params = url.split('?code=')[1];
+          // Do something with the query parameters (e.g., parse them and handle the response)
+          console.log('Response query parameters:', params);
+          setreturn_Params(params);
+      }
+  }
+
+  const loginToSpotify = async () => {
+    // // request user authorization
+    Linking.addEventListener('url', handleRedirect);
+    // // const state = generateRandomString(16);
+    try {
+        const url = await requestUserAuthorization();
+        Linking.openURL(url);
+    } catch (error) {
+        console.error('Error in requestAccessToken => ', error)
+    }
+    // // Open Spotify authorization page in browser
+    // url = String(requestUserAuthorization());
+}
+
   // Define form fields
   const formFields = [
     {
@@ -41,7 +95,10 @@ const SignInScreen = ({navigation}) => {
         </TouchableOpacity>
         <CustomButton
           title="SIGN IN"
-          onPress={() => navigation.navigate('Main')}
+          onPress={() => {
+            navigation.navigate('Main')
+            loginToSpotify()
+          }}
           style={styles.button}
         />
         <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
