@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 def load_model():
-    os.environ["OPENAI_API_KEY"] = "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"
+    os.environ["OPENAI_API_KEY"] = ""
     model = ChatOpenAI(model="gpt-3.5-turbo-1106")
     prompt = ChatPromptTemplate.from_messages(
         [
