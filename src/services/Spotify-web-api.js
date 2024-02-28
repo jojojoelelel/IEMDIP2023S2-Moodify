@@ -180,11 +180,11 @@ export async function getUserSavedTracks (access_token, limit, offset) {
         const data = response.data
         const previewUrl = getPreviewURL(data)
         // get preview_url of saved tracks
-        if (data && data.items && data.items.length > 0) {
-            const previewUrl = data.items[0].track.preview_url;
-            console.log('Preview URL:', previewUrl);
-            return previewUrl;
-        }
+        // if (data && data.items && data.items.length > 0) {
+        //     const previewUrl = data.items[0].track.preview_url;
+        //     console.log('Preview URL:', previewUrl);
+        //     return previewUrl;
+        // }
         // console.log('Response => ', response)
         console.log('Preview URL: ', previewUrl)
     } catch (error) {
@@ -364,9 +364,30 @@ export async function getTrack (access_token, id) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        console.log('Response => ', response.data)
+        console.log('Response => ', response.data.preview_url)
+        return response.data.preview_url;
+        // console.log(response.data.preview_url)
     } catch (error) {
         console.error('Error => ', error)
         throw error;
     }   
+}
+
+export async function searchTrack (access_token, q, type) {
+    const authOptions = {
+        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=1&offset=1`,
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        }
+    }
+    try {
+        const response = await axios.get(authOptions.url, {
+            headers: authOptions.headers
+        })
+        console.log('Response => ', response.data.tracks.items[0].preview_url)
+        return response.data.tracks.items[0].preview_url
+    } catch (error) {
+        console.error('Error => ', error)
+        throw error;
+    }  
 }

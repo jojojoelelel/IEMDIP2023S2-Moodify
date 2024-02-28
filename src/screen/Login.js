@@ -21,6 +21,8 @@ import {
     getArtistTopTracks,
     getTrack,
     getUserProfile,
+    getPreviewURL,
+    searchTrack
 
 } from '../services/Spotify-web-api'
 
@@ -196,6 +198,15 @@ const Login = ({navigation}) => {
     //     });
     // }
 
+    const searchTrack2 = async () => {
+        try {
+            const response = await searchTrack(access_token, 'track%3A%22Bury%20the%20light%22%20artist%3A%22Casey%20Edwards%22', 'track');
+            setpreviewUrl(response)
+        } catch (error) {
+            console.error('Error in getdeviceID => ', error)
+        }
+    }
+
     const startMusic = async (preview_url) => {
         const sound = new Sound(preview_url, null, (error) => {
         setplayerInfo(sound)
@@ -336,7 +347,8 @@ const Login = ({navigation}) => {
 
     const getTrack2 = async () => {
         try {
-            const response = await getTrack(access_token, '6zm8NjhBTrqtKUA6OIc0fk');
+            const response = await getTrack(access_token, '40riOy7x9W7GXjyGp4pjAv');
+            setpreviewUrl(response)
         } catch (error) {
             console.error('Error in getTrack => ', error)
         }
@@ -410,7 +422,12 @@ const Login = ({navigation}) => {
                     <Text>Pause Music Preview</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => getFollowedArtists2()}>
+            <TouchableOpacity onPress={() => searchTrack2()}>
+                <View style={(styles.button)}>
+                    <Text>search for track</Text>
+                </View>
+            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => getFollowedArtists2()}>
                 <View style={(styles.button)}>
                     <Text>Get Followed Artists</Text>
                 </View>
@@ -449,7 +466,7 @@ const Login = ({navigation}) => {
                 <View style={(styles.button)}>
                     <Text>Get Artist Top Tracks</Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={() => getTrack2()}>
                 <View style={(styles.button)}>
                     <Text>Get Track</Text>
