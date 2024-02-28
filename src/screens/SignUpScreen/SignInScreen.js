@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -66,6 +66,22 @@ const SignInScreen = ({navigation}) => {
     // // Open Spotify authorization page in browser
     // url = String(requestUserAuthorization());
 }
+
+  useEffect(() => {
+    if (return_Params) {
+      requestAccessToken2();
+    }
+  }, [return_Params])
+
+  const requestAccessToken2 = async () => {
+
+    try {
+        const response = await requestAccessToken(return_Params);
+        setaccess_token(response);
+    } catch (error) {
+        console.error('Error in requestAccessToken => ', error)
+    }
+  }
 
   // Define form fields
   const formFields = [
