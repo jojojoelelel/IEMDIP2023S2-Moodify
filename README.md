@@ -16,6 +16,59 @@ NodeJS, JDK, Android Studio, FireBase
 
 **FireBase** : rnfirebase.io
 
+## Setting up FireBase
+
+Go to https://console.firebase.google.com
+
+Select IM3180-APP project > Project settings 
+
+In the General pages, scroll down to Your apps.
+
+Download google-services.json and place it in android > app
+
+![image](https://github.com/jojojoelelel/IM3180/assets/31207498/f3f2e9fc-0794-4375-b35c-6c52112be0f1)
+
+![image](https://github.com/jojojoelelel/IM3180/assets/31207498/0333bf23-f921-4dc1-84e7-8f25fc4aa87c)
+
+## Setting up env file for SpotifyAPI
+
+Steps for Spotify API call
+
+Set up .env file in project root folder.
+
+REACT_APP_CLIENT_ID = '…'
+
+REACT_APP_CLIENT_SECRET = '…'
+
+![image](https://github.com/jojojoelelel/IM3180/assets/31207498/ec70a229-a227-489f-bd95-bb37953f01cb)
+
+add .env and google-services.json to .gitignore located in project root folder.
+
+![image](https://github.com/jojojoelelel/IM3180/assets/31207498/883a226c-fd81-4a64-8f2f-4fe1128ca374)
+
+API calls are tentatively stored in src>services>Spotify-web-api.js
+
+## To make calls : 
+import * from SpotifyAPI from '../services/Spotify-web-api'
+
+Look at src/screen/Login.js to see examples of how to make calls.
+
+In general, should make calls in try-catch statements.
+
+Copy lines 43 to 98, functions handleRedirect(event), addEventListener('url', handleRedirect) and loginToSpotify(), and useEffects for requestRefreshAccessToken(). These 3 functions handle the initial process of : 
+
+1.Request user’s authorization. Directs user to browser to log in with Spotify.
+
+2.Redirect_uri will redirect the user back to localhost:8081 (the app).
+
+3.The event listener will invoke handleRedirect, which obtains the response code.
+
+4.This response code will be saved as return_Params useState variable, and passed as an input to requestAccessToken(return_Params) to get the access_token (which will expire in 1 hour) used for other API calls.
+
+5.useEffect line 94 to 98 will request a refresh access token after 1 hour automatically.
+
+6.useEffect line 100 to 104 will automatically requestAccessToken after handleRedirect sets the return_Param.
+
 ## GitHub setup
 
 NOTE: DO NOT push directly into the remote main branch without discussion.
