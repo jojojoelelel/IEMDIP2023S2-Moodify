@@ -10,7 +10,7 @@ import {
 import CustomButton from '../../components/CustomButton';
 import CustomForm from '../../components/CustomForm';
 
-import * as SpotifyAPI from '../services/Spotify-web-api'
+import * as SpotifyAPI from '../../services/Spotify-web-api';
 
 const SignInScreen = ({navigation}) => {
   // State for form fields
@@ -24,69 +24,71 @@ const SignInScreen = ({navigation}) => {
   const [refresh_token, setrefresh_Token] = useState();
 
   const redirect_uri = 'http://localhost:8081/callback';
-    
-  const handleRedirect = (event) => {
+
+  const handleRedirect = event => {
     // Extract the URL from the event
     const url = event.url;
 
     // Check if the URL starts with the custom URI scheme
     if (url.startsWith(redirect_uri)) {
-        // Extract the query parameters from the URL
-        const params = url.split('?code=')[1];
-        // Do something with the query parameters (e.g., parse them and handle the response)
-        console.log('Response query parameters:', params);
-        setreturn_Params(params);
+      // Extract the query parameters from the URL
+      const params = url.split('?code=')[1];
+      // Do something with the query parameters (e.g., parse them and handle the response)
+      console.log('Response query parameters:', params);
+      setreturn_Params(params);
     }
-}
+  };
 
   // Add a listener to handle deep links
   Linking.addEventListener('url', handleRedirect);
 
   const loginToSpotify = async () => {
-      // // request user authorization
-      // // const state = generateRandomString(16);
-      try {
-          const url = await SpotifyAPI.requestUserAuthorization();
-          Linking.openURL(url);
-      } catch (error) {
-          console.error('Error in requestAccessToken => ', error)
-      }
-  }
+    // // request user authorization
+    // // const state = generateRandomString(16);
+    try {
+      const url = await SpotifyAPI.requestUserAuthorization();
+      Linking.openURL(url);
+    } catch (error) {
+      console.error('Error in requestAccessToken => ', error);
+    }
+  };
 
   const requestAccessToken2 = async () => {
-
-      try {
-          const response = await SpotifyAPI.requestAccessToken(return_Params);
-          setaccess_token(response.access_token);
-          setrefresh_Token(response.refresh_token);
-      } catch (error) {
-          console.error('Error in requestAccessToken => ', error)
-      }
-  }
+    try {
+      const response = await SpotifyAPI.requestAccessToken(return_Params);
+      setaccess_token(response.access_token);
+      setrefresh_Token(response.refresh_token);
+    } catch (error) {
+      console.error('Error in requestAccessToken => ', error);
+    }
+  };
 
   const requestRefreshAccessToken2 = async () => {
-
-      try {
-          const response = await SpotifyAPI.requestRefreshAccessToken(refresh_token);
-          setaccess_token(response.access_token);
-          setrefresh_Token(response.refresh_token);
-      } catch (error) {
-          console.error('Error in requestRefreshAccessToken => ', error)
-      }
-
-  }
+    try {
+      const response = await SpotifyAPI.requestRefreshAccessToken(
+        refresh_token,
+      );
+      setaccess_token(response.access_token);
+      setrefresh_Token(response.refresh_token);
+    } catch (error) {
+      console.error('Error in requestRefreshAccessToken => ', error);
+    }
+  };
 
   useEffect(() => {
-      const refreshInterval = setInterval(requestRefreshAccessToken2, 3600 * 1000);
+    const refreshInterval = setInterval(
+      requestRefreshAccessToken2,
+      3600 * 1000,
+    );
 
-      return () => clearInterval(refreshInterval);
+    return () => clearInterval(refreshInterval);
   }, []);
 
   useEffect(() => {
-      if(return_Params) {
-          requestAccessToken2();
-      }
-  },[return_Params])
+    if (return_Params) {
+      requestAccessToken2();
+    }
+  }, [return_Params]);
 
   // Define form fields
   const formFields = [
@@ -117,8 +119,8 @@ const SignInScreen = ({navigation}) => {
         <CustomButton
           title="SIGN IN"
           onPress={() => {
-            navigation.navigate('Main')
-            loginToSpotify()
+            navigation.navigate('Main');
+            loginToSpotify();
           }}
           style={styles.button}
         />

@@ -8,6 +8,7 @@ import SignInScreen from '../screens/SignUpScreen/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ForgotPasswordScreen from '../screens/SignUpScreen/ForgotPasswordScreen';
 import BottomNavigation from './BottomNavigation';
+import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
 import PlaylistsScreen from '../screens/AccountScreen/MyPlaylistScreen';
 import PlaylistDetailsScreen from '../screens/AccountScreen/PlaylistDetailsScreen';
@@ -37,12 +38,36 @@ const AppNavigator = () => {
       {/* Add more screens as needed */}
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
-      <Stack.Screen name="FollowingScreen" component={FollowingScreen} options={{headerShown: false}}/>
-      <Stack.Screen name="FollowerScreen" component={FollowerScreen} options={{headerShown: false}} />
-      <Stack.Screen name="AccountScreen" component={AccountScreen} options={{headerShown: false}}/>
-      <Stack.Screen name="PIScreen" component={PIscreen} options={{headerShown: false}}/>
-      <Stack.Screen name="SScreen" component={SScreen} options={{headerShown: false}}/>
-
+      <Stack.Screen
+        name="FollowingScreen"
+        component={FollowingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FollowerScreen"
+        component={FollowerScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PIScreen"
+        component={PIscreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SScreen"
+        component={SScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ChatBotScreen"
+        component={ChatBotScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
