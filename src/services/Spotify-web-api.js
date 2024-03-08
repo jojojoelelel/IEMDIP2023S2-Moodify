@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Linking } from 'react-native'
-import React, { useState } from 'react'
+// import { View, Text, TouchableOpacity, TextInput, StyleSheet, Linking } from 'react-native'
+// import React, { useState } from 'react'
 import axios from 'axios'
-import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env'
+// import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env'
 
 var Buffer = require('buffer/').Buffer
 
@@ -52,7 +52,9 @@ export async function requestAccessToken (return_Params) {
             headers: authOptions.headers
         })
         console.log('Response => ', response.data)
-        return response.data.access_token
+        // console.log('Refresh token => ', response.data.refresh_token)
+        return response.data
+        // return response.data.access_token
     } catch (error) {
         console.error('Error => ', error)
         throw error;
@@ -390,4 +392,31 @@ export async function searchTrack (access_token, q, type) {
         console.error('Error => ', error)
         throw error;
     }  
+}
+
+export async function requestRefreshAccessToken (refresh_token) {
+
+    const authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token,
+        },
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
+        },
+        json: true
+    }
+
+    try {
+        const response = await axios.post(authOptions.url, authOptions.form, {
+            headers: authOptions.headers
+        })
+        console.log('Response => ', response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error => ', error)
+        throw error;
+    }
 }

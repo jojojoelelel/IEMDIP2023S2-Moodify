@@ -1,30 +1,32 @@
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Linking } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 
 import {Auth} from '../services'
 import Sound from 'react-native-sound'
 
-import { 
-    requestAccessToken, 
-    requestUserAuthorization, 
-    getCurrentUserProfile, 
-    getDeviceID, 
-    getUserSavedTracks, 
-    getFollowedArtists,
-    checkIfUserFollowsArtistsOrUsers,
-    checkIfUserFollowsPlaylist,
-    checkUserSavedTracks,
-    getUserPlaylist,
-    getArtist,
-    getArtistAlbums,
-    getArtistTopTracks,
-    getTrack,
-    getUserProfile,
-    getPreviewURL,
-    searchTrack
+// import { 
+//     requestAccessToken, 
+//     requestUserAuthorization, 
+//     getCurrentUserProfile, 
+//     getDeviceID, 
+//     getUserSavedTracks, 
+//     getFollowedArtists,
+//     checkIfUserFollowsArtistsOrUsers,
+//     checkIfUserFollowsPlaylist,
+//     checkUserSavedTracks,
+//     getUserPlaylist,
+//     getArtist,
+//     getArtistAlbums,
+//     getArtistTopTracks,
+//     getTrack,
+//     getUserProfile,
+//     getPreviewURL,
+//     searchTrack
 
-} from '../services/Spotify-web-api'
+// } from '../services/Spotify-web-api'
+
+import * as SpotifyAPI from '../services/Spotify-web-api'
 
 const Login = ({navigation}) => {
 
@@ -35,6 +37,7 @@ const Login = ({navigation}) => {
     const [userData, setuserData] = useState();
     const [playerInfo, setplayerInfo] = useState();
     const [previewUrl, setpreviewUrl] = useState();
+    const [refresh_token, setrefresh_Token] = useState();
 
     const redirect_uri = 'http://localhost:8081/callback';
     
@@ -42,11 +45,9 @@ const Login = ({navigation}) => {
         // Extract the URL from the event
         const url = event.url;
     
-        // Check if the URL starts with the custom URI scheme
         if (url.startsWith(redirect_uri)) {
             // Extract the query parameters from the URL
             const params = url.split('?code=')[1];
-            // Do something with the query parameters (e.g., parse them and handle the response)
             console.log('Response query parameters:', params);
             setreturn_Params(params);
         }
@@ -57,31 +58,46 @@ const Login = ({navigation}) => {
 
     const loginToSpotify = async () => {
         // // request user authorization
-        // Linking.addEventListener('url', handleRedirect);
         // // const state = generateRandomString(16);
         try {
-            const url = await requestUserAuthorization();
+            const url = await SpotifyAPI.requestUserAuthorization();
             Linking.openURL(url);
         } catch (error) {
             console.error('Error in requestAccessToken => ', error)
         }
-        // // Open Spotify authorization page in browser
-        // url = String(requestUserAuthorization());
     }
 
     const requestAccessToken2 = async () => {
 
         try {
-            const response = await requestAccessToken(return_Params);
-            setaccess_token(response);
+            const response = await SpotifyAPI.requestAccessToken(return_Params);
+            setaccess_token(response.access_token);
+            setrefresh_Token(response.refresh_token);
         } catch (error) {
             console.error('Error in requestAccessToken => ', error)
         }
 
     }
 
+    const requestRefreshAccessToken2 = async () => {
+
+        try {
+            const response = await SpotifyAPI.requestRefreshAccessToken(refresh_token);
+            setaccess_token(response.access_token);
+            setrefresh_Token(response.refresh_token);
+        } catch (error) {
+            console.error('Error in requestRefreshAccessToken => ', error)
+        }
+
+    }
+
     useEffect(() => {
-        console.log('returnParams', return_Params)
+        const refreshInterval = setInterval(requestRefreshAccessToken2, 3600 * 1000);
+
+        return () => clearInterval(refreshInterval);
+    }, []);
+
+    useEffect(() => {
         if(return_Params) {
             requestAccessToken2();
         }
@@ -90,8 +106,7 @@ const Login = ({navigation}) => {
     const getUserProfile2 = async () => {
 
         try {
-            const response = await getUserProfile(access_token, 'h76bjnjtq32wksw089gdk2ybl');
-            // const response = await getUserProfile(access_token, 'smedjan');
+            const response = await SpotifyAPI.getUserProfile(access_token, 'h76bjnjtq32wksw089gdk2ybl');
             setuserData(response)
         } catch (error) {
             console.error('Error in getUserProfile => ', error)
@@ -101,86 +116,17 @@ const Login = ({navigation}) => {
     const getCurrentUserProfile2 = async () => {
 
         try {
-            const response = await getCurrentUserProfile(access_token);
+            const response = await SpotifyAPI.getCurrentUserProfile(access_token);
             setuserData(response)
         } catch (error) {
             console.error('Error in getCurrentUserProfile => ', error)
         }
 
-        // axios.get('https://api.spotify.com/v1/me', {
-        //     headers: {
-        //         Authorization: 'Bearer ' + access_token
-        //     }
-        // })
-        // .then(response => {
-        //     console.log('User data => ', response.data)
-        // })
-        // .catch(error => {
-        //     console.error('Error => ', error);
-        // });
-
-        // const data = await response.json();
-        // console.log('User profile data => ', data)
     }
-
-    const getdeviceID2 = async () => {
-        
-        try {
-            const response = await getDeviceID(access_token);
-        } catch (error) {
-            console.error('Error in getdeviceID => ', error)
-        }
-        //56f7db82bbf7b1c85fee5e1bf6d3f29d5ee529f0
-        // const authOptions = {
-        //     url: 'https://api.spotify.com/v1/me/player/devices',
-        //     headers: {
-        //         'Authorization': 'Bearer ' + access_token
-        //     }
-        // }
-
-        // axios.get(authOptions.url, {
-        //     headers: authOptions.headers
-        // })
-        // .then(response => {
-        //     console.log('Device id =>', response)
-        // })
-        // .catch(error => {
-        //     console.log('Error =>', error)
-        // })
-    }
-
-    // const playMusicOnDevice = async () => {
-
-    //     const authOptions = {
-            
-    //         url: 'https://api.spotify.com/v1/me/player/play?device_id=56f7db82bbf7b1c85fee5e1bf6d3f29d5ee529f0',
-    //         data: {
-    //             'context_uri': 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr',
-    //             'offset': {
-    //                 'position': 5
-    //             },
-    //             'position_ms': 0
-    //         },
-    //         headers: {
-    //             'Authorization': 'Bearer ' + access_token,
-    //             'Content-Type': 'application/json',
-    //         },
-    //     };
-
-    //     axios.put(authOptions.url, authOptions.data, {
-    //         headers: authOptions.headers
-    //     })
-    //     .then(response => {
-    //         console.log('PLAY SONG Response => ', response)
-    //     })
-    //     .catch(error => {
-    //         console.error('Error => ', error);
-    //     });
-    // }
 
     const searchTrack2 = async () => {
         try {
-            const response = await searchTrack(access_token, 'track%3A%22Bury%20the%20light%22%20artist%3A%22Casey%20Edwards%22', 'track');
+            const response = await SpotifyAPI.searchTrack(access_token, 'track%3A%22Bury%20the%20light%22%20artist%3A%22Casey%20Edwards%22', 'track');
             setpreviewUrl(response)
         } catch (error) {
             console.error('Error in getdeviceID => ', error)
@@ -221,7 +167,7 @@ const Login = ({navigation}) => {
 
     const getFollowedArtists2 = async () => {
         try {
-            const response = await getFollowedArtists(access_token, 5);
+            const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
         } catch (error) {
             console.error('Error in getFollowedArtists => ', error)
         }
@@ -229,40 +175,8 @@ const Login = ({navigation}) => {
 
     const getSavedTracks2 = async () => {
 
-        // const authOptions = {
-        //     url : 'https://api.spotify.com/v1/me/tracks?offset=0&limit=1',
-        //     data : {
-        //         'limit' : 10,
-        //         'offset' : 5
-        //     },
-        //     headers : {
-        //         'Authorization' : 'Bearer ' + access_token,
-        //     },
-
-        // }
-
-        // axios.get(authOptions.url, {
-        //     headers: authOptions.headers
-        // })
-        // .then(response => {
-        //     // console.log('Get saved track response => ', response)
-        //     const data = response.data
-        //     if (data && data.items && data.items.length > 0) {
-        //         const previewUrl = data.items[0].track.preview_url;
-        //         console.log('Preview URL:', previewUrl);
-        //         startMusic(previewUrl);
-        //     } else {
-        //         console.error('No items found in the response');
-        //     }
-
-        // })
-        // .catch(error => {
-        //     console.log('Error', error)
-        // })
-
         try {
-            const previewUrl = await getUserSavedTracks(access_token, 5, 5);
-            // startMusic(previewUrl);
+            const previewUrl = await SpotifyAPI.getUserSavedTracks(access_token, 5, 5);
             setpreviewUrl(previewUrl)
         } catch (error) {
             console.error('Error in getUserSavedTracks => ', error)
@@ -271,7 +185,7 @@ const Login = ({navigation}) => {
 
     const checkIfUserFollowsArtistsOrUsers2 = async () => {
         try {
-            const response = await checkIfUserFollowsArtistsOrUsers(access_token, 'artist', '0grdhNhiRLFBaFVyybqsj6');
+            const response = await SpotifyAPI.checkIfUserFollowsArtistsOrUsers(access_token, 'artist', '0grdhNhiRLFBaFVyybqsj6');
         } catch (error) {
             console.error('Error in checkIfUserFollowsArtistsOrUsers => ', error)
         }
@@ -279,7 +193,7 @@ const Login = ({navigation}) => {
 
     const checkIfUserFollowsPlaylist2 = async () => {
         try {
-            const response = await checkIfUserFollowsPlaylist(access_token, '6fU3H8a6Il3C2C9znNku5r', 'h76bjnjtq32wksw089gdk2ybl');
+            const response = await SpotifyAPI.checkIfUserFollowsPlaylist(access_token, '6fU3H8a6Il3C2C9znNku5r', 'h76bjnjtq32wksw089gdk2ybl');
         } catch (error) {
             console.error('Error in checkIfUserFollowsPlaylist => ', error)
         }
@@ -287,7 +201,7 @@ const Login = ({navigation}) => {
 
     const checkUserSavedTracks2 = async () => {
         try {
-            const response = await checkUserSavedTracks(access_token, '7tbJozWewwmFvTkXCUFtt0');
+            const response = await SpotifyAPI.checkUserSavedTracks(access_token, '7tbJozWewwmFvTkXCUFtt0');
         } catch (error) {
             console.error('Error in checkUserSavedTracks => ', error)
         }
@@ -295,7 +209,7 @@ const Login = ({navigation}) => {
 
     const getUserPlaylist2 = async () => {
         try {
-            const response = await getUserPlaylist(access_token, 'h76bjnjtq32wksw089gdk2ybl');
+            const response = await SpotifyAPI.getUserPlaylist(access_token, 'h76bjnjtq32wksw089gdk2ybl');
         } catch (error) {
             console.error('Error in getUserPlaylist => ', error)
         }
@@ -303,7 +217,7 @@ const Login = ({navigation}) => {
 
     const getArtist2 = async () => {
         try {
-            const response = await getArtist(access_token, '1hGdQOfaZ5saQ6JWVuxVDZ');
+            const response = await SpotifyAPI.getArtist(access_token, '1hGdQOfaZ5saQ6JWVuxVDZ');
         } catch (error) {
             console.error('Error in getArtist => ', error)
         }
@@ -311,7 +225,7 @@ const Login = ({navigation}) => {
 
     const getArtistAlbums2 = async () => {
         try {
-            const response = await getArtistAlbums(access_token, '1hGdQOfaZ5saQ6JWVuxVDZ');
+            const response = await SpotifyAPI.getArtistAlbums(access_token, '1hGdQOfaZ5saQ6JWVuxVDZ');
         } catch (error) {
             console.error('Error in getArtistAlbums => ', error)
         }
@@ -319,7 +233,7 @@ const Login = ({navigation}) => {
 
     const getArtistTopTracks2 = async () => {
         try {
-            const response = await getArtistTopTracks(access_token, '0grdhNhiRLFBaFVyybqsj6', 'SG');
+            const response = await SpotifyAPI.getArtistTopTracks(access_token, '0grdhNhiRLFBaFVyybqsj6', 'SG');
         } catch (error) {
             console.error('Error in getArtistTopTracks => ', error)
         }
@@ -327,7 +241,7 @@ const Login = ({navigation}) => {
 
     const getTrack2 = async () => {
         try {
-            const response = await getTrack(access_token, '40riOy7x9W7GXjyGp4pjAv');
+            const response = await SpotifyAPI.getTrack(access_token, '40riOy7x9W7GXjyGp4pjAv');
             setpreviewUrl(response)
         } catch (error) {
             console.error('Error in getTrack => ', error)
