@@ -1,6 +1,5 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
 
 //Import the screens here
 import GettingStarted from '../screens/SignUpScreen/GettingStarted';
@@ -8,7 +7,6 @@ import SignInScreen from '../screens/SignUpScreen/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ForgotPasswordScreen from '../screens/SignUpScreen/ForgotPasswordScreen';
 import BottomNavigation from './BottomNavigation';
-import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 //import NextScreen from '../screens/SignUpScreen/NextScreen';
 import PlaylistsScreen from '../screens/AccountScreen/MyPlaylistScreen';
 import PlaylistDetailsScreen from '../screens/AccountScreen/PlaylistDetailsScreen';
@@ -17,6 +15,12 @@ import FollowerScreen from '../screens/AccountScreen/directFollower';
 import AccountScreen from '../screens/AccountScreen/AccountScreen';
 import PIscreen from '../screens/AccountScreen/directProfileInfo';
 import SScreen from '../screens/AccountScreen/directSetting';
+// import FullMusicPlayerScreen from '../screens/MusicPlayerScreen/FullMusicPlayerScreen';
+import SearchScreen from '../screens/HomeScreen/SearchScreen';
+import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
+import MusicPlayerBar from '../components/MusicPlayerBar';
+import MusicPlayerScreen from '../screens/MusicPlayerScreen';
+import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +42,10 @@ const AppNavigator = () => {
       {/* Add more screens as needed */}
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
+      {/* <Stack.Screen
+        name="FullMusicPlayerScreen"
+        component={FullMusicPlayerScreen}
+      /> */}
       <Stack.Screen
         name="FollowingScreen"
         component={FollowingScreen}
@@ -63,11 +71,10 @@ const AppNavigator = () => {
         component={SScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="ChatBotScreen"
-        component={ChatBotScreen}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
     </Stack.Navigator>
   );
 };

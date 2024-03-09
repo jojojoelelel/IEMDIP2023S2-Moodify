@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 // Sample data of people you are following
@@ -36,12 +36,10 @@ const FollowingNum = ({ followingCount }) => {
         />
       </TouchableOpacity>
       <View style={styles.headerTextContainer}>
-        <Image style={styles.headerImage}
-          source={require('../../assets/icon/follow.png')} // Add the path to your image
-          
-        />
+        <Image style={styles.headerImage} source={require('../../assets/icon/follow.png')} />
         <Text style={styles.headerText}>People you are following {'\n'}</Text>
       </View>
+      
       <Text style={styles.fNumText}>{followingCount}</Text>
     </View>
   );
@@ -66,10 +64,12 @@ const FollowingScreen = () => {
   // Render each user item in the list
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleUserClick(item.id)}>
-      <View style={styles.itemContainer}>
-        <Image source={item.profilePic} style={styles.profilePic} />
-        <Text style={styles.userName}>{item.name}</Text>
-      </View>
+      <ImageBackground source={require('../../assets/images/background.png')} style={styles.imageBackground}>
+        <View style={styles.itemContainer}>
+          <Image source={item.profilePic} style={styles.profilePic} />
+          <Text style={styles.userName}>{item.name}</Text>
+        </View>
+      </ImageBackground>
     </TouchableOpacity>
   );
 
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 0,
     flex: 1,
-    backgroundColor: 'black', // Set background color to grey
+    backgroundColor: 'rgba(0,0,0,0.7)', // Set background color to grey
     paddingTop: 10,
   },
   header: {
@@ -109,23 +109,31 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
-    top:-15,
-    right:30
+    top: -15,
+    right: 30
   },
   fNumText: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'white',
-    top:20,
-    right:150
+    top: 20,
+    right: 150
   },
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    borderBottomWidth: 3,
-    borderBottomColor: 'black',
-    backgroundColor: '#A4EC0A',
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    shadowColor: '#000', // Shadow color
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25, // Opacity of the shadow
+    shadowRadius: 3.84, // Radius of the shadow
+    elevation: 5, // Android only
   },
   profilePic: {
     width: 50,
@@ -135,13 +143,19 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 18,
+    color: 'white',
   },
-  headerImage:{
-    width:40,
-    height:40,
-    top:23,
-    left:70
-  }
+  headerImage: {
+    width: 40,
+    height: 40,
+    top: 23,
+    left: 70
+  },
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
 });
 
 export default FollowingScreen;

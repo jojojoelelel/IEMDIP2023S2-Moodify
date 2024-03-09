@@ -15,6 +15,10 @@ const SScreen = () => {
     navigation.goBack();
   }
 
+  const SignOut = () => {
+    navigation.navigate('GettingStarted'); // Replace 'GettingStarted' with the actual screen name
+  };
+
   const [userData, setUserData] = useState(initialUserData);
 
   const toggleSwitch = (index) => {
@@ -50,6 +54,9 @@ const SScreen = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.label}
         />
+        <TouchableOpacity onPress={SignOut} style={styles.signOutBtn}>
+          <Text style={styles.signOutBtnTxt}>Sign Out</Text>
+        </TouchableOpacity>
       </ScrollView>
     </ImageBackground>
   );
@@ -78,6 +85,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 17,
+  },
+  signOutBtn: {
+    backgroundColor: '#A4EC0A',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    bottom:'40%',
+    alignItems: 'center',
+  },
+  signOutBtnTxt: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
 });
 
