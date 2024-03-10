@@ -1,8 +1,42 @@
-import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
+import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const DiscoverScreen = ({navigation}) => {
+  // Create an animated value for opacity
+  const shakeAnimation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Define a shaking sequence
+    const shakingSequence = Animated.sequence([
+      // Start to the right, move left, then back to center
+      Animated.timing(shakeAnimation, {
+        toValue: 8,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: -8,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 5,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]);
+
+    // Loop the sequence indefinitely
+    Animated.loop(shakingSequence).start();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Discover New Experiences</Text>
@@ -14,10 +48,20 @@ const DiscoverScreen = ({navigation}) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('ChatBotScreen')}
+        onPress={() => navigation.navigate('VrConcertScreen')}
         activeOpacity={0.7}>
         <Text style={styles.buttonText}>VR Concert</Text>
       </TouchableOpacity>
+      <Animated.Image
+        source={require('../../assets/images/imagediscoverscreen.png')}
+        style={[
+          styles.gif,
+          {
+            // Apply a continuous shake animation
+            transform: [{translateX: shakeAnimation}],
+          },
+        ]}
+      />
     </View>
   );
 };
@@ -38,7 +82,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', // Center the title
   },
   button: {
-    backgroundColor: '#e0e0e0', // A subtle grey for buttons
+    backgroundColor: '#CBFB5E',
     borderRadius: 10, // Rounded corners
     paddingVertical: 15,
     marginVertical: 10, // Space between buttons
@@ -49,8 +93,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   buttonText: {
-    color: '#333',
-    fontSize: 18,
+    color: 'black',
+    fontSize: 16,
     fontWeight: '500',
   },
 });
