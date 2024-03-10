@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView, StyleSheet, FlatList, Image, ImageBackground, ScrollView } from 'react-native';
 import { pxToDp } from '../../utils/stylesKits';
 import { useNavigation } from '@react-navigation/native';
+import SpotifyWebApi from 'spotify-web-api-js';
+import * as SpotifyAPI from '../../services/Spotify-web-api'
 
 const PIscreen = () => {
   const initialUserData = [
     { label: 'Account Name', value: 'Andy' },
-    { label: 'Gender', value: 'Male' },
+    { label: 'Country', value: 'SG' },
     { label: 'Email', value: 'Andy@example.com' },
     { label: 'Phone', value: '+1234567890' },
     { label: 'Date of Birth', value: '1990-01-01' },
@@ -17,6 +19,9 @@ const PIscreen = () => {
   const backNav = () => {
     navigation.goBack();
 }
+
+
+
 
   const [userData, setUserData] = useState(initialUserData);
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +35,26 @@ const PIscreen = () => {
   const handleEditProfile = () => {
     setIsEditing(!isEditing);
   };
+
+  const access_token = 'BQC-4zcSs6ptyg3CX7Zix32DvO0SjY7MdzDkTQyqO2MyaTy5FWFc9GUmzy7bLFh-nzSLhsZ_Y9ghfXJ2ZNKO0QuNcrxuAC2Pvsk50uqxRPuezJRq442nhkhfFoeDQc3_tgpd4xIm-RMVLJtxGB7JL0jalDhRffj2KCivyG77SC9F1LphSkoowoRUKNcNhELheGxi_eCjG4cNjg2Lbrl32OIQ6OVEu8kMCUterqpGm4Q4YlpXmH6dTZ2Dq2eC'
+  const getCurrentUserProfile2 = async () => {
+
+    try {
+        
+        const response = await SpotifyAPI.getCurrentUserProfile(access_token);
+        handleInputChange(response.display_name,0);
+        handleInputChange(response.country,1);
+        handleInputChange(response.email,2);
+
+    } catch (error) {
+        console.error('Error in getCurrentUserProfile => ', error)
+    }
+
+}
+
+useEffect(() => {
+  getCurrentUserProfile2();
+}, []);
 
   const renderItem = ({ item, index }) => (
     <View style={styles.itemContainer}>

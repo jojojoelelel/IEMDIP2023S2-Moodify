@@ -21,6 +21,7 @@ import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 import MusicPlayerBar from '../components/MusicPlayerBar';
 import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
+import DiaryScreen from '../screens/AccountScreen/directDiary';
 
 const Stack = createStackNavigator();
 
@@ -59,6 +60,11 @@ const AppNavigator = () => {
       <Stack.Screen
         name="AccountScreen"
         component={AccountScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DiaryScreen"
+        component={DiaryScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

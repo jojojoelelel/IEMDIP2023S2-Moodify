@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -13,10 +13,6 @@ import {
 } from 'react-native';
 import {pxToDp} from '../../utils/stylesKits'; //Transform dimensions to fit screen
 import {useNavigation} from '@react-navigation/native';
-import { useAuth } from '../AccountScreen/AuthContext';
-import SpotifyWebApi from 'spotify-web-api-js';
-import * as SpotifyAPI from '../../services/Spotify-web-api'
-import { updatePassword } from 'firebase/auth';
 //import * as ImagePicker from 'react-native-image-picker';
 
 const styles = StyleSheet.create({
@@ -84,80 +80,21 @@ const boxData = boxNames.map((name, index) => ({
   key: `Box ${index + 1}`,
   name,
 }));
-
-const initialFollowInfo = [
-  { name: 'Following', count: 0 },
-  { name: 'Follower', count: 0 },
-  { name: 'Hours', count: 0 }
-];
+const circleNames = ['Following', 'Follower', 'Hours'];
+circleVar = [1, 2, 3]; // to be replaced by database numbers
+const circleData = circleNames.map((name, index) => ({
+  key: `Circle ${index + 1}`,
+  name: name,
+  variable: circleVar[index],
+}));
 
 const AccountScreen = () => {
   const navigation = useNavigation();
-
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState();
-  const [profilePhoto, setProfilePhoto] = useState(' ');
-  const [followInfo, setFollowInfo]=useState(initialFollowInfo) // to be replaced by database numbers
-  const circleData = followInfo.map((name, index) => ({
-  key: `Circle ${index + 1}`,
-  name: name,
-}));
-
-
-  const spotifyApi = new SpotifyWebApi();
-
-  const setFollower = num =>{
-    circleVar[1]=num;
-  }
-
-  const updateFollowInfo = (index,newCount) =>{
-
-    setFollowInfo(prevData => {
-      
-      const newData = [...prevData];
-      newData[index].count=newCount;
-      return newData;
-
-    })
-  }
-
-  const access_token = 'BQC-4zcSs6ptyg3CX7Zix32DvO0SjY7MdzDkTQyqO2MyaTy5FWFc9GUmzy7bLFh-nzSLhsZ_Y9ghfXJ2ZNKO0QuNcrxuAC2Pvsk50uqxRPuezJRq442nhkhfFoeDQc3_tgpd4xIm-RMVLJtxGB7JL0jalDhRffj2KCivyG77SC9F1LphSkoowoRUKNcNhELheGxi_eCjG4cNjg2Lbrl32OIQ6OVEu8kMCUterqpGm4Q4YlpXmH6dTZ2Dq2eC'
-  let imgurl = '123';
-  const getCurrentUserProfile2 = async () => {
-
-    try {
-        
-        const response = await SpotifyAPI.getCurrentUserProfile(access_token);
-        setName(response.display_name);
-        updateFollowInfo(1,response.followers.total);
-        setProfilePhoto(response.images[0].url);
-        console.log(profilePhoto);
-        console.log(response.images[0].url)
-        imgurl=response.images[0].url;
-        console.log(imgurl)
-
-    } catch (error) {
-        console.error('Error in getCurrentUserProfile => ', error)
-    }
-
-}
-
-useEffect(() => {
-  getCurrentUserProfile2();
-}, []);
-
-const getFollowedArtists2 = async () => {
-  try {
-      const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      //updateFollowInfo(0,response.artists.total);
-  } catch (error) {
-      console.error('Error in getFollowedArtists => ', error)
-  }
-}
-
-useEffect(() => {
-  getFollowedArtists2();
-}, []);
+  const [name, setName] = useState('Andy');
+  const [profilePhoto, setProfilePhoto] = useState(
+    require('../../assets/icon/profile.jpg'),
+  );
 
   /*const launchImageLibrary = () => {
 
@@ -200,7 +137,6 @@ useEffect(() => {
         break;
 
       case 'Diary':
-        navigation.navigate('DiaryScreen');
         break;
 
       case 'PodCast':
@@ -210,7 +146,6 @@ useEffect(() => {
       case 'LikedSongs':
         navigation.navigate('LikedSongsScreen');
         break;
-        
 
       default:
         alert('Null');
@@ -228,7 +163,7 @@ useEffect(() => {
   };
 
   const tempCircleHandler = item => {
-    switch (item.name.name) {
+    switch (item.name) {
       case 'Following':
         navigation.navigate('FollowingScreen'); //for testing purpose, to be replaced by following list screen
         break;
@@ -236,6 +171,7 @@ useEffect(() => {
         navigation.navigate('FollowerScreen'); //for testing purpose, to be replaced by follower list screen
         break;
         //for testing purpose, to be replaced by follower list screen
+        break;
       default:
         break;
     }
@@ -306,7 +242,7 @@ useEffect(() => {
             textAlign: 'center',
             fontWeight: 'bold',
           }}>
-          {item.name.count}
+          {item.variable}
         </Text>
       </View>
       <View>
@@ -318,7 +254,7 @@ useEffect(() => {
             textAlign: 'center',
             fontWeight: 'bold',
           }}>
-          {item.name.name}
+          {item.name}
         </Text>
       </View>
     </TouchableOpacity>
@@ -367,10 +303,10 @@ useEffect(() => {
               marginTop: '-35%',
             }}>
             <Image
-              source={{uri:'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608'}}
+              source={profilePhoto}
               style={{
-                height: 100,
-                width: 100,
+                height: pxToDp(80),
+                width: pxToDp(80),
                 borderRadius: 120,
                 marginTop: '-15%',
                 marginBottom: '15%',
@@ -383,7 +319,7 @@ useEffect(() => {
                 marginTop: '-7%',
               }}>
               <TextInput
-                placeholder={name}
+                placeholder={'Andy'}
                 editable={false}
                 onChangeText={text => setName(text)}
                 value={name}
