@@ -18,6 +18,7 @@ import SScreen from '../screens/AccountScreen/directSetting';
 // import FullMusicPlayerScreen from '../screens/MusicPlayerScreen/FullMusicPlayerScreen';
 import SearchScreen from '../screens/HomeScreen/SearchScreen';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
+import VrConcertScreen from '../screens/DiscoverScreen/VrConcertScreen';
 import MusicPlayerBar from '../components/MusicPlayerBar';
 import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
@@ -72,6 +73,11 @@ const AppNavigator = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Screen
+        name="VrConcertScreen"
+        component={VrConcertScreen}
+        options={{title: 'VR Concert'}}
+      />
       <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
