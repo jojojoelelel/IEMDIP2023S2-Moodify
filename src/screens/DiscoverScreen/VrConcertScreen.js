@@ -7,7 +7,7 @@ const VrConcertScreen = () => {
     <View style={styles.container}>
       <WebView
         source={{
-          uri: 'http://10.0.2.2:5500/IM3180/src/screens/DiscoverScreen/vrconcert.html',
+          uri: 'http://10.0.2.2:5500/src/screens/DiscoverScreen/a-saturday-night/index.html',
         }}
         style={styles.webView}
       />
