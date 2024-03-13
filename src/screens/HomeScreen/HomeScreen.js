@@ -16,39 +16,53 @@ import axios from 'axios';
 const HomeScreen = () => {
   // const [access_token, setaccess_token] = useState();
   const redirect_uri = 'http://localhost:8081/callback';
-  const [access_token, setaccess_token] = useState();
+  // const [access_token, setaccess_token] = useState();
   const [return_Params, setreturn_Params] = useState();
   const [userPlaylists, setUserPlaylists] = useState([]);
+  // const access_token = useEffect(() => {
+  //   if (return_Params) requestAccessToken2();
+  // }, [return_Params]);
+  // useEffect(() => {
+  //   if (access_token) {
+  //     // Fetch user playlists when access_token is available
+  //     getUserPlaylists();
+  //   }
+  // }, [access_token]);
+  // const requestAccessToken2 = async () => {
+  //   try {
+  //     const response = await requestAccessToken(return_Params);
+  //     console.log(response);
+  //     setaccess_token(response);
+  //   } catch (error) {
+  //     console.error('Error in requestAccessToken => ', error);
+  //   }
+  // };
+  // const getUserPlaylists = async () => {
+  //   try {
+  //     // Call the getUserPlaylist function with access_token and user_id
+  //     const playlistsResponse = await getUserPlaylist(
+  //       access_token,
+  //       REACT_APP_CLIENT_ID,
+  //     );
+  //     console.log('Playlists Response:', playlistsResponse);
+  //     setUserPlaylists(playlistsResponse.data.items);
+  //   } catch (error) {
+  //     console.error('Error in getUserPlaylists => ', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (return_Params) requestAccessToken2();
-  }, [return_Params]);
-  useEffect(() => {
-    if (access_token) {
-      // Fetch user playlists when access_token is available
-      getUserPlaylists();
-    }
-  }, [access_token]);
-  const requestAccessToken2 = async () => {
+  const access_token =
+    'BQCVwGPNS02li7B5N0CwKfGeddrAljlflgTzFeQ6A1wQ72QyWk0irvPAfy2N4RAvkipYDFvRIeAADTolecPgtWShReyKxoApaj9x4HPMXE_XIdJnNRLKvWjvhateRJVUIoxx6CVJfKJmrs3SicFSUZ6qySqMjRN1nl15I7MqBXuuCGdCGZuyyexsvC0G1NBrNS-MxbhHTPGen0hbzLMVuZptWZrXxtU0kWWu0r-asiXbnXqY5shtc4lsrjVY';
+  const getUserProfile = async () => {
     try {
-      const response = await requestAccessToken(return_Params);
-      console.log(response);
-      setaccess_token(response);
-    } catch (error) {
-      console.error('Error in requestAccessToken => ', error);
-    }
-  };
-  const getUserPlaylists = async () => {
-    try {
-      // Call the getUserPlaylist function with access_token and user_id
-      const playlistsResponse = await getUserPlaylist(
+      const response = await SpotifyAPI.getUserProfile(
         access_token,
-        REACT_APP_CLIENT_ID,
+        'h76bjnjtq32wksw089gdk2ybl',
       );
-      console.log('Playlists Response:', playlistsResponse);
-      setUserPlaylists(playlistsResponse.data.items);
+      setUserData(response);
+      console.log('get user profile =>>', response);
     } catch (error) {
-      console.error('Error in getUserPlaylists => ', error);
+      console.error('error in geruser profile=>', error);
     }
   };
 
