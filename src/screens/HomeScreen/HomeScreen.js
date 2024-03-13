@@ -1,61 +1,54 @@
 // src/screens/HomeScreen/HomeScreen.js
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+  TextInput,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import AlbumCard from '../../components/AlbumCard';
 import TrackList from '../../components/TrackList';
 import PlayerControls from '../../components/PlayerControls';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env';
-import {
-  getArtistAlbums,
-  getUserProfile,
-  requestAccessToken,
-} from '../../services/Spotify-web-api';
+import MusicPlayerBar from '../../components/MusicPlayerBar';
 import axios from 'axios';
+import {useSpotify} from '../../services/SpotifyAuthContext';
 
 const HomeScreen = () => {
-  // const [access_token, setaccess_token] = useState();
-  const redirect_uri = 'http://localhost:8081/callback';
-  const [access_token, setaccess_token] = useState();
-  const [return_Params, setreturn_Params] = useState();
-  const [userPlaylists, setUserPlaylists] = useState([]);
-
+  const {accessToken, getRecentlyPlayedTracks} = useSpotify();
+  const [recentlyPlayed, setRecentlyPlayed] = useState([]);
+  console.log('Access Token', accessToken);
   useEffect(() => {
-    if (return_Params) requestAccessToken2();
-  }, [return_Params]);
-  useEffect(() => {
-    if (access_token) {
-      // Fetch user playlists when access_token is available
-      getUserPlaylists();
+    if (accessToken) {
+      const fetchRecentlyPlayedTracks = async () => {
+        if (accessToken) {
+          console.log('Access Token is now avaialble:', accessToken);
+          const tracks = await getRecentlyPlayedTracks();
+          console.log('Recently Played Tracks:', tracks); // Log to inspect the structure
+          setRecentlyPlayed(tracks);
+        }
+      };
     }
-  }, [access_token]);
-  const requestAccessToken2 = async () => {
-    try {
-      const response = await requestAccessToken(return_Params);
-      console.log(response);
-      setaccess_token(response);
-    } catch (error) {
-      console.error('Error in requestAccessToken => ', error);
-    }
-  };
-  const getUserPlaylists = async () => {
-    try {
-      // Call the getUserPlaylist function with access_token and user_id
-      const playlistsResponse = await getUserPlaylist(
-        access_token,
-        REACT_APP_CLIENT_ID,
-      );
-      console.log('Playlists Response:', playlistsResponse);
-      setUserPlaylists(playlistsResponse.data.items);
-    } catch (error) {
-      console.error('Error in getUserPlaylists => ', error);
-    }
-  };
+  }, [accessToken, getRecentlyPlayedTracks]);
 
   return (
     <View style={styles.container}>
-      {/* Bottom navigation will be shown by the BottomNavigation component and does not need to be added here */}
-      {/* BottomNavigation removed from here, it will be shown by the navigation container */}
+      <Text style={styles.header}>Home Screen</Text>
+      <ScrollView>
+        {/* Render your recently played tracks here */}
+        <Text style={styles.sectionHeader}>Recently Played</Text>
+        {recentlyPlayed.length > 0 ? (
+          <TrackList data={recentlyPlayed} />
+        ) : (
+          <Text style={styles.text}>No data available</Text>
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -65,6 +58,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
   },
+  header: {
+    fontSize: 24,
+    color: '#fff',
+    margin: 10,
+  },
+  sectionHeader: {
+    color: '#fff',
+    fontSize: 20,
+    marginVertical: 10,
+  },
+  // Add more styles as needed
 });
 
 export default HomeScreen;

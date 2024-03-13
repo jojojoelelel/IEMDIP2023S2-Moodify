@@ -12,6 +12,7 @@ import CustomForm from '../../components/CustomForm';
 
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
+
 const SignInScreen = ({navigation}) => {
   // State for form fields
   const [email, setEmail] = useState();
@@ -119,8 +120,8 @@ const SignInScreen = ({navigation}) => {
         <CustomButton
           title="SIGN IN"
           onPress={() => {
-            navigation.navigate('Main');
-            loginToSpotify();
+            navigation.navigate('Main'); //Main is bottom navigator
+            loginToSpotify(); //
           }}
           style={styles.button}
         />
