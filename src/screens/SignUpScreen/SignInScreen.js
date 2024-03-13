@@ -11,10 +11,11 @@ import CustomButton from '../../components/CustomButton';
 import CustomForm from '../../components/CustomForm';
 
 import * as SpotifyAPI from '../../services/Spotify-web-api';
-import { useAuth } from '../AccountScreen/AuthContext';
 
-const SignInScreen = ({navigation}) => {
+
+const SignInScreen = ({navigation,test}) => {
   // State for form fields
+  console.log(test);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [return_Params, setreturn_Params] = useState();
@@ -54,7 +55,6 @@ const SignInScreen = ({navigation}) => {
       console.error('Error in requestAccessToken => ', error);
     }
   };
-  const { refreshToken, accessToken, setAccessToken, setRefreshToken } = useAuth();
   const requestAccessToken2 = async () => {
     try {
       

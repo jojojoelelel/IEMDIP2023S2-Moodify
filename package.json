@@ -30,12 +30,9 @@
     "react-native-screens": "^3.29.0",
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^10.0.3",
-<<<<<<< HEAD
-    "spotify-web-api-js": "^1.5.2"
-=======
     "react-native-webview": "^13.8.1",
-    "react-viro": "^2.17.0"
->>>>>>> 1f817bbb4565a615faafb2aa4f2b68403f192ac8
+    "react-viro": "^2.17.0",
+    "spotify-web-api-js": "^1.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
