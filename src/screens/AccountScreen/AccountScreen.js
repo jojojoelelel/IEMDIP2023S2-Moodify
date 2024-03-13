@@ -91,9 +91,8 @@ const initialFollowInfo = [
   {name: 'Hours', count: 0},
 ];
 
-const AccountScreen = ({accessToken}) => {
+const AccountScreen = () => {
   const navigation = useNavigation();
-  console.log(accessToken);
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState();
@@ -119,7 +118,7 @@ const AccountScreen = ({accessToken}) => {
   };
 
   const access_token =
-    'BQAWh17cj2uYCkuuKv7k_n3vs3mPdcoXt6Sh9NEcH7annd5f89YLCI3_Kfjd76OP7_fSL_a1XfKNVGlCnluKwFX22le99d9RAP4E20BOmQoPLq6heTS-Fhk0ZgsDfpGki91--VYa81--VzkWpcTE_BXBiDL-4u46WMK6l4ZScA9W9Xsrz6yPca28wmeC36xl8WwP3cvh5fOmUU1SXg_06h6rgZhpd1KZuIPO6VK3N18Dm1JlUFMIEuauvZUX';
+    'BQCGqN9ckfW3B0Kj1pLOBIADVfzsL13mpY13YR3HN9-wPFG-V5nEofWgwbDnm6yEo0FyBkPcQdf1RqYR78Z1GS5kW-5pxDyBefq-rtFyUJFBjx1l2t54y029GSqkvZFM_nQpTHx2rl9dGIxYuu2Hb1o5nSHK8DcfQ66nguio_Qh8hu5mYpTeu_DhHvgY0NR9ID7tuul2enYfw88yZgOd6wlGi8mbEPojljkdfikXfkUvvqMmgGHXmWaryTe-';
   let imgurl = '123';
   const getCurrentUserProfile2 = async () => {
     try {
