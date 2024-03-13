@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import {pxToDp} from '../../utils/stylesKits'; //Transform dimensions to fit screen
 import {useNavigation} from '@react-navigation/native';
-import { useAuth } from '../AccountScreen/AuthContext';
+import {useAuth} from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
-import * as SpotifyAPI from '../../services/Spotify-web-api'
-import { updatePassword } from 'firebase/auth';
+import * as SpotifyAPI from '../../services/Spotify-web-api';
+import {updatePassword} from 'firebase/auth';
 //import * as ImagePicker from 'react-native-image-picker';
 
 const styles = StyleSheet.create({
@@ -86,9 +86,9 @@ const boxData = boxNames.map((name, index) => ({
 }));
 
 const initialFollowInfo = [
-  { name: 'Following', count: 0 },
-  { name: 'Follower', count: 0 },
-  { name: 'Hours', count: 0 }
+  {name: 'Following', count: 0},
+  {name: 'Follower', count: 0},
+  {name: 'Hours', count: 0},
 ];
 
 const AccountScreen = ({accessToken}) => {
@@ -98,67 +98,60 @@ const AccountScreen = ({accessToken}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState();
   const [profilePhoto, setProfilePhoto] = useState(' ');
-  const [followInfo, setFollowInfo]=useState(initialFollowInfo) // to be replaced by database numbers
+  const [followInfo, setFollowInfo] = useState(initialFollowInfo); // to be replaced by database numbers
   const circleData = followInfo.map((name, index) => ({
-  key: `Circle ${index + 1}`,
-  name: name,
-}));
-
+    key: `Circle ${index + 1}`,
+    name: name,
+  }));
 
   const spotifyApi = new SpotifyWebApi();
 
-  const setFollower = num =>{
-    circleVar[1]=num;
-  }
+  const setFollower = num => {
+    circleVar[1] = num;
+  };
 
-  const updateFollowInfo = (index,newCount) =>{
-
+  const updateFollowInfo = (index, newCount) => {
     setFollowInfo(prevData => {
-      
       const newData = [...prevData];
-      newData[index].count=newCount;
+      newData[index].count = newCount;
       return newData;
+    });
+  };
 
-    })
-  }
-
-  const access_token = 'BQCGqN9ckfW3B0Kj1pLOBIADVfzsL13mpY13YR3HN9-wPFG-V5nEofWgwbDnm6yEo0FyBkPcQdf1RqYR78Z1GS5kW-5pxDyBefq-rtFyUJFBjx1l2t54y029GSqkvZFM_nQpTHx2rl9dGIxYuu2Hb1o5nSHK8DcfQ66nguio_Qh8hu5mYpTeu_DhHvgY0NR9ID7tuul2enYfw88yZgOd6wlGi8mbEPojljkdfikXfkUvvqMmgGHXmWaryTe-'
+  const access_token =
+    'BQAWh17cj2uYCkuuKv7k_n3vs3mPdcoXt6Sh9NEcH7annd5f89YLCI3_Kfjd76OP7_fSL_a1XfKNVGlCnluKwFX22le99d9RAP4E20BOmQoPLq6heTS-Fhk0ZgsDfpGki91--VYa81--VzkWpcTE_BXBiDL-4u46WMK6l4ZScA9W9Xsrz6yPca28wmeC36xl8WwP3cvh5fOmUU1SXg_06h6rgZhpd1KZuIPO6VK3N18Dm1JlUFMIEuauvZUX';
   let imgurl = '123';
   const getCurrentUserProfile2 = async () => {
-
     try {
-        
-        const response = await SpotifyAPI.getCurrentUserProfile(access_token);
-        setName(response.display_name);
-        updateFollowInfo(1,response.followers.total);
-        setProfilePhoto(response.images[0].url);
-        console.log(profilePhoto);
-        console.log(response.images[0].url)
-        imgurl=response.images[0].url;
-        console.log(imgurl)
-
+      const response = await SpotifyAPI.getCurrentUserProfile(access_token);
+      setName(response.display_name);
+      updateFollowInfo(1, response.followers.total);
+      setProfilePhoto(response.images[0].url);
+      console.log(profilePhoto);
+      console.log(response.images[0].url);
+      imgurl = response.images[0].url;
+      console.log(imgurl);
     } catch (error) {
-        console.error('Error in getCurrentUserProfile => ', error)
+      console.error('Error in getCurrentUserProfile => ', error);
     }
+  };
 
-}
+  useEffect(() => {
+    getCurrentUserProfile2();
+  }, []);
 
-useEffect(() => {
-  getCurrentUserProfile2();
-}, []);
-
-const getFollowedArtists2 = async () => {
-  try {
+  const getFollowedArtists2 = async () => {
+    try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
       //updateFollowInfo(0,response.artists.total);
-  } catch (error) {
-      console.error('Error in getFollowedArtists => ', error)
-  }
-}
+    } catch (error) {
+      console.error('Error in getFollowedArtists => ', error);
+    }
+  };
 
-useEffect(() => {
-  getFollowedArtists2();
-}, []);
+  useEffect(() => {
+    getFollowedArtists2();
+  }, []);
 
   /*const launchImageLibrary = () => {
 
@@ -211,7 +204,6 @@ useEffect(() => {
       case 'LikedSongs':
         navigation.navigate('LikedSongsScreen');
         break;
-        
 
       default:
         alert('Null');
@@ -236,7 +228,7 @@ useEffect(() => {
       case 'Follower':
         navigation.navigate('FollowerScreen'); //for testing purpose, to be replaced by follower list screen
         break;
-        //for testing purpose, to be replaced by follower list screen
+      //for testing purpose, to be replaced by follower list screen
       default:
         break;
     }
@@ -368,7 +360,9 @@ useEffect(() => {
               marginTop: '-35%',
             }}>
             <Image
-              source={{uri:'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608'}}
+              source={{
+                uri: 'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608',
+              }}
               style={{
                 height: 100,
                 width: 100,
