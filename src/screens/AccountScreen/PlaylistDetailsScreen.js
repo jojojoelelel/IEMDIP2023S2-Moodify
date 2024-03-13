@@ -12,10 +12,13 @@ import {
 import SongItem from '../../components/SongItem';
 import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
+import Sound from 'react-native-sound';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const PlaylistDetailsScreen = ({route}) => {
   const {playlist} = route.params;
   const [songs, setSongs] = useState([]);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const fetchPlaylistDetails = async () => {
@@ -32,39 +35,6 @@ const PlaylistDetailsScreen = ({route}) => {
 
     fetchPlaylistDetails();
   }, [playlist.id]);
-
-  // Placeholder for actual song list data
-  /* const songs = [
-    {
-      id: '1',
-      title: 'Song 1',
-      artist: 'Artist 1',
-      cover:
-        'https://upload.wikimedia.org/wikipedia/en/9/9b/Le_Sserafim_-_Unforgiven.png',
-    },
-    {
-      id: '2',
-      title: 'Song 2',
-      artist: 'Artist 2',
-      cover:
-        'https://upload.wikimedia.org/wikipedia/en/9/9b/Le_Sserafim_-_Unforgiven.png',
-    },
-    {
-      id: '3',
-      title: 'Song 3',
-      artist: 'Artist 3',
-      cover:
-        'https://upload.wikimedia.org/wikipedia/en/9/9b/Le_Sserafim_-_Unforgiven.png',
-    },
-    {
-      id: '4',
-      title: 'Song 4',
-      artist: 'Artist 4',
-      cover:
-        'https://upload.wikimedia.org/wikipedia/en/9/9b/Le_Sserafim_-_Unforgiven.png',
-    },
-    // ... more songs
-  ]; */
 
   return (
     <ScrollView style={styles.container}>
@@ -89,6 +59,7 @@ const PlaylistDetailsScreen = ({route}) => {
               title={item.title}
               artist={item.artist}
               cover={item.cover}
+              preview_url={item.preview_url}
             />
           )}
         />

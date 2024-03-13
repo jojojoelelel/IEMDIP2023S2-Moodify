@@ -7,45 +7,7 @@ import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
 const PlaylistsScreen = ({navigation}) => {
-  const playlists = [
-    // dummy playlist items
-    {
-      id: '1',
-      title: 'Chill Hits',
-      creator: 'Spotify',
-      imageUrl:
-        'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
-    },
-    {
-      id: '2',
-      title: 'Chiller Hits',
-      creator: 'Spotify',
-      imageUrl:
-        'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
-    },
-    {
-      id: '3',
-      title: 'Chilled Hits',
-      creator: 'Spotify',
-      imageUrl:
-        'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
-    },
-    {
-      id: '4',
-      title: 'Chilling Hitting',
-      creator: 'Spotify',
-      imageUrl:
-        'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
-    },
-    {
-      id: '5',
-      title: 'Chilli Hits',
-      creator: 'Spotify',
-      imageUrl:
-        'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
-    },
-    // Add more playlists here...
-  ];
+
   const [playlist, setPlaylists] = useState([]);
 
   useEffect(() => {
@@ -112,3 +74,43 @@ const styles = StyleSheet.create({
 });
 
 export default PlaylistsScreen;
+
+/* const playlists = [
+  // dummy playlist items
+  {
+    id: '1',
+    title: 'Chill Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '2',
+    title: 'Chiller Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '3',
+    title: 'Chilled Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '4',
+    title: 'Chilling Hitting',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '5',
+    title: 'Chilli Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  // Add more playlists here...
+]; */

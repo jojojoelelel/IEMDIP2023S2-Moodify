@@ -326,12 +326,14 @@ export async function getPlaylistDetails(access_token, playlist_id) {
       id: item.track.id,
       title: item.track.name,
       artist: item.track.artists.map(artist => artist.name).join(', '),
-      cover: item.track.album.images.length > 0 ? item.track.album.images[0].url : '',
+      cover:
+        item.track.album.images.length > 0
+          ? item.track.album.images[0].url
+          : '',
       album: item.track.album.name,
       duration_ms: item.track.duration_ms,
       preview_url: item.track.preview_url,
     }));
-
 
     console.log('Playlist Details Response => ', tracksInfo);
     return tracksInfo; // Return the simplified playlist information
@@ -340,7 +342,6 @@ export async function getPlaylistDetails(access_token, playlist_id) {
     throw error;
   }
 }
-
 
 export async function getPublicUserPlaylist(access_token, user_id) {
   // get a playlist owned/followed by a Spotify User
