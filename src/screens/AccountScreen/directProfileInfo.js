@@ -3,7 +3,8 @@ import { View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView, StyleShe
 import { pxToDp } from '../../utils/stylesKits';
 import { useNavigation } from '@react-navigation/native';
 import SpotifyWebApi from 'spotify-web-api-js';
-import * as SpotifyAPI from '../../services/Spotify-web-api'
+import * as SpotifyAPI from '../../services/Spotify-web-api';
+import {accessToken} from '@env';
 
 const PIscreen = () => {
   const initialUserData = [
@@ -41,7 +42,7 @@ const PIscreen = () => {
 
     try {
         
-        const response = await SpotifyAPI.getCurrentUserProfile(access_token);
+        const response = await SpotifyAPI.getCurrentUserProfile(accessToken);
         handleInputChange(response.display_name,0);
         handleInputChange(response.country,1);
         handleInputChange(response.email,2);

@@ -17,6 +17,8 @@ import { useAuth } from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api'
 import { updatePassword } from 'firebase/auth';
+import { accessToken} from '@env'
+
 //import * as ImagePicker from 'react-native-image-picker';
 
 const styles = StyleSheet.create({
@@ -91,9 +93,8 @@ const initialFollowInfo = [
   { name: 'Hours', count: 0 }
 ];
 
-const AccountScreen = ({accessToken}) => {
+const AccountScreen = () => {
   const navigation = useNavigation();
-  console.log(accessToken);
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState();
@@ -122,13 +123,12 @@ const AccountScreen = ({accessToken}) => {
     })
   }
 
-  const access_token = 'BQCGqN9ckfW3B0Kj1pLOBIADVfzsL13mpY13YR3HN9-wPFG-V5nEofWgwbDnm6yEo0FyBkPcQdf1RqYR78Z1GS5kW-5pxDyBefq-rtFyUJFBjx1l2t54y029GSqkvZFM_nQpTHx2rl9dGIxYuu2Hb1o5nSHK8DcfQ66nguio_Qh8hu5mYpTeu_DhHvgY0NR9ID7tuul2enYfw88yZgOd6wlGi8mbEPojljkdfikXfkUvvqMmgGHXmWaryTe-'
   let imgurl = '123';
   const getCurrentUserProfile2 = async () => {
 
     try {
         
-        const response = await SpotifyAPI.getCurrentUserProfile(access_token);
+        const response = await SpotifyAPI.getCurrentUserProfile(accessToken);
         setName(response.display_name);
         updateFollowInfo(1,response.followers.total);
         setProfilePhoto(response.images[0].url);
@@ -149,8 +149,8 @@ useEffect(() => {
 
 const getFollowedArtists2 = async () => {
   try {
-      const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      //updateFollowInfo(0,response.artists.total);
+      const response = await SpotifyAPI.getFollowedArtists(accessToken, 5);
+      updateFollowInfo(0,response.artists.total);
   } catch (error) {
       console.error('Error in getFollowedArtists => ', error)
   }
