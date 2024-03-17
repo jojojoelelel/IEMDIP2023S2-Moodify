@@ -9,6 +9,7 @@ const VrConcertScreen = () => {
         source={{
           uri: 'http://10.0.2.2:5500/src/screens/DiscoverScreen/a-saturday-night/index.html',
         }}
+        javaScriptEnabled={true} //default is true
         style={styles.webView}
       />
     </View>
