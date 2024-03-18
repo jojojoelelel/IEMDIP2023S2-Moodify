@@ -1,0 +1,117 @@
+//Screen for playlists from account screen
+//Screen for playlists from account screen
+import React, {useEffect, useState} from 'react';
+import {FlatList, Text, StyleSheet, View} from 'react-native';
+import PlaylistItem from '../../../components/PlaylistItem';
+import MusicPlayerBar from '../../../components/MusicPlayerBar'; //to demo music player bar
+import {access_token} from '@env';
+import * as SpotifyAPI from '../../../services/Spotify-web-api';
+
+const PlaylistsScreen = ({navigation}) => {
+
+  const [playlist, setPlaylists] = useState([]);
+
+  useEffect(() => {
+    const fetchPlaylists = async () => {
+      const accessToken = '"BQBAQ9Qo5_VtAhzbTQt4HrMppNgB5nI2vVAUQZBmGgbIn8MiIKwem5yomQGgeAFo_ct3Is5KPeLxwIsgFwDmd3vMkfI_r_bh5yDdgZ1yiw5CVIgTGi_Qi3USbABel3G1Bxq7lmcpTJpkX5RtZXqV-83TlKk4iqzX1zkhYolG3DwEInCT1KRgRsS_gCz-GtDPXBmeCWDX7Hem8qlq4hbg8z7jTEsqpWvUlD7Y1kW0yQktsKtGWuvtSnrWo5ZS'; // Replace with your actual access token
+      const playlistsData = await SpotifyAPI.getUserPlaylist(accessToken);
+      setPlaylists(
+        playlistsData.map(playlist => ({
+          id: playlist.id,
+          title: playlist.name,
+          creator: playlist.owner.display_name,
+          imageUrl:
+            playlist.images.length > 0
+              ? playlist.images[0].url
+              : 'default_playlist_image_url', // Provide a default image URL as fallback
+        })),
+      );
+    };
+
+    fetchPlaylists();
+  }, []);
+
+  // Function to handle item press if needed
+  const handleItemPress = playlist => {
+    // To navigate to a playlist detail screen:
+    navigation.navigate('PlaylistDetails', {playlist});
+  };
+
+  return (
+    <View style={styles.screenContainer}>
+      <FlatList
+        data={playlist}
+        renderItem={({item}) => (
+          <PlaylistItem
+            title={item.title}
+            creator={item.creator}
+            imageUrl={item.imageUrl}
+            onPress={() => handleItemPress(item)} // Assuming PlaylistItem accepts an onPress prop
+          />
+        )}
+        keyExtractor={item => item.id}
+        style={styles.listContainer}
+      />
+      {/* REMEMBER TO MOVE the MusicPlayerBar to a more appropriate place later */}
+      <MusicPlayerBar
+        songTitle="Song Title"
+        artistName="Artist Name"
+        coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
+        onPlayPausePress={() => {}}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  // ... your existing styles ...
+  screenContainer: {
+    flex: 1,
+    backgroundColor: '#121212',
+  },
+  listContainer: {
+    // styles for your FlatList if needed
+  },
+});
+
+export default PlaylistsScreen;
+
+/* const playlists = [
+  // dummy playlist items
+  {
+    id: '1',
+    title: 'Chill Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '2',
+    title: 'Chiller Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '3',
+    title: 'Chilled Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '4',
+    title: 'Chilling Hitting',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  {
+    id: '5',
+    title: 'Chilli Hits',
+    creator: 'Spotify',
+    imageUrl:
+      'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
+  },
+  // Add more playlists here...
+]; */
