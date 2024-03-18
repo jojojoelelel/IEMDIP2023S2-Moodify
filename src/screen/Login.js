@@ -168,6 +168,7 @@ const Login = ({navigation}) => {
     const getFollowedArtists2 = async () => {
         try {
             const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
+            console.log(response.data.artists.items)
         } catch (error) {
             console.error('Error in getFollowedArtists => ', error)
         }
