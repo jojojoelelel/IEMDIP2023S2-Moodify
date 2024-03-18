@@ -1,12 +1,27 @@
 // SongItem.js
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Sound from 'react-native-sound';
+import {MusicPlayerContext} from '../contexts/SongContext';
 
-const SongItem = ({title, artist, cover, preview_url}) => {
-  // Function to play the song preview
-  const playPreview = () => {
+const SongItem = ({id, title, artist, cover, preview_url}) => {
+  const {playTrack} = useContext(MusicPlayerContext);
+
+  const handlePress = () => {
+    const track2 = {
+      id: id,
+      url: preview_url,
+      title: title,
+      artist: artist,
+      artwork: cover,
+    };
+
+    playTrack(track2);
+  };
+
+  // Function to play the song preview [OLD]
+  /* const playPreview = () => {
     const song = new Sound(preview_url, null, error => {
       if (error) {
         console.log('Failed to load the sound', error);
@@ -21,10 +36,11 @@ const SongItem = ({title, artist, cover, preview_url}) => {
         song.release();
       });
     });
-  };
+  }; */
 
+  // NEW RETURN STATEMENT WITH MUSICPLAYERCONTEXT
   return (
-    <TouchableOpacity style={styles.songContainer} onPress={playPreview}>
+    <TouchableOpacity style={styles.songContainer} onPress={handlePress}>
       <Image source={{uri: cover}} style={styles.coverImage} />
       <View style={styles.textContainer}>
         <Text style={styles.songTitle}>{title}</Text>
@@ -33,6 +49,18 @@ const SongItem = ({title, artist, cover, preview_url}) => {
       <Ionicons name="ellipsis-horizontal" size={20} color="#ffffff" />
     </TouchableOpacity>
   );
+
+  // OLD RETURN STATEMENT
+  /* return (
+    <TouchableOpacity style={styles.songContainer} onPress={playPreview}>
+      <Image source={{uri: cover}} style={styles.coverImage} />
+      <View style={styles.textContainer}>
+        <Text style={styles.songTitle}>{title}</Text>
+        <Text style={styles.artistName}>{artist}</Text>
+      </View>
+      <Ionicons name="ellipsis-horizontal" size={20} color="#ffffff" />
+    </TouchableOpacity>
+  ); */
 };
 
 const styles = StyleSheet.create({

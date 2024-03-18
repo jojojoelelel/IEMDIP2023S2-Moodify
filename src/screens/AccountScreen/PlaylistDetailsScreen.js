@@ -1,5 +1,5 @@
 // PlaylistDetailsScreen.js
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -14,11 +14,22 @@ import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import Sound from 'react-native-sound';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {MusicPlayerContext} from '../../contexts/SongContext';
+//comment
 const PlaylistDetailsScreen = ({route}) => {
   const {playlist} = route.params;
   const [songs, setSongs] = useState([]);
   const [playing, setPlaying] = useState(false);
+  const {
+    isPlaying,
+    setIsPlaying,
+    currentTrack,
+    setCurrentTrack,
+    playTrack,
+    pauseTrack,
+    skipToNext,
+    skipToPrevious,
+  } = useContext(MusicPlayerContext);
 
   useEffect(() => {
     const fetchPlaylistDetails = async () => {
@@ -56,6 +67,7 @@ const PlaylistDetailsScreen = ({route}) => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <SongItem
+              id={item.id}
               title={item.title}
               artist={item.artist}
               cover={item.cover}

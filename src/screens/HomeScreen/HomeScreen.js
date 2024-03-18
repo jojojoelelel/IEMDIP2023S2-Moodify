@@ -19,13 +19,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
 import axios from 'axios';
 import {useSpotify} from '../../services/SpotifyAuthContext';
+import {access_token2} from '@env';
+//addcommoent
 
 const HomeScreen = () => {
-  const {accessToken, getRecentlyPlayedTracks} = useSpotify();
+  //const {accessToken, getRecentlyPlayedTracks} = useSpotify();
   const [recentlyPlayed, setRecentlyPlayed] = useState([]);
-  console.log('Access Token', accessToken);
+  console.log('Access Token', access_token2);
   useEffect(() => {
-    if (accessToken) {
+    if (access_token2) {
       const fetchRecentlyPlayedTracks = async () => {
         if (accessToken) {
           console.log('Access Token is now avaialble:', accessToken);
@@ -35,7 +37,7 @@ const HomeScreen = () => {
         }
       };
     }
-  }, [accessToken, getRecentlyPlayedTracks]);
+  }, [access_token2, setRecentlyPlayed]);
 
   return (
     <View style={styles.container}>

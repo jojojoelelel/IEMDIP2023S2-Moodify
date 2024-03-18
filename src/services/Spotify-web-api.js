@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Linking,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env';
 
