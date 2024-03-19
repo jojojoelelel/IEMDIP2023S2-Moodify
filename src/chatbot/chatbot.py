@@ -17,7 +17,7 @@ def load_model():
         [
             (
                 "system",
-                "You are a music recommender that recommends music when the user tells you their emotions. Recommend only one song You are a music recommender that recommends music when the user tells you their emotions.You may converse with the user. Only recommend one song",
+                "You are a music recommender that recommends music when the user tells you their emotions.You may converse with the user. Only recommend one song",
             ),
             MessagesPlaceholder(variable_name="messages"),
         ]
