@@ -30,20 +30,10 @@ import MusicPlayerBar from '../../components/MusicPlayerBar.js';
 export default function HomeScreen({ navigation }) {
 // Example data - replace with real data to be added by backend
 
-  const albums = [
-     { id: 1, title: 'Album 1', artist: 'Artist 1', cover: '' },
-     { id: 2, title: 'Album 2', artist: 'Artist 2', cover: 'cover_url_2' },
-     { id: 3, title: 'Album 3', artist: 'Artist 3', cover: 'cover_url_3' },
-// Add more albums
-             ];
+  const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
+  const [topTracks, setTopTracks] = useState([]);
 
-  const tracks = [
-      { id: 1, title: 'Track 1', artist: 'Artist 1', duration: '2:30' },
-      { id: 2, title: 'Track 2', artist: 'Artist 2', duration: '2:30' },
-      { id: 3, title: 'Track 3', artist: 'Artist 3', duration: '2:30' },
-               // Add more tracks
-             ];
 
 const handleSearchPress = () => {
 // Need to navigate to the Search screen properly
@@ -51,13 +41,21 @@ const handleSearchPress = () => {
 };
 
  const spotifyApi = new SpotifyWebApi();
- const access_token = 'BQBgL7b4Sga1BhTu_Og7LBO7tG8Qo7RZT1OouUtm3D9xa_sX_8RK-EAMU9Pk4NV_X7wIM1H9ho4AeJhrVwvtM0xJUoOWff3fXvSrnZ06CDz9W6BFIAf-nwsBIYs4cSEqKqAiB6PMrSTQv2KVhBFQU99OaKqs-9WzzPhOFexSiqqSbX9gNnq080x9vr8Uq-TBChudRPF49xG9z1nqhOmiRb43dS4AamaRsAlS_xEnFMfW2JHGJTiRes3LUC_Z'; // Replace with your actual access token
+ const access_token = 'BQBeIvi2GmulTcj3-ATSSqDXF8-OMeVSbSngEerqRmEPATkKjNtpYyVnHiFtJtnO35R44fJOTyHvWTcCTxz8bpkmR3rI7zHJjDrcDeKwKCZp8oyV68gnfE_YHLndHBK3TyMXyz4UzArBl5KRRwkIR80oyI73x7WVUYvs4ohTPhwXGxWgVXoGvH9V1GPW2WG6--IW28Q5gLWWKZGx12kwm9RxD7UBcWvjxVgqT_sOsrxTRXFTxoss-3B0R94Y'; // Replace with your actual access token
 
 const getFollowedArtist2 = async () => {
     try {
         const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-        //console.log('Response:', response); // Log the response object
-        setTopArtists(response.artists.items);
+        console.log(response.data.artists.items); // Log the response object
+        setTopArtists((prevData) => [
+            ...prevData,
+            ...response.data.artists.items.map(artist => ({
+                ...artist,
+                imageUrl: artist.images && artist.images.length > 0
+                ? artist.images[0].url
+                : '' // Provide a default image URL as fallback
+            }))
+        ]);
 
     } catch (error) {
         console.error('Error in getFollowedArtists => ', error)
@@ -67,12 +65,21 @@ const getFollowedArtist2 = async () => {
 useEffect(() => {
   getFollowedArtist2();
 }, []);
-console.log(topArtists);
+//console.log(topArtists);
 
-/* const getArtistAlbums2 = async () => {
+const getArtistAlbums2 = async () => {
   try {
     const response = await SpotifyAPI.getArtistAlbums(access_token, '1hGdQOfaZ5saQ6JWVuxVDZ');
-    console.log('Artist albums:', response);
+    console.log(response.data.items);
+            setTopAlbums((prevData) => [
+                ...prevData,
+                ...response.data.items.map(album => ({
+                    ...album,
+                    imageUrl: album.images && album.images.length > 0
+                    ? album.images[0].url
+                    : '' // Provide a default image URL as fallback
+                }))
+            ]);
   } catch (error) {
     console.error('Error in getArtistAlbums => ', error);
   }
@@ -85,7 +92,18 @@ useEffect(() => {
 const getArtistTopTracks2 = async () => {
   try {
     const response = await SpotifyAPI.getArtistTopTracks(access_token, '0grdhNhiRLFBaFVyybqsj6', 'SG');
-    console.log('Artist top tracks:', response);
+    //console.log(response);
+    console.log(response.data.tracks);
+    setTopTracks(
+      response.data.tracks.map(track => ({
+        title: track.name,
+        artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
+        imageUrl:
+            track.album.images.length > 0
+             ? track.album.images[0].url
+             : '' // Provide a default image URL as fallback
+      })),
+    );
   } catch (error) {
     console.error('Error in getArtistTopTracks => ', error);
   }
@@ -93,51 +111,63 @@ const getArtistTopTracks2 = async () => {
 
 useEffect(() => {
   getArtistTopTracks2();
-}, []); */
+}, []);
 
-return (
-   <View style={styles.container}>
-    <View style={styles.headerContainer}>
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
         <Text
           onPress={() => alert('This is the "Home" screen.')}
-          style={styles.text}>Moodify</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.searchIconContainer}>
-           <Ionicons name="search" size={24} color="#fff" style={styles.searchIcon} />
-          </TouchableOpacity>
-          </View>
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-           <Text style={styles.header}>New Albums</Text>
-           <View style={styles.albumContainer}>
-           {albums.map(album => (
-           <AlbumCard key={album.id} {...album} />
-           ))}
-           </View>
-
-<Text style={styles.header}>Top Artists</Text>
+          style={styles.text}
+        >
+          Moodify
+        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SearchScreen')}
+          style={styles.searchIconContainer}
+        >
+          <Ionicons name="search" size={24} color="#fff" style={styles.searchIcon} />
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Text style={styles.header}>Recent Albums</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {topArtists.map((item, index) => (
-            <ArtistCard item={item} key={index} />
+          {topAlbums.map((item, index) => (
+            <AlbumCard item={item} key={index} imageUrl={item.imageUrl} />
           ))}
         </ScrollView>
 
-<Text style={styles.header}>Recently Played</Text>
-   <View style={styles.trackContainer}>
-    {tracks.map(tracks => (
-   <TrackList data={tracks} {...tracks} />
-    ))}
-   </View>
-</ScrollView>
+        <Text style={styles.header}>Top Artists</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {topArtists.map((item, index) => (
+            <ArtistCard item={item} key={index} imageUrl={item.imageUrl} />
+          ))}
+        </ScrollView>
 
+        <Text style={styles.header}>Recently Played</Text>
+        <View style={styles.trackContainer}>
+          <FlatList
+            data={topTracks} // Use topTracks instead of track
+            renderItem={({ item }) => (
+              <TrackList
+                title={item.title}
+                artist={item.artist}
+                imageUrl={item.imageUrl}
+                onPress={() => handleItemPress(item)}
+              />
+            )}
+          />
+        </View>
+      </ScrollView>
 
-        <MusicPlayerBar
-          songTitle="Song Title"
-          artistName="Artist Name"
-          coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
-          onPlayPausePress={() => {}}
-        />
-
+      <MusicPlayerBar
+        songTitle="Song Title"
+        artistName="Artist Name"
+        coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
+        onPlayPausePress={() => {}}
+      />
     </View>
-);
+  );
 }
            const styles = StyleSheet.create({
              container: {
