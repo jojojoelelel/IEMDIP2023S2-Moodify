@@ -1,119 +1,79 @@
-# This is the GitHub repository for IM3180 Project
-...Description...
-## Software needed:
-NodeJS, JDK, Android Studio, FireBase
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting started
-## Installing requirements
+# Getting Started
 
-**React Native** : https://reactnative.dev/docs/environment-setup?guide=native
+>**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-**JDK** : https://www3.ntu.edu.sg/home/ehchua/programming/howto/jdk_howto.html
+## Step 1: Start the Metro Server hi
 
-**NodeJS** : https://nodejs.org/en/download
+First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-**Android Studio** : https://www3.ntu.edu.sg/home/ehchua/programming/android/Android_HowTo.html
+To start Metro, run the following command from the _root_ of your React Native project:
 
-**FireBase** : rnfirebase.io
+```bash
+# using npm
+npm start
 
-## Setting up FireBase
+# OR using Yarn
+yarn start
+```
 
-Go to https://console.firebase.google.com
+## Step 2: Start your Application
 
-Select IM3180-APP project > Project settings 
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-In the General pages, scroll down to Your apps.
+### For Android
 
-Download google-services.json and place it in android > app
+```bash
+# using npm
+npm run android
 
-![image](https://github.com/jojojoelelel/IM3180/assets/31207498/f3f2e9fc-0794-4375-b35c-6c52112be0f1)
+# OR using Yarn
+yarn android
+```
 
-![image](https://github.com/jojojoelelel/IM3180/assets/31207498/0333bf23-f921-4dc1-84e7-8f25fc4aa87c)
+### For iOS
 
-## Setting up env file for SpotifyAPI
+```bash
+# using npm
+npm run ios
 
-Steps for Spotify API call
+# OR using Yarn
+yarn ios
+```
 
-Set up .env file in project root folder.
+If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-REACT_APP_CLIENT_ID = '…'
+This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-REACT_APP_CLIENT_SECRET = '…'
+## Step 3: Modifying your App
 
-![image](https://github.com/jojojoelelel/IM3180/assets/31207498/ec70a229-a227-489f-bd95-bb37953f01cb)
+Now that you have successfully run the app, let's modify it.
 
-add .env and google-services.json to .gitignore located in project root folder.
+1. Open `App.tsx` in your text editor of choice and edit some lines.
+2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
-![image](https://github.com/jojojoelelel/IM3180/assets/31207498/883a226c-fd81-4a64-8f2f-4fe1128ca374)
+   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-API calls are tentatively stored in src>services>Spotify-web-api.js
+## Congratulations! :tada:
 
-## To make calls : 
-import * from SpotifyAPI from '../services/Spotify-web-api'
+You've successfully run and modified your React Native App. :partying_face:
 
-Look at src/screen/Login.js to see examples of how to make calls.
+### Now what?
 
-In general, should make calls in try-catch statements.
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
 
-Copy lines 43 to 98, functions handleRedirect(event), addEventListener('url', handleRedirect) and loginToSpotify(), and useEffects for requestRefreshAccessToken(). These 3 functions handle the initial process of : 
+# Troubleshooting
 
-1.Request user’s authorization. Directs user to browser to log in with Spotify.
+If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-2.Redirect_uri will redirect the user back to localhost:8081 (the app).
+# Learn More
 
-3.The event listener will invoke handleRedirect, which obtains the response code.
+To learn more about React Native, take a look at the following resources:
 
-4.This response code will be saved as return_Params useState variable, and passed as an input to requestAccessToken(return_Params) to get the access_token (which will expire in 1 hour) used for other API calls.
-
-5.useEffect line 94 to 98 will request a refresh access token after 1 hour automatically.
-
-6.useEffect line 100 to 104 will automatically requestAccessToken after handleRedirect sets the return_Param.
-
-## GitHub setup
-
-NOTE: DO NOT push directly into the remote main branch without discussion.
-
-Git repository URL : https://github.com/jojojoelelel/IM3180.git
-
-Setup
-Ensure you have git.
-Ensure that your folder is a git repository. If it is not, you can run `git init` to create it as one.
-Add the repositories as your remote:
-`git remote add origin https://github.com/jojojoelelel/IM3180.git`
-
-NOTE: You can check what is your current branch name by running git status.
-
-# GitHub Workflow - Pushing your code to the remote repository
-As much as possible please make sure your code runs correctly before pushing to the repository.
-
-Pull main branch (make sure it is most updated) → Create a new local branch → Make your code changes → Push to new branch in repository → Review/Proof that it works → Create a pull request
-
-## Ensure that you are on the **main** branch of the repository by running `git status`, and have pulled the latest changes from the remote : 
-`git pull`
-
-## Create a new branch locally :
-`git checkout -b <branch_name>`
-
-Make your changes to the code as needed in this new branch.
-
-## Stage files to be committed into github :
-`git add .` OR if you want to select specific files `git add <name of file>`
-
-## Commit the staged files with message :
-`git commit -m "<your message, usually something to describe the changes>"`
-
-## Push the committed changes to remote branch :
-`git push`
-
-IF it is the first time pushing this branch to the remote :
-`git push -u origin <branch_name>`
-
-## Create a pull request :
-Title should include the JIRA task ID and a short description. E.g. TASK-123 Implementing AI search 
-1. Objective
-2. File changes
-3. Proof of testing (Screenshots/Recordings)
-4. After reviewing together, merge the branch into main
-
-# Pull requests and reviews
-Every week, go through all requests together and merge to main.
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
