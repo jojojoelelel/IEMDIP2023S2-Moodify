@@ -339,7 +339,9 @@ export async function getTrack (access_token, id) {
     }   
 }
 
-export async function searchTrack (access_token, q, type) {
+export async function searchTrack (access_token, queryString, type) {
+    const q = encodeURIComponent(queryString)
+
     const authOptions = {
         url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=1&offset=1`,
         headers: {
@@ -350,7 +352,8 @@ export async function searchTrack (access_token, q, type) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        console.log('Response => ', response.data.tracks.items[0].preview_url)
+        // console.log('Response => ', response.data.tracks.items[0].preview_url)
+        console.log('Response => ', response.data.tracks.items[0])
         return response.data.tracks.items[0].preview_url
     } catch (error) {
         console.error('Error => ', error)
