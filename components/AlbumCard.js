@@ -1,30 +1,40 @@
-//Component for individual album card
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const AlbumCard = ({title, artist, cover, onPress}) => {
+const AlbumCard = ({ item, onPress, imageUrl }) => {
+  // Split the name into words
+  const words = item?.name.split(' ');
+
+  // Join the first three words together
+  const truncatedName = words.slice(0, 6).join(' ');
+
+  // Check if there are more than three words
+  const isTruncated = words.length > 6;
+
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      <Image source={{uri: cover }} style={styles.cover} />
-      <Text style={styles.artist}>{artist}</Text>
-    </TouchableOpacity>
+    <View style={{ margin: 10 }}>
+      <Image
+        style={{ width: 200, height: 200, borderRadius: 5 }}
+        source={{ uri: imageUrl }}
+      />
+      <Text
+        style={{
+          fontSize: 13,
+          fontWeight: "500",
+          color: "white",
+          marginTop: 10,
+        }}
+      >
+        {/* Display the truncated name */}
+        {truncatedName}
+
+        {/* Display ellipsis (...) if the name is truncated */}
+        {isTruncated && ' ...'}
+      </Text>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    width: 150,
-    marginRight: 16,
-  },
-  cover: {
-    width: '100%',
-    height: 150,
-    borderRadius: 8,
-  },
-  artist: {
-    color: '#FFF',
-    textAlign: 'center',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default AlbumCard;
