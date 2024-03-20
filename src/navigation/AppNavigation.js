@@ -18,17 +18,23 @@ import SScreen from '../screens/AccountScreen/directSetting';
 // import FullMusicPlayerScreen from '../screens/MusicPlayerScreen/FullMusicPlayerScreen';
 import SearchScreen from '../screens/HomeScreen/SearchScreen';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
+import VrConcertScreen from '../screens/DiscoverScreen/VrConcertScreen';
 import MusicPlayerBar from '../components/MusicPlayerBar';
 import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
+import DiaryScreen from '../screens/AccountScreen/directDiary';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => {
+const AppNavigator = ({test}) => { 
+
+  console.log(test);
   return (
+    
     <Stack.Navigator>
       <Stack.Screen name="GettingStarted" component={GettingStarted} />
-      <Stack.Screen name="SignInScreen" component={SignInScreen} />
+      <Stack.Screen name="SignInScreen" component={SignInScreen} initialParams={{test}}/>
+      
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen
         name="ForgotPasswordScreen"
@@ -62,6 +68,11 @@ const AppNavigator = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="DiaryScreen"
+        component={DiaryScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="PIScreen"
         component={PIscreen}
         options={{headerShown: false}}
@@ -72,6 +83,11 @@ const AppNavigator = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+      <Stack.Screen
+        name="VrConcertScreen"
+        component={VrConcertScreen}
+        options={{title: 'VR Concert'}}
+      />
       <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
