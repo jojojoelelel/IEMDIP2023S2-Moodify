@@ -124,9 +124,10 @@ const Login = ({navigation}) => {
 
     }
 
-    const searchTrack2 = async () => {
+    const searchTrack2 = async (queryString) => {
+        const type = 'album%2Ctrack%2Cplaylist%2Cartist'
         try {
-            const response = await SpotifyAPI.searchTrack(access_token, 'track%3A%22Bury%20the%20light%22%20artist%3A%22Casey%20Edwards%22', 'track');
+            const response = await SpotifyAPI.searchTrack(access_token, queryString, type);
             setpreviewUrl(response)
         } catch (error) {
             console.error('Error in getdeviceID => ', error)
@@ -312,7 +313,7 @@ const Login = ({navigation}) => {
                     <Text>Pause Music Preview</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => searchTrack2()}>
+            <TouchableOpacity onPress={() => searchTrack2('Hello Adele')}>
                 <View style={(styles.button)}>
                     <Text>search for track</Text>
                 </View>
