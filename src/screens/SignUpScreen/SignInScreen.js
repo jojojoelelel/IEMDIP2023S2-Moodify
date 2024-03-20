@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
 }); */
 
 // Import useSpotify hook
-import {useSpotify} from '../../SpotifyAuthContext'; // Adjust the import path according to your project structure
+//import {useSpotify} from '../../SpotifyAuthContext'; // Adjust the import path according to your project structure
 
 /* const SignInScreen = ({navigation}) => {
   const {requestUserAuthorization, requestAccessToken} = useSpotify(); // Use the hook
@@ -299,10 +299,8 @@ const styles = StyleSheet.create({
   },
 }); */
 
-
 const SignInScreen = ({navigation}) => {
   // State for form fields
-  console.log(test);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [return_Params, setreturn_Params] = useState();
@@ -311,7 +309,6 @@ const SignInScreen = ({navigation}) => {
   const [playerInfo, setplayerInfo] = useState();
   const [previewUrl, setpreviewUrl] = useState();
   const [refresh_token, setrefresh_Token] = useState();
-  
 
   const redirect_uri = 'http://localhost:8081/callback';
 
@@ -344,7 +341,6 @@ const SignInScreen = ({navigation}) => {
   };
   const requestAccessToken2 = async () => {
     try {
-      
       const response = await SpotifyAPI.requestAccessToken(return_Params);
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
@@ -360,7 +356,6 @@ const SignInScreen = ({navigation}) => {
       );
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
-      
     } catch (error) {
       console.error('Error in requestRefreshAccessToken => ', error);
     }
@@ -378,7 +373,6 @@ const SignInScreen = ({navigation}) => {
   useEffect(() => {
     if (return_Params) {
       requestAccessToken2();
-      
     }
   }, [return_Params]);
 

@@ -69,7 +69,7 @@ export const SpotifyProvider = ({children}) => {
     }
   };
   /*     try {
-      const response = await axios.post(
+     np const response = await axios.post(
         'https://accounts.spotify.com/api/token',
         params.toString(),
         {headers},

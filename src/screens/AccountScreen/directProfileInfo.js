@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {pxToDp} from '../../utils/stylesKits';
 import {useNavigation} from '@react-navigation/native';
-import SpotifyWebApi from 'spotify-web-api-js';
+//import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
 const PIscreen = () => {
