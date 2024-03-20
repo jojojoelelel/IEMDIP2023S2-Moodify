@@ -1,13 +1,13 @@
-//Component for individual album card
+//Component for individual artist card
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-const ArtistCard = ({item, onPress}) => {
+const ArtistCard = ({item, onPress, imageUrl}) => {
   return (
     <View style={{ margin: 10 }}>
       <Image
-        style={{ width: 130, height: 130, borderRadius: 5 }}
-        source={{ uri: artists.items.images[0].url }}
+        style={{ width: 200, height: 200, borderRadius: 5 }}
+        source={{ uri: imageUrl }}
       />
       <Text
         style={{
