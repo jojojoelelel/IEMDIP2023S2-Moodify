@@ -5,26 +5,42 @@ import PlaylistItem from '../../components/PlaylistItem';
 import MusicPlayerBar from '../../components/MusicPlayerBar'; //to demo music player bar
 import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
-//comment
+//commentcommenthujh
 const PlaylistsScreen = ({navigation}) => {
   const [playlist, setPlaylists] = useState([]);
 
+  const fetchPlaylists = async () => {
+    const accessToken = access_token2; // Replace with your actual access token
+    const playlistsData = await SpotifyAPI.getUserPlaylist(accessToken);
+    setPlaylists(
+      playlistsData.map(playlist => ({
+        id: playlist.id,
+        title: playlist.name,
+        creator: playlist.owner.display_name,
+        imageUrl:
+          playlist.images.length > 0
+            ? playlist.images[0].url
+            : 'default_playlist_image_url', // Provide a default image URL as fallback
+      })),
+    );
+  };
+
   useEffect(() => {
-    const fetchPlaylists = async () => {
-      const accessToken = access_token2; // Replace with your actual access token
-      const playlistsData = await SpotifyAPI.getUserPlaylist(accessToken);
-      setPlaylists(
-        playlistsData.map(playlist => ({
-          id: playlist.id,
-          title: playlist.name,
-          creator: playlist.owner.display_name,
-          imageUrl:
-            playlist.images.length > 0
-              ? playlist.images[0].url
-              : 'default_playlist_image_url', // Provide a default image URL as fallback
-        })),
-      );
-    };
+    // const fetchPlaylists = async () => {
+    //   const accessToken = access_token2; // Replace with your actual access token
+    //   const playlistsData = await SpotifyAPI.getUserPlaylist(accessToken);
+    //   setPlaylists(
+    //     playlistsData.map(playlist => ({
+    //       id: playlist.id,
+    //       title: playlist.name,
+    //       creator: playlist.owner.display_name,
+    //       imageUrl:
+    //         playlist.images.length > 0
+    //           ? playlist.images[0].url
+    //           : 'default_playlist_image_url', // Provide a default image URL as fallback
+    //     })),
+    //   );
+    // };
 
     fetchPlaylists();
   }, []);
@@ -37,26 +53,31 @@ const PlaylistsScreen = ({navigation}) => {
 
   return (
     <View style={styles.screenContainer}>
-      <FlatList
-        data={playlist}
-        renderItem={({item}) => (
-          <PlaylistItem
-            title={item.title}
-            creator={item.creator}
-            imageUrl={item.imageUrl}
-            onPress={() => handleItemPress(item)} // Assuming PlaylistItem accepts an onPress prop
+      {playlist.length > 0 ? (
+        <>
+          <FlatList
+            data={playlist}
+            renderItem={({item}) => (
+              <PlaylistItem
+                title={item.title}
+                creator={item.creator}
+                imageUrl={item.imageUrl}
+                onPress={() => handleItemPress(item)} // Assuming PlaylistItem accepts an onPress prop
+              />
+            )}
+            keyExtractor={item => item.id}
+            style={styles.listContainer}
           />
-        )}
-        keyExtractor={item => item.id}
-        style={styles.listContainer}
-      />
-      {/* REMEBER TO MOVE the MusicPlayerBar to a more appropriate place later */}
-      <MusicPlayerBar
-        songTitle="Song Title"
-        artistName="Artist Name"
-        coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
-        onPlayPausePress={() => {}}
-      />
+          <MusicPlayerBar
+            songTitle="Song Title"
+            artistName="Artist Name"
+            coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
+            onPlayPausePress={() => {}}
+          />
+        </>
+      ) : (
+        <Text>NOT WORKING</Text>
+      )}
     </View>
   );
 };

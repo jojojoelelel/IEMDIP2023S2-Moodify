@@ -18,6 +18,7 @@ const SongItem = ({id, title, artist, cover, preview_url}) => {
     };
 
     playTrack(track2);
+    //playTrack({url: preview_url})
   };
 
   // Function to play the song preview [OLD]

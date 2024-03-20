@@ -1,4 +1,4 @@
-// PlaylistDetailsScreen.js
+// PlaylistDetailsScreen.js comment
 import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
@@ -80,7 +80,7 @@ const PlaylistDetailsScreen = ({route}) => {
   );
 };
 
-/* return (
+/* return (jhjhghghgg
     <ScrollView style={styles.container}>
       <Image source={{uri: playlist.imageUrl}} style={styles.coverImage} />
       <View style={styles.detailsContainer}>

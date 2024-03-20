@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
+import TrackPlayer, { State } from 'react-native-track-player';
 import {useSong} from './SongContext'; // Ensure you have a SongContext
 import {MusicPlayerContext} from '../contexts/SongContext';
 
@@ -16,6 +16,7 @@ const MusicPlayerBar = ({
   onNextPress,
 }) => {
   const navigation = useNavigation();
+  const { playerState } = useContext(MusicPlayerContext);
   const [isPlaying, setIsPlaying] = useState(true);
 
   const togglePlayPause = () => {
