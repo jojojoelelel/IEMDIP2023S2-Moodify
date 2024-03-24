@@ -181,7 +181,7 @@ useEffect(() => {
   const tempBoxHandler = item => {
     switch (item.name) {
       case 'Album':
-        navigation.navigate('AB'); //Navigate to Monicka's screen
+        navigation.navigate('RecomScreen'); //Navigate to Monicka's screen
         break;
       case 'MyPlaylist':
         navigation.navigate('MyPlaylists'); //Navigate to Monicka's screen
@@ -211,7 +211,8 @@ useEffect(() => {
       case 'LikedSongs':
         navigation.navigate('LikedSongsScreen');
         break;
-        
+
+     
 
       default:
         alert('Null');
