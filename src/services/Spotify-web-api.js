@@ -6,15 +6,17 @@ import {
   StyleSheet,
   Linking,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env';
 
 var Buffer = require('buffer/').Buffer;
 
 const redirect_uri = 'http://localhost:8081/callback';
-const client_secret = process.env.REACT_APP_CLIENT_SECRET;
-const client_id = process.env.REACT_APP_CLIENT_ID;
+const client_secret = REACT_APP_CLIENT_SECRET;
+const client_id = REACT_APP_CLIENT_ID;
+// const client_secret = process.env.REACT_APP_CLIENT_SECRET;
+// const client_id = process.env.REACT_APP_CLIENT_ID;
 
 export async function requestUserAuthorization() {
   // Login to Spotify to request authorization from the user to access
@@ -31,6 +33,7 @@ export async function requestUserAuthorization() {
     user-follow-read
     playlist-read-private
     playlist-read-collaborative
+    user-read-recently-played
     `;
 
   const url = `${auth_endpoint}?response_type=${response_type}&client_id=${client_id}&scope=${scope}&redirect_uri=${redirect_uri}`;
@@ -289,7 +292,58 @@ export async function checkUserSavedTracks(access_token, ids) {
   }
 }
 
-export async function getUserPlaylist(access_token, user_id) {
+// Get my playlists
+export async function getUserPlaylist(access_token) {
+  const url = `https://api.spotify.com/v1/me/playlists`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    // Directly return the playlists items from the response
+    return response.data.items;
+  } catch (error) {
+    console.error('Error fetching user playlists => ', error);
+    return []; // Return an empty array in case of error
+  }
+}
+
+// Get my playlist details
+export async function getPlaylistDetails(access_token, playlist_id) {
+  const authOptions = {
+    url: `https://api.spotify.com/v1/playlists/${playlist_id}`,
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  };
+
+  try {
+    const response = await axios.get(authOptions.url, {
+      headers: authOptions.headers,
+    });
+    const tracksInfo = response.data.tracks.items.map(item => ({
+      id: item.track.id,
+      title: item.track.name,
+      artist: item.track.artists.map(artist => artist.name).join(', '),
+      cover:
+        item.track.album.images.length > 0
+          ? item.track.album.images[0].url
+          : '',
+      album: item.track.album.name,
+      duration_ms: item.track.duration_ms,
+      preview_url: item.track.preview_url,
+    }));
+
+    console.log('Playlist Details Response => ', tracksInfo);
+    return tracksInfo; // Return the simplified playlist information
+  } catch (error) {
+    console.error('Error fetching playlist details => ', error);
+    throw error;
+  }
+}
+
+export async function getPublicUserPlaylist(access_token, user_id) {
   // get a playlist owned/followed by a Spotify User
   const authOptions = {
     url: `https://api.spotify.com/v1/users/${user_id}/playlists`,
@@ -383,3 +437,19 @@ export async function getTrack(access_token, id) {
     throw error;
   }
 }
+
+// Get user's recently played tracks
+const getRecentlyPlayedTracks = async accessToken => {
+  const url = 'https://api.spotify.com/v1/me/player/recently-played?limit=10'; // Adjust limit as needed
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data.items; // items array contains the recently played tracks
+  } catch (error) {
+    console.error('Error fetching recently played tracks:', error);
+    throw error;
+  }
+};

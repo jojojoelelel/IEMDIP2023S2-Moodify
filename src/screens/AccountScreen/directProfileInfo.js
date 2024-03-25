@@ -1,28 +1,35 @@
-import React, { useState,useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView, StyleSheet, FlatList, Image, ImageBackground, ScrollView } from 'react-native';
-import { pxToDp } from '../../utils/stylesKits';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  KeyboardAvoidingView,
+  StyleSheet,
+  FlatList,
+  Image,
+  ImageBackground,
+  ScrollView,
+} from 'react-native';
+import {pxToDp} from '../../utils/stylesKits';
+import {useNavigation} from '@react-navigation/native';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
-import {accessToken} from '@env';
 
 const PIscreen = () => {
   const initialUserData = [
-    { label: 'Account Name', value: 'Andy' },
-    { label: 'Country', value: 'SG' },
-    { label: 'Email', value: 'Andy@example.com' },
-    { label: 'Phone', value: '+1234567890' },
-    { label: 'Date of Birth', value: '1990-01-01' },
+    {label: 'Account Name', value: 'Andy'},
+    {label: 'Country', value: 'SG'},
+    {label: 'Email', value: 'Andy@example.com'},
+    {label: 'Phone', value: '+1234567890'},
+    {label: 'Date of Birth', value: '1990-01-01'},
   ];
 
   const navigation = useNavigation();
 
   const backNav = () => {
     navigation.goBack();
-}
-
-
-
+  };
 
   const [userData, setUserData] = useState(initialUserData);
   const [isEditing, setIsEditing] = useState(false);
@@ -37,27 +44,24 @@ const PIscreen = () => {
     setIsEditing(!isEditing);
   };
 
-  const access_token = 'BQC-4zcSs6ptyg3CX7Zix32DvO0SjY7MdzDkTQyqO2MyaTy5FWFc9GUmzy7bLFh-nzSLhsZ_Y9ghfXJ2ZNKO0QuNcrxuAC2Pvsk50uqxRPuezJRq442nhkhfFoeDQc3_tgpd4xIm-RMVLJtxGB7JL0jalDhRffj2KCivyG77SC9F1LphSkoowoRUKNcNhELheGxi_eCjG4cNjg2Lbrl32OIQ6OVEu8kMCUterqpGm4Q4YlpXmH6dTZ2Dq2eC'
+  const access_token =
+    'BQAWh17cj2uYCkuuKv7k_n3vs3mPdcoXt6Sh9NEcH7annd5f89YLCI3_Kfjd76OP7_fSL_a1XfKNVGlCnluKwFX22le99d9RAP4E20BOmQoPLq6heTS-Fhk0ZgsDfpGki91--VYa81--VzkWpcTE_BXBiDL-4u46WMK6l4ZScA9W9Xsrz6yPca28wmeC36xl8WwP3cvh5fOmUU1SXg_06h6rgZhpd1KZuIPO6VK3N18Dm1JlUFMIEuauvZUX';
   const getCurrentUserProfile2 = async () => {
-
     try {
-        
-        const response = await SpotifyAPI.getCurrentUserProfile(accessToken);
-        handleInputChange(response.display_name,0);
-        handleInputChange(response.country,1);
-        handleInputChange(response.email,2);
-
+      const response = await SpotifyAPI.getCurrentUserProfile(access_token);
+      handleInputChange(response.display_name, 0);
+      handleInputChange(response.country, 1);
+      handleInputChange(response.email, 2);
     } catch (error) {
-        console.error('Error in getCurrentUserProfile => ', error)
+      console.error('Error in getCurrentUserProfile => ', error);
     }
+  };
 
-}
+  useEffect(() => {
+    getCurrentUserProfile2();
+  }, []);
 
-useEffect(() => {
-  getCurrentUserProfile2();
-}, []);
-
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({item, index}) => (
     <View style={styles.itemContainer}>
       <View style={styles.item}>
         <Text style={styles.label}>{item.label}:</Text>
@@ -65,7 +69,7 @@ useEffect(() => {
           <TextInput
             style={styles.input}
             value={userData[index].value}
-            onChangeText={(text) => handleInputChange(text, index)}
+            onChangeText={text => handleInputChange(text, index)}
           />
         ) : (
           <Text style={styles.value}>{item.value}</Text>
@@ -75,22 +79,31 @@ useEffect(() => {
   );
 
   return (
-    <ImageBackground source={require('../../assets/images/background.png')} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.container}>
-        <TouchableOpacity onPress={backNav}><Image
-        source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
-        style={{ width: 50, height: 50 }} // Adjust the width and height according to your preference
-      /></TouchableOpacity>
-        <Image source={require('../../assets/icon/profile.jpg')} style={styles.profileImage} />
+    <ImageBackground
+      source={require('../../assets/images/background.png')}
+      style={{flex: 1}}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <TouchableOpacity onPress={backNav}>
+          <Image
+            source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
+            style={{width: 50, height: 50}} // Adjust the width and height according to your preference
+          />
+        </TouchableOpacity>
+        <Image
+          source={require('../../assets/icon/profile.jpg')}
+          style={styles.profileImage}
+        />
         <FlatList
           data={userData}
           renderItem={renderItem}
-          keyExtractor={(item) => item.label}
+          keyExtractor={item => item.label}
         />
         <TouchableOpacity onPress={handleEditProfile} style={styles.editButton}>
-          <Text style={styles.editButtonText}>{isEditing ? 'Save Changes' : 'Update Profile Info'}</Text>
+          <Text style={styles.editButtonText}>
+            {isEditing ? 'Save Changes' : 'Update Profile Info'}
+          </Text>
         </TouchableOpacity>
-        </ScrollView>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -99,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    marginTop:40,
+    marginTop: 40,
   },
   profileImage: {
     height: pxToDp(80),
@@ -127,14 +140,14 @@ const styles = StyleSheet.create({
   value: {
     color: 'white',
     flex: 1,
-    fontSize: 15
+    fontSize: 15,
   },
   editButton: {
     backgroundColor: '#A4EC0A',
     borderRadius: 5,
     padding: 10,
     alignItems: 'center',
-    marginBottom:130,
+    marginBottom: 130,
   },
   editButtonText: {
     color: 'black',
