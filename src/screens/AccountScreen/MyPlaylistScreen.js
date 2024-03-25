@@ -5,7 +5,7 @@ import PlaylistItem from '../../components/PlaylistItem';
 import MusicPlayerBar from '../../components/MusicPlayerBar'; //to demo music player bar
 import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
-//commentcommenthujh
+//c
 const PlaylistsScreen = ({navigation}) => {
   const [playlist, setPlaylists] = useState([]);
 

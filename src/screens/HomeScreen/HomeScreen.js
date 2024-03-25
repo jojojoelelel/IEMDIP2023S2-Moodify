@@ -49,12 +49,10 @@ export default function HomeScreen({navigation}) {
   };
 
   const spotifyApi = new SpotifyWebApi();
-  const access_token =
-    'BQAKkeGFjnwLzARS0Jv2M7Lfan128JxKIKEDcZDTPYDx1mebH5PN9JIj2LYBFMt-8qtC8J9u7EZ-_iDqfrNnnvFa3keAOFGdSK1kFRgUARRGPdOjxa5uz1ho8ZYQXo9tKAOVfawYTbC2f29M_GrVpixbeLMJw_6A5emw1JpY-lGgs8Rgy_ivCEIetc4lo9gKShqcGiWFgKfXOxlrxZUdrG1sdFv2u_OGmE5vQt_cWrgRoySNgAei8wp_pA9t'; // Replace with your actual access token
 
   const getFollowedArtist2 = async () => {
     try {
-      const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
+      const response = await SpotifyAPI.getFollowedArtists(access_token2, 5);
       console.log(response.data.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
@@ -79,7 +77,7 @@ export default function HomeScreen({navigation}) {
   const getArtistAlbums2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistAlbums(
-        access_token,
+        access_token2,
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
       console.log(response.data.items);
@@ -103,7 +101,7 @@ export default function HomeScreen({navigation}) {
   const getArtistTopTracks2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistTopTracks(
-        access_token,
+        access_token2,
         '0grdhNhiRLFBaFVyybqsj6',
         'SG',
       );

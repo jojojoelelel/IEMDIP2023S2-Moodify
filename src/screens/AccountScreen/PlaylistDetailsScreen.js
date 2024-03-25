@@ -15,7 +15,7 @@ import * as SpotifyAPI from '../../services/Spotify-web-api';
 import Sound from 'react-native-sound';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../../contexts/SongContext';
-//comment
+//c
 const PlaylistDetailsScreen = ({route}) => {
   const {playlist} = route.params;
   const [songs, setSongs] = useState([]);
