@@ -1,4 +1,5 @@
 // HomeScreen.js
+// HomeScreen.js
 import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
@@ -24,7 +25,7 @@ import {useAuth} from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
-import {access_token} from '@env';
+import {access_token2} from '@env';
 
 // Other screens in Home
 import SearchScreen from './SearchScreen';
@@ -48,17 +49,16 @@ export default function HomeScreen({navigation}) {
     navigation.navigate('Search');
   };
 
-  const spotifyApi = new SpotifyWebApi();
-  const access_token =
-    'BQAKkeGFjnwLzARS0Jv2M7Lfan128JxKIKEDcZDTPYDx1mebH5PN9JIj2LYBFMt-8qtC8J9u7EZ-_iDqfrNnnvFa3keAOFGdSK1kFRgUARRGPdOjxa5uz1ho8ZYQXo9tKAOVfawYTbC2f29M_GrVpixbeLMJw_6A5emw1JpY-lGgs8Rgy_ivCEIetc4lo9gKShqcGiWFgKfXOxlrxZUdrG1sdFv2u_OGmE5vQt_cWrgRoySNgAei8wp_pA9t'; // Replace with your actual access token
+  const spotifyAPI = new SpotifyWebApi();
+  const access_token = access_token2;
 
   const getFollowedArtist2 = async () => {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      console.log(response.data.artists.items); // Log the response object
+      console.log(response.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
-        ...response.data.artists.items.map(artist => ({
+        ...response.artists.items.map(artist => ({
           ...artist,
           imageUrl:
             artist.images && artist.images.length > 0
@@ -82,10 +82,10 @@ export default function HomeScreen({navigation}) {
         access_token,
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
-      console.log(response.data.items);
+      console.log(response.items);
       setTopAlbums(prevData => [
         ...prevData,
-        ...response.data.items.map(album => ({
+        ...response.items.map(album => ({
           ...album,
           imageUrl:
             album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
@@ -110,7 +110,7 @@ export default function HomeScreen({navigation}) {
       //console.log(response);
       console.log(response.data.tracks);
       setTopTracks(
-        response.data.tracks.map(track => ({
+        response.tracks.map(track => ({
           title: track.name,
           artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
           imageUrl:

@@ -11,7 +11,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {pxToDp} from '../../utils/stylesKits'; //Transform dimensions to fit screen
+import {pxToDp} from '../src/utils/stylesKits'; //Transform dimensions to fit screen
 import {useNavigation} from '@react-navigation/native';
 //import * as ImagePicker from 'react-native-image-picker';
 
