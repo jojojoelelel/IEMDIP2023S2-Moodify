@@ -1,5 +1,4 @@
 // HomeScreen.js
-// HomeScreen.js
 import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
@@ -49,16 +48,16 @@ export default function HomeScreen({navigation}) {
     navigation.navigate('Search');
   };
 
-  const spotifyAPI = new SpotifyWebApi();
+  const spotifyApi = new SpotifyWebApi();
   const access_token = access_token2;
 
   const getFollowedArtist2 = async () => {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      console.log(response.artists.items); // Log the response object
+      console.log(response.data.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
-        ...response.artists.items.map(artist => ({
+        ...response.data.artists.items.map(artist => ({
           ...artist,
           imageUrl:
             artist.images && artist.images.length > 0
@@ -74,7 +73,7 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     getFollowedArtist2();
   }, []);
-  //console.log(topArtists);
+  //console.log(topArtists);c
 
   const getArtistAlbums2 = async () => {
     try {
@@ -82,10 +81,10 @@ export default function HomeScreen({navigation}) {
         access_token,
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
-      console.log(response.items);
+      console.log(response.data.items);
       setTopAlbums(prevData => [
         ...prevData,
-        ...response.items.map(album => ({
+        ...response.data.items.map(album => ({
           ...album,
           imageUrl:
             album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
@@ -99,7 +98,7 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     getArtistAlbums2();
   }, []);
-
+  //
   const getArtistTopTracks2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistTopTracks(
@@ -110,7 +109,7 @@ export default function HomeScreen({navigation}) {
       //console.log(response);
       console.log(response.data.tracks);
       setTopTracks(
-        response.tracks.map(track => ({
+        response.data.tracks.map(track => ({
           title: track.name,
           artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
           imageUrl:
@@ -175,13 +174,6 @@ export default function HomeScreen({navigation}) {
           />
         </View>
       </ScrollView>
-
-      <MusicPlayerBar
-        songTitle="Song Title"
-        artistName="Artist Name"
-        coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
-        onPlayPausePress={() => {}}
-      />
     </View>
   );
 }

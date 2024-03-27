@@ -1,11 +1,17 @@
 // SongContext.js
 import React, {createContext, useContext, useState, useEffect} from 'react';
-import TrackPlayer, {Capability, State} from 'react-native-track-player';
+import TrackPlayer, {
+  Capability,
+  State,
+  Event,
+  useTrackPlayerEvents,
+  usePlaybackState,
+} from 'react-native-track-player';
 
 const MusicPlayerContext = createContext();
 
 const MusicPlayerProvider = ({children}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState();
   const [currentTrack, setCurrentTrack] = useState(null);
   const [playerState, setPlayerState] = useState(TrackPlayer.STATE_NONE); //Initial state
 
@@ -13,6 +19,7 @@ const MusicPlayerProvider = ({children}) => {
     // Track Player setup
     TrackPlayer.setupPlayer().then(async () => {
       await TrackPlayer.updateOptions({
+        stopWithApp: true,
         capabilities: [
           Capability.Play,
           Capability.Pause,
@@ -22,34 +29,29 @@ const MusicPlayerProvider = ({children}) => {
         ],
       });
     });
+  }, []);
 
-    // Event listener
-    TrackPlayer.addEventListener('playback-state', async data => {
-      console.log('Previous State:', playerState);
-      setPlayerState(data.state);
-      console.log('New State:', data.state);
-
-      if (data.state === State.Playing) {
+/*   const togglePlayback = async playBackState => {
+    const currentTrack = await TrackPlayer.getActiveTrack();
+    console.log(currentTrack, playBackState, State.Playing);
+    if (currentTrack != null) {
+      if (playBackState == State.Paused) {
+        await TrackPlayer.play();
         setIsPlaying(true);
-      } else if (data.state === State.Paused || data.state === State.Stopped) {
+      } else {
+        await TrackPlayer.pause();
         setIsPlaying(false);
       }
-    });
-
-    // Clean up on unmount
-    return () => {
-      //TrackPlayer.destroy();
-      TrackPlayer.removeEventListener('playback-state'); // Remove listener
-    };
-  }, []);
+    }
+  }; */
 
   const playOrPauseTrack = async () => {
     const currentPlaybackState = await TrackPlayer.getPlaybackState();
-
-    if (currentPlaybackState === TrackPlayer.STATE_PAUSED) {
+    console.log('Playback state', currentPlaybackState);
+    if (currentPlaybackState.state === 'paused') {
       await TrackPlayer.play();
       setIsPlaying(true);
-    } else if (currentPlaybackState === TrackPlayer.STATE_PLAYING) {
+    } else if (currentPlaybackState.state === 'playing') {
       await TrackPlayer.pause();
       setIsPlaying(false);
     }
@@ -70,7 +72,7 @@ const MusicPlayerProvider = ({children}) => {
     await TrackPlayer.stop();
     await TrackPlayer.skipToNext();
     await TrackPlayer.play();
-    setIsPlaying(true);
+    //setIsPlaying(true);
     setCurrentTrack(track);
     const q = await TrackPlayer.getQueue();
     console.log(q);
@@ -79,7 +81,7 @@ const MusicPlayerProvider = ({children}) => {
   // ... other player control functions (pause, skip, etc.)
   const pauseTrack = async () => {
     await TrackPlayer.pause();
-    setIsPlaying(false);
+    //setIsPlaying(false);
   };
 
   const skipToNext = async () => {
@@ -95,7 +97,7 @@ const MusicPlayerProvider = ({children}) => {
   };
 
   const contextValue = {
-    isPlaying: false,
+    isPlaying,
     setIsPlaying,
     currentTrack,
     setCurrentTrack,
@@ -104,6 +106,7 @@ const MusicPlayerProvider = ({children}) => {
     skipToNext,
     skipToPrevious,
     playOrPauseTrack,
+    togglePlayback,
     // ...other control functions
   };
 
