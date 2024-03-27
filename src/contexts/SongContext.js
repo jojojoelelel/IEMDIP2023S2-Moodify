@@ -72,7 +72,7 @@ const MusicPlayerProvider = ({children}) => {
     await TrackPlayer.stop();
     await TrackPlayer.skipToNext();
     await TrackPlayer.play();
-    //setIsPlaying(true);
+    setIsPlaying(true);
     setCurrentTrack(track);
     const q = await TrackPlayer.getQueue();
     console.log(q);
