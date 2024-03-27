@@ -18,8 +18,8 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
 
-import { AppContext } from '../../navigation/AppNavigation';
-
+import {AppContext} from '../../navigation/AppNavigation';
+import MusicPlayerBar from '../../components/MusicPlayerBar';
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -94,7 +94,7 @@ const initialFollowInfo = [
 
 const AccountScreen = () => {
   const navigation = useNavigation();
-  const { access_token, setaccess_token } = useContext(AppContext);
+  const {access_token, setaccess_token} = useContext(AppContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState();
@@ -444,6 +444,7 @@ const AccountScreen = () => {
           />
         </View>
       </View>
+      <MusicPlayerBar />
     </ImageBackground>
   );
 };
