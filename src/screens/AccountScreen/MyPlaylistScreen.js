@@ -15,9 +15,9 @@ const PlaylistsScreen = ({navigation}) => {
 
   const fetchPlaylists = async () => {
     // const accessToken = access_token2; // Replace with your actual access token
-    const playlistsData = await SpotifyAPI.getUserPlaylist(access_token);
+    const playlistsData = await SpotifyAPI.getCurrentUserPlaylist(access_token);
     setPlaylists(
-      playlistsData.map(playlist => ({
+      playlistsData.items.map(playlist => ({
         id: playlist.id,
         title: playlist.name,
         creator: playlist.owner.display_name,
@@ -45,9 +45,12 @@ const PlaylistsScreen = ({navigation}) => {
     //     })),
     //   );
     // };
-
-    fetchPlaylists();
-  }, []);
+    if (access_token) {
+      fetchPlaylists();
+      console.log('PLAYLISTATAS', playlist)
+    }
+    
+  }, [access_token]);
 
   // Function to handle item press if needed
   const handleItemPress = playlist => {

@@ -58,10 +58,10 @@ export default function HomeScreen({navigation}) {
   const getFollowedArtist2 = async () => {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      console.log(response.artists.items); // Log the response object
+      // console.log(response.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
-        ...response.data.artists.items.map(artist => ({
+        ...response.artists.items.map(artist => ({
           ...artist,
           imageUrl:
             artist.images && artist.images.length > 0
