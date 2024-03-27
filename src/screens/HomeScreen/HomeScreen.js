@@ -37,6 +37,7 @@ import AlbumCard from '../../components/AlbumCard.js';
 import TrackList from '../../components/TrackList.js';
 import PlayerControls from '../../components/PlayerControls.js';
 import MusicPlayerBar from '../../components/MusicPlayerBar.js';
+import {MusicPlayerContext} from '../../contexts/SongContext.js';
 
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
@@ -46,6 +47,9 @@ export default function HomeScreen({navigation}) {
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
+
+  const {playTrack, playOrPauseTrack, currentTrack} =
+    useContext(MusicPlayerContext);
 
   const handleSearchPress = () => {
     // Need to navigate to the Search screen properly
@@ -86,14 +90,14 @@ export default function HomeScreen({navigation}) {
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
       console.log(response.items);
-      setTopAlbums(prevData => [
-        ...prevData,
-        ...response.items.map(album => ({
-          ...album,
-          imageUrl:
-            album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
-        })),
-      ]);
+      const mappedAlbums = response.items.map(album => ({
+        ...album,
+        imageUrl:
+          album.images && album.images.length > 0
+            ? album.images[0].url
+            : 'default_image_url_here', // Add your default image URL
+      }));
+      setTopAlbums(prevData => [...prevData, ...mappedAlbums]);
     } catch (error) {
       console.error('Error in getArtistAlbums => ', error);
     }
@@ -116,8 +120,8 @@ export default function HomeScreen({navigation}) {
         response.tracks.map(track => ({
           title: track.name,
           artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
-          imageUrl:
-            track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+          cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+          url: track.preview_url,
         })),
       );
     } catch (error) {
@@ -135,6 +139,10 @@ export default function HomeScreen({navigation}) {
       getArtistTopTracks2();
     }
   }, [access_token])
+
+  const handleItemPress = item => {
+    playTrack(item);
+  };
 
   return (
     <View style={styles.container}>
@@ -176,9 +184,11 @@ export default function HomeScreen({navigation}) {
             data={topTracks} // Use topTracks instead of track
             renderItem={({item}) => (
               <TrackList
+                id={item.id}
                 title={item.title}
                 artist={item.artist}
-                imageUrl={item.imageUrl}
+                cover={item.cover}
+                url={item.preview_url}
                 onPress={() => handleItemPress(item)}
               />
             )}

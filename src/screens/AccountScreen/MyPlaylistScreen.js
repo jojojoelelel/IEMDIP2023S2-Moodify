@@ -12,7 +12,6 @@ import { AppContext } from '../../navigation/AppNavigation';
 const PlaylistsScreen = ({navigation}) => {
   const { access_token, setaccess_token } = useContext(AppContext);
   const [playlist, setPlaylists] = useState([]);
-
   const fetchPlaylists = async () => {
     // const accessToken = access_token2; // Replace with your actual access token
     const playlistsData = await SpotifyAPI.getCurrentUserPlaylist(access_token);

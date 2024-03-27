@@ -18,6 +18,7 @@ const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
   return (
     <>
+      <MusicPlayerBar />
       <Tab.Navigator
         initialRouteName={homeRoute}
         screenOptions={({route}) => ({
@@ -53,7 +54,6 @@ const BottomNavigation = () => {
           options={{tabBarLabel: 'Account'}}
         />
       </Tab.Navigator>
-      <MusicPlayerBar />
     </>
   );
 };
