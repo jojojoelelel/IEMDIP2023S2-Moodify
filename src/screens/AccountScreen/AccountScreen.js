@@ -17,8 +17,6 @@ import {useAuth} from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
-// import {access_token2} from '@env';
-//import * as ImagePicker from 'react-native-image-picker';.
 
 import { AppContext } from '../../navigation/AppNavigation';
 
