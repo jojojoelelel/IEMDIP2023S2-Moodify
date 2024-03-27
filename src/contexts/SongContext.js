@@ -31,7 +31,7 @@ const MusicPlayerProvider = ({children}) => {
     });
   }, []);
 
-/*   const togglePlayback = async playBackState => {
+  /*   const togglePlayback = async playBackState => {
     const currentTrack = await TrackPlayer.getActiveTrack();
     console.log(currentTrack, playBackState, State.Playing);
     if (currentTrack != null) {
@@ -106,7 +106,6 @@ const MusicPlayerProvider = ({children}) => {
     skipToNext,
     skipToPrevious,
     playOrPauseTrack,
-    togglePlayback,
     // ...other control functions
   };
 

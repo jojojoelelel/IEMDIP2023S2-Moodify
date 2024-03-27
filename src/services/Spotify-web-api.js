@@ -59,7 +59,7 @@ export async function requestAccessToken(return_Params) {
     const response = await axios.post(authOptions.url, authOptions.form, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('requestAccessToken Response => ', response.data);
     return response.data.access_token;
   } catch (error) {
     console.error('Error => ', error);
@@ -91,7 +91,7 @@ export async function getCurrentUserProfile(access_token) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('authOptions Response => ', response.data);
     return response.data;
   } catch (error) {
     console.error('Error => ', error);
@@ -121,7 +121,7 @@ export async function getDeviceID(access_token) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response);
+    console.log('getDeviceID Response => ', response);
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -141,7 +141,7 @@ export async function getUserProfile(access_token, user_id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('getUserProfile Response => ', response.data);
   } catch (error) {
     console.error('Error in getUserProfile => ', error);
     throw error;
@@ -214,7 +214,8 @@ export async function getFollowedArtists(access_token, limit) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response);
+    console.log('getFollowedArtists Response => ', response);
+    return response;
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -238,7 +239,7 @@ export async function checkIfUserFollowsArtistsOrUsers(
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('checkIfUserFollowsArtistsOrUsers Response => ', response.data);
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -261,7 +262,7 @@ export async function checkIfUserFollowsPlaylist(
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('checkIfUserFollowsPlaylist Response => ', response.data);
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -282,7 +283,7 @@ export async function checkUserSavedTracks(access_token, ids) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('checkUserSavedTracks Response => ', response.data);
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -320,7 +321,8 @@ export async function getArtist(access_token, id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('getArtist Response => ', response.data);
+    return response;
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -339,7 +341,8 @@ export async function getArtistAlbums(access_token, id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('getArtistAlbums Response => ', response.data);
+    return response;
   } catch (error) {
     console.error('Error => ', error);
     throw error;
@@ -359,8 +362,9 @@ export async function getArtistTopTracks(access_token, id, market) {
       headers: authOptions.headers,
     });
     console.log('Response => ', response.data);
+    return response;
   } catch (error) {
-    console.error('Error => ', error);
+    console.error('getArtistTopTracks Error => ', error);
     throw error;
   }
 }
@@ -377,7 +381,7 @@ export async function getTrack(access_token, id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    console.log('getTrack Response => ', response.data);
   } catch (error) {
     console.error('Error => ', error);
     throw error;
