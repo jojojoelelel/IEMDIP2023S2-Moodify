@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, createContext } from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 //Import the screens here
@@ -26,25 +26,23 @@ import DiaryScreen from '../screens/AccountScreen/directDiary';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = ({test}) => { 
+export const AppContext = createContext(null);
 
-  console.log(test);
+const AppNavigator = () => { 
+  const [access_token, setaccess_token] = useState()
+
   return (
-    
+    <AppContext.Provider value={{access_token, setaccess_token}}>
     <Stack.Navigator>
       <Stack.Screen name="GettingStarted" component={GettingStarted} />
-      <Stack.Screen name="SignInScreen" component={SignInScreen} initialParams={{test}}/>
+      <Stack.Screen name="SignInScreen" component={SignInScreen}/>
       
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
       />
-      <Stack.Screen
-        name="Main"
-        component={BottomNavigation}
-        options={{headerShown: false}}
-      />
+
       {/* Add more screens as needed */}
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
@@ -91,7 +89,13 @@ const AppNavigator = ({test}) => {
       <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
+      <Stack.Screen
+        name="Main"
+        component={BottomNavigation}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
+    </AppContext.Provider>
   );
 };
 
