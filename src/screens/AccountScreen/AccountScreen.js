@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -17,7 +17,8 @@ import {useAuth} from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
-//import * as ImagePicker from 'react-native-image-picker';
+
+import { AppContext } from '../../navigation/AppNavigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -93,6 +94,7 @@ const initialFollowInfo = [
 
 const AccountScreen = () => {
   const navigation = useNavigation();
+  const { access_token, setaccess_token } = useContext(AppContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState();
@@ -117,8 +119,7 @@ const AccountScreen = () => {
     });
   };
 
-  const access_token =
-    'BQCGqN9ckfW3B0Kj1pLOBIADVfzsL13mpY13YR3HN9-wPFG-V5nEofWgwbDnm6yEo0FyBkPcQdf1RqYR78Z1GS5kW-5pxDyBefq-rtFyUJFBjx1l2t54y029GSqkvZFM_nQpTHx2rl9dGIxYuu2Hb1o5nSHK8DcfQ66nguio_Qh8hu5mYpTeu_DhHvgY0NR9ID7tuul2enYfw88yZgOd6wlGi8mbEPojljkdfikXfkUvvqMmgGHXmWaryTe-';
+  // const access_token = access_token2;
   let imgurl = '123';
   const getCurrentUserProfile2 = async () => {
     try {

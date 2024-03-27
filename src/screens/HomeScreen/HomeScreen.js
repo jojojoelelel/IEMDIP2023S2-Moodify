@@ -1,5 +1,5 @@
 // HomeScreen.js
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -24,7 +24,9 @@ import {useAuth} from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
-import {access_token} from '@env';
+// import {access_token2} from '@env';
+
+import { AppContext } from '../../navigation/AppNavigation.js';
 
 // Other screens in Home
 import SearchScreen from './SearchScreen';
@@ -35,13 +37,19 @@ import AlbumCard from '../../components/AlbumCard.js';
 import TrackList from '../../components/TrackList.js';
 import PlayerControls from '../../components/PlayerControls.js';
 import MusicPlayerBar from '../../components/MusicPlayerBar.js';
+import {MusicPlayerContext} from '../../contexts/SongContext.js';
 
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
 
+  const { access_token, setaccess_token } = useContext(AppContext);
+
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
+
+  const {playTrack, playOrPauseTrack, currentTrack} =
+    useContext(MusicPlayerContext);
 
   const handleSearchPress = () => {
     // Need to navigate to the Search screen properly
@@ -49,16 +57,15 @@ export default function HomeScreen({navigation}) {
   };
 
   const spotifyApi = new SpotifyWebApi();
-  const access_token =
-    'BQAKkeGFjnwLzARS0Jv2M7Lfan128JxKIKEDcZDTPYDx1mebH5PN9JIj2LYBFMt-8qtC8J9u7EZ-_iDqfrNnnvFa3keAOFGdSK1kFRgUARRGPdOjxa5uz1ho8ZYQXo9tKAOVfawYTbC2f29M_GrVpixbeLMJw_6A5emw1JpY-lGgs8Rgy_ivCEIetc4lo9gKShqcGiWFgKfXOxlrxZUdrG1sdFv2u_OGmE5vQt_cWrgRoySNgAei8wp_pA9t'; // Replace with your actual access token
+  // const access_token = access_token2;
 
   const getFollowedArtist2 = async () => {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      console.log(response.data.artists.items); // Log the response object
+      // console.log(response.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
-        ...response.data.artists.items.map(artist => ({
+        ...response.artists.items.map(artist => ({
           ...artist,
           imageUrl:
             artist.images && artist.images.length > 0
@@ -71,10 +78,10 @@ export default function HomeScreen({navigation}) {
     }
   };
 
-  useEffect(() => {
-    getFollowedArtist2();
-  }, []);
-  //console.log(topArtists);
+  // useEffect(() => {
+  //   getFollowedArtist2();
+  // }, []);
+  //console.log(topArtists);c
 
   const getArtistAlbums2 = async () => {
     try {
@@ -82,24 +89,24 @@ export default function HomeScreen({navigation}) {
         access_token,
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
-      console.log(response.data.items);
-      setTopAlbums(prevData => [
-        ...prevData,
-        ...response.data.items.map(album => ({
-          ...album,
-          imageUrl:
-            album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
-        })),
-      ]);
+      console.log(response.items);
+      const mappedAlbums = response.items.map(album => ({
+        ...album,
+        imageUrl:
+          album.images && album.images.length > 0
+            ? album.images[0].url
+            : 'default_image_url_here', // Add your default image URL
+      }));
+      setTopAlbums(prevData => [...prevData, ...mappedAlbums]);
     } catch (error) {
       console.error('Error in getArtistAlbums => ', error);
     }
   };
 
-  useEffect(() => {
-    getArtistAlbums2();
-  }, []);
-
+  // useEffect(() => {
+  //   getArtistAlbums2();
+  // }, []);
+  //
   const getArtistTopTracks2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistTopTracks(
@@ -108,13 +115,13 @@ export default function HomeScreen({navigation}) {
         'SG',
       );
       //console.log(response);
-      console.log(response.data.tracks);
+      console.log(response.tracks);
       setTopTracks(
-        response.data.tracks.map(track => ({
+        response.tracks.map(track => ({
           title: track.name,
           artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
-          imageUrl:
-            track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+          cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+          url: track.preview_url,
         })),
       );
     } catch (error) {
@@ -122,9 +129,20 @@ export default function HomeScreen({navigation}) {
     }
   };
 
+  // useEffect(() => {
+  //   getArtistTopTracks2();
+  // }, []);
   useEffect(() => {
-    getArtistTopTracks2();
-  }, []);
+    if(access_token) {
+      getArtistAlbums2();
+      getFollowedArtist2();
+      getArtistTopTracks2();
+    }
+  }, [access_token])
+
+  const handleItemPress = item => {
+    playTrack(item);
+  };
 
   return (
     <View style={styles.container}>
@@ -166,22 +184,17 @@ export default function HomeScreen({navigation}) {
             data={topTracks} // Use topTracks instead of track
             renderItem={({item}) => (
               <TrackList
+                id={item.id}
                 title={item.title}
                 artist={item.artist}
-                imageUrl={item.imageUrl}
+                cover={item.cover}
+                url={item.preview_url}
                 onPress={() => handleItemPress(item)}
               />
             )}
           />
         </View>
       </ScrollView>
-
-      <MusicPlayerBar
-        songTitle="Song Title"
-        artistName="Artist Name"
-        coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
-        onPlayPausePress={() => {}}
-      />
     </View>
   );
 }

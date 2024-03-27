@@ -1,29 +1,46 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, {useState, useContext} from 'react';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {MusicPlayerContext} from '../contexts/SongContext';
 
-const MusicPlayerBar = ({ songTitle, artistName, coverImage, onPlayPausePress }) => {
-  const [isPlaying, setIsPlaying] = useState(true);
+const MusicPlayerBar = () => {
+  const {
+    currentTrack,
+    isPlaying,
+    playOrPauseTrack,
+    skipToNext,
+    skipToPrevious,
+  } = useContext(MusicPlayerContext);
 
-  const togglePlayPause = () => {
+  /*   const togglePlayPause = () => {
     const newIsPlaying = !isPlaying;
     setIsPlaying(newIsPlaying);
     if (onPlayPausePress) {
       onPlayPausePress(newIsPlaying);
     }
-  };
+  }; */
+
+  // Render guard
+  if (!currentTrack) {
+    // If there is no current track, render nothing or a placeholder
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-    <Image source={{ uri: coverImage }} style={styles.coverImage} />
-    <View style={styles.songInfo}>
-      <Text style={styles.songTitle}>{songTitle}</Text>
-      <Text style={styles.artistName}>{artistName}</Text>
+      <Image source={{uri: currentTrack.cover}} style={styles.coverImage} />
+      <View style={styles.songInfo}>
+        <Text style={styles.songTitle}>{currentTrack.title}</Text>
+        <Text style={styles.artistName}>{currentTrack.artist}</Text>
+      </View>
+      <TouchableOpacity onPress={playOrPauseTrack}>
+        <Ionicons
+          name={isPlaying ? 'pause' : 'play'}
+          size={30}
+          color="#FFFFFF"
+        />
+      </TouchableOpacity>
     </View>
-    <TouchableOpacity onPress={togglePlayPause}>
-      <Icon name={isPlaying ? 'ios-pause' : 'ios-play'} size={30} color="#FFFFFF" />
-    </TouchableOpacity>
-  </View>
   );
 };
 
