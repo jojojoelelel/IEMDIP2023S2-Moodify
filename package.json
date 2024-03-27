@@ -23,6 +23,7 @@
     "firebase": "^10.8.0",
     "react": "18.2.0",
     "react-native": "^0.73.2",
+    "react-native-async-storage": "^0.0.1",
     "react-native-buffer": "^6.0.3",
     "react-native-calendar-picker": "^6.1.5",
     "react-native-dotenv": "^3.4.10",
