@@ -1,5 +1,5 @@
 // HomeScreen.js
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -35,6 +35,7 @@ import AlbumCard from '../../components/AlbumCard.js';
 import TrackList from '../../components/TrackList.js';
 import PlayerControls from '../../components/PlayerControls.js';
 import MusicPlayerBar from '../../components/MusicPlayerBar.js';
+import {MusicPlayerContext} from '../../contexts/SongContext.js';
 
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
@@ -42,6 +43,9 @@ export default function HomeScreen({navigation}) {
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
+
+  const {playTrack, playOrPauseTrack, currentTrack} =
+    useContext(MusicPlayerContext);
 
   const handleSearchPress = () => {
     // Need to navigate to the Search screen properly
@@ -110,10 +114,11 @@ export default function HomeScreen({navigation}) {
       console.log(response.data.tracks);
       setTopTracks(
         response.data.tracks.map(track => ({
+          id: track.id,
           title: track.name,
           artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
-          imageUrl:
-            track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+          cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+          url: track.preview_url,
         })),
       );
     } catch (error) {
@@ -124,6 +129,10 @@ export default function HomeScreen({navigation}) {
   useEffect(() => {
     getArtistTopTracks2();
   }, []);
+
+  const handleItemPress = item => {
+    playTrack(item);
+  };
 
   return (
     <View style={styles.container}>
@@ -165,9 +174,11 @@ export default function HomeScreen({navigation}) {
             data={topTracks} // Use topTracks instead of track
             renderItem={({item}) => (
               <TrackList
+                id={item.id}
                 title={item.title}
                 artist={item.artist}
-                imageUrl={item.imageUrl}
+                cover={item.cover}
+                url={item.preview_url}
                 onPress={() => handleItemPress(item)}
               />
             )}
