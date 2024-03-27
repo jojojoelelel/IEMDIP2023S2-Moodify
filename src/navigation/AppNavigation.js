@@ -42,11 +42,7 @@ const AppNavigator = () => {
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
       />
-      <Stack.Screen
-        name="Main"
-        component={BottomNavigation}
-        options={{headerShown: false}}
-      />
+
       {/* Add more screens as needed */}
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
@@ -93,6 +89,11 @@ const AppNavigator = () => {
       <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
+      <Stack.Screen
+        name="Main"
+        component={BottomNavigation}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
     </AppContext.Provider>
   );

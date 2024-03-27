@@ -171,7 +171,6 @@ export async function getFollowedArtists(access_token, limit) {
         console.error('Error => ', error)
         throw error;
     }
-
 }
 
 export async function checkIfUserFollowsArtistsOrUsers(access_token, type, ids) {

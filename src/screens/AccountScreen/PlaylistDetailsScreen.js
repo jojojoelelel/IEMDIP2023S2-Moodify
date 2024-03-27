@@ -33,7 +33,7 @@ const PlaylistDetailsScreen = ({route}) => {
     skipToNext,
     skipToPrevious,
   } = useContext(MusicPlayerContext);
-
+  //
   useEffect(() => {
     const fetchPlaylistDetails = async () => {
       try {
