@@ -10,13 +10,16 @@ import {
   FlatList,
 } from 'react-native';
 import SongItem from '../../components/SongItem';
-import {access_token2} from '@env';
+// import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import Sound from 'react-native-sound';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../../contexts/SongContext';
 
+import { AppContext } from '../../navigation/AppNavigation';
+
 const PlaylistDetailsScreen = ({route}) => {
+  const { access_token, setaccess_token } = useContext(AppContext);
   const {playlist} = route.params;
   const [songs, setSongs] = useState([]);
   const [playing, setPlaying] = useState(false);
@@ -35,7 +38,7 @@ const PlaylistDetailsScreen = ({route}) => {
     const fetchPlaylistDetails = async () => {
       try {
         const tracks = await SpotifyAPI.getPlaylistDetails(
-          access_token2,
+          access_token,
           playlist.id,
         );
         setSongs(tracks); // Assuming the returned value is directly the list of tracks

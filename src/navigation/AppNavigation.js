@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, createContext } from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 //Import the screens here
@@ -26,10 +26,13 @@ import DiaryScreen from '../screens/AccountScreen/directDiary';
 
 const Stack = createStackNavigator();
 
+export const AppContext = createContext(null);
+
 const AppNavigator = () => { 
+  const [access_token, setaccess_token] = useState()
 
   return (
-    
+    <AppContext.Provider value={{access_token, setaccess_token}}>
     <Stack.Navigator>
       <Stack.Screen name="GettingStarted" component={GettingStarted} />
       <Stack.Screen name="SignInScreen" component={SignInScreen}/>
@@ -91,6 +94,7 @@ const AppNavigator = () => {
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
     </Stack.Navigator>
+    </AppContext.Provider>
   );
 };
 
