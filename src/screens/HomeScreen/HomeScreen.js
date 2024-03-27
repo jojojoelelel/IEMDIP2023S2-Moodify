@@ -1,5 +1,5 @@
 // HomeScreen.js
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -24,7 +24,9 @@ import {useAuth} from '../AccountScreen/AuthContext';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
-import {access_token2} from '@env';
+// import {access_token2} from '@env';
+
+import { AppContext } from '../../navigation/AppNavigation.js';
 
 // Other screens in Home
 import SearchScreen from './SearchScreen';
@@ -39,6 +41,8 @@ import MusicPlayerBar from '../../components/MusicPlayerBar.js';
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
 
+  const { access_token, setaccess_token } = useContext(AppContext);
+
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
@@ -49,12 +53,12 @@ export default function HomeScreen({navigation}) {
   };
 
   const spotifyApi = new SpotifyWebApi();
-  const access_token = access_token2;
+  // const access_token = access_token2;
 
   const getFollowedArtist2 = async () => {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
-      console.log(response.data.artists.items); // Log the response object
+      console.log(response.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
         ...response.data.artists.items.map(artist => ({
@@ -70,9 +74,9 @@ export default function HomeScreen({navigation}) {
     }
   };
 
-  useEffect(() => {
-    getFollowedArtist2();
-  }, []);
+  // useEffect(() => {
+  //   getFollowedArtist2();
+  // }, []);
   //console.log(topArtists);c
 
   const getArtistAlbums2 = async () => {
@@ -81,10 +85,10 @@ export default function HomeScreen({navigation}) {
         access_token,
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
-      console.log(response.data.items);
+      console.log(response.items);
       setTopAlbums(prevData => [
         ...prevData,
-        ...response.data.items.map(album => ({
+        ...response.items.map(album => ({
           ...album,
           imageUrl:
             album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
@@ -95,9 +99,9 @@ export default function HomeScreen({navigation}) {
     }
   };
 
-  useEffect(() => {
-    getArtistAlbums2();
-  }, []);
+  // useEffect(() => {
+  //   getArtistAlbums2();
+  // }, []);
   //
   const getArtistTopTracks2 = async () => {
     try {
@@ -107,9 +111,9 @@ export default function HomeScreen({navigation}) {
         'SG',
       );
       //console.log(response);
-      console.log(response.data.tracks);
+      console.log(response.tracks);
       setTopTracks(
-        response.data.tracks.map(track => ({
+        response.tracks.map(track => ({
           title: track.name,
           artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
           imageUrl:
@@ -121,9 +125,16 @@ export default function HomeScreen({navigation}) {
     }
   };
 
+  // useEffect(() => {
+  //   getArtistTopTracks2();
+  // }, []);
   useEffect(() => {
-    getArtistTopTracks2();
-  }, []);
+    if(access_token) {
+      getArtistAlbums2();
+      getFollowedArtist2();
+      getArtistTopTracks2();
+    }
+  }, [access_token])
 
   return (
     <View style={styles.container}>
