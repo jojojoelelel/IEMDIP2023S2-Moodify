@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,8 @@ import CustomForm from '../../components/CustomForm';
 
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
+import { AppContext } from '../../navigation/AppNavigation';
+
 
 const SignInScreen = ({navigation}) => {
   // State for form fields
@@ -19,12 +21,13 @@ const SignInScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [return_Params, setreturn_Params] = useState();
-  const [access_token, setaccess_token] = useState();
+  // const [access_token, setaccess_token] = useState();
   const [userData, setuserData] = useState();
   const [playerInfo, setplayerInfo] = useState();
   const [previewUrl, setpreviewUrl] = useState();
   const [refresh_token, setrefresh_Token] = useState();
   
+  const { access_token, setaccess_token } = useContext(AppContext);
 
   const redirect_uri = 'http://localhost:8081/callback';
 

@@ -6,12 +6,16 @@ import MusicPlayerBar from '../../components/MusicPlayerBar'; //to demo music pl
 import {access_token2} from '@env';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 //commentcommenthujh
+
+import { AppContext } from '../../navigation/AppNavigation';
+
 const PlaylistsScreen = ({navigation}) => {
+  const { access_token, setaccess_token } = useContext(AppContext);
   const [playlist, setPlaylists] = useState([]);
 
   const fetchPlaylists = async () => {
-    const accessToken = access_token2; // Replace with your actual access token
-    const playlistsData = await SpotifyAPI.getUserPlaylist(accessToken);
+    // const accessToken = access_token2; // Replace with your actual access token
+    const playlistsData = await SpotifyAPI.getUserPlaylist(access_token);
     setPlaylists(
       playlistsData.map(playlist => ({
         id: playlist.id,
