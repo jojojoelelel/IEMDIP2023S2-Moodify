@@ -79,37 +79,6 @@ const PlaylistDetailsScreen = ({route}) => {
     </ScrollView>
   );
 };
-//
-/* return (jhjhghghgg
-    <ScrollView style={styles.container}>
-      <Image source={{uri: playlist.imageUrl}} style={styles.coverImage} />
-      <View style={styles.detailsContainer}>
-        <Text style={styles.playlistTitle}>{playlist.title}</Text>
-        <Text style={styles.description}>Playlist description here...</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Play</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Shuffle</Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList // IDEALLY FLATLIST SHOULDN'T BE NESTED WITHIN SCROLLVIEW. REMEMBER TO MODIFY LATER (LISTHEADERCOMPONENT)
-          data={songs}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            // 'SongItem' component
-            <SongItem
-              title={item.title}
-              artist={item.artist}
-              cover={item.cover} // Passing the cover image URL
-            />
-          )}
-        />
-      </View>
-    </ScrollView>
-  );
-}; */
 
 const styles = StyleSheet.create({
   container: {
