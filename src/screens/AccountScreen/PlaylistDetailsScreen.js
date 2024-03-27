@@ -23,7 +23,7 @@ const PlaylistDetailsScreen = ({route}) => {
   const { access_token, setaccess_token } = useContext(AppContext);
   const {playlist} = route.params;
   const [songs, setSongs] = useState([]);
-  const [playing, setPlaying] = useState(false);
+  //const [playing, setPlaying] = useState(false);
   const {
     isPlaying,
     setIsPlaying,

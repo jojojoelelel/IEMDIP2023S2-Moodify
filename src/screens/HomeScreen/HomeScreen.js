@@ -144,6 +144,10 @@ export default function HomeScreen({navigation}) {
     playTrack(item);
   };
 
+  const handleArtistPress = item => {
+    navigation.navigate('ArtistDetails');
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -175,7 +179,12 @@ export default function HomeScreen({navigation}) {
           <Text style={styles.header}>Top Artists</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {topArtists.map((item, index) => (
-              <ArtistCard item={item} key={index} imageUrl={item.imageUrl} />
+              <ArtistCard
+                item={item}
+                key={index}
+                imageUrl={item.imageUrl}
+                onPress={() => handleArtistPress(item)}
+              />
             ))}
           </ScrollView>
 
