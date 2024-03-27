@@ -32,7 +32,6 @@
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^10.0.3",
     "react-native-webview": "^13.8.1",
-    "react-viro": "^2.17.0",
     "spotify-web-api-js": "^1.5.2"
   },
   "devDependencies": {
