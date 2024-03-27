@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   TextInput,
@@ -16,7 +16,11 @@ import {useNavigation} from '@react-navigation/native';
 import SpotifyWebApi from 'spotify-web-api-js';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
+import { AppContext } from '../../navigation/AppNavigation';
+
 const PIscreen = () => {
+  const { access_token, setaccess_token } = useContext(AppContext);
+
   const initialUserData = [
     {label: 'Account Name', value: 'Andy'},
     {label: 'Country', value: 'SG'},
@@ -44,8 +48,8 @@ const PIscreen = () => {
     setIsEditing(!isEditing);
   };
 
-  const access_token =
-    'BQAWh17cj2uYCkuuKv7k_n3vs3mPdcoXt6Sh9NEcH7annd5f89YLCI3_Kfjd76OP7_fSL_a1XfKNVGlCnluKwFX22le99d9RAP4E20BOmQoPLq6heTS-Fhk0ZgsDfpGki91--VYa81--VzkWpcTE_BXBiDL-4u46WMK6l4ZScA9W9Xsrz6yPca28wmeC36xl8WwP3cvh5fOmUU1SXg_06h6rgZhpd1KZuIPO6VK3N18Dm1JlUFMIEuauvZUX';
+  // const access_token =
+  //   'BQAWh17cj2uYCkuuKv7k_n3vs3mPdcoXt6Sh9NEcH7annd5f89YLCI3_Kfjd76OP7_fSL_a1XfKNVGlCnluKwFX22le99d9RAP4E20BOmQoPLq6heTS-Fhk0ZgsDfpGki91--VYa81--VzkWpcTE_BXBiDL-4u46WMK6l4ZScA9W9Xsrz6yPca28wmeC36xl8WwP3cvh5fOmUU1SXg_06h6rgZhpd1KZuIPO6VK3N18Dm1JlUFMIEuauvZUX';
   const getCurrentUserProfile2 = async () => {
     try {
       const response = await SpotifyAPI.getCurrentUserProfile(access_token);
