@@ -9,15 +9,13 @@ import { MusicPlayerContext, MusicPlayerProvider } from './src/contexts/SongCont
 
 function App() {
 
-  const [test, settest] = useState('yes');
-
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <MusicPlayerProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
           <NavigationContainer>
-            <AppNavigator test={test}/>
+            <AppNavigator/>
         </NavigationContainer>
       </SafeAreaView>
     </MusicPlayerProvider>

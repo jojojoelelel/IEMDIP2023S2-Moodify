@@ -26,14 +26,13 @@ import DiaryScreen from '../screens/AccountScreen/directDiary';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = ({test}) => { 
+const AppNavigator = () => { 
 
-  console.log(test);
   return (
     
     <Stack.Navigator>
       <Stack.Screen name="GettingStarted" component={GettingStarted} />
-      <Stack.Screen name="SignInScreen" component={SignInScreen} initialParams={{test}}/>
+      <Stack.Screen name="SignInScreen" component={SignInScreen}/>
       
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen

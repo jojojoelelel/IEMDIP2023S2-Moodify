@@ -13,9 +13,9 @@ import CustomForm from '../../components/CustomForm';
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
 
-const SignInScreen = ({navigation,test}) => {
+const SignInScreen = ({navigation}) => {
   // State for form fields
-  console.log(test);
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [return_Params, setreturn_Params] = useState();
