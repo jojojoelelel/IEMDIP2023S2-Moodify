@@ -19,7 +19,7 @@ import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
 import {access_token2} from '@env';
 //import * as ImagePicker from 'react-native-image-picker';
-//
+////
 
 const styles = StyleSheet.create({
   container: {

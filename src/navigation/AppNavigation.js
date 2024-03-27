@@ -26,25 +26,23 @@ import DiaryScreen from '../screens/AccountScreen/directDiary';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = ({test}) => { 
-
+const AppNavigator = ({test}) => {
   console.log(test);
   return (
-    
     <Stack.Navigator>
       <Stack.Screen name="GettingStarted" component={GettingStarted} />
-      <Stack.Screen name="SignInScreen" component={SignInScreen} initialParams={{test}}/>
-      
+      <Stack.Screen
+        name="SignInScreen"
+        component={SignInScreen}
+        initialParams={{test}}
+      />
+
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
       />
-      <Stack.Screen
-        name="Main"
-        component={BottomNavigation}
-        options={{headerShown: false}}
-      />
+
       {/* Add more screens as needed */}
       <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
       <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
@@ -91,6 +89,11 @@ const AppNavigator = ({test}) => {
       <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
+      <Stack.Screen
+        name="Main"
+        component={BottomNavigation}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

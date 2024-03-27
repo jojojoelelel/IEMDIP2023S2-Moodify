@@ -53,7 +53,7 @@ export default function HomeScreen({navigation}) {
 
   const getFollowedArtist2 = async () => {
     try {
-      const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
+      const response = await SpotifyAPI.getFollowedArtists(access_token2, 5);
       console.log(response.data.artists.items); // Log the response object
       setTopArtists(prevData => [
         ...prevData,
@@ -82,14 +82,14 @@ export default function HomeScreen({navigation}) {
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
       console.log(response.data.items);
-      setTopAlbums(prevData => [
-        ...prevData,
-        ...response.data.items.map(album => ({
-          ...album,
-          imageUrl:
-            album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
-        })),
-      ]);
+      const mappedAlbums = response.data.items.map(album => ({
+        ...album,
+        imageUrl:
+          album.images && album.images.length > 0
+            ? album.images[0].url
+            : 'default_image_url_here', // Add your default image URL
+      }));
+      setTopAlbums(prevData => [...prevData, ...mappedAlbums]);
     } catch (error) {
       console.error('Error in getArtistAlbums => ', error);
     }
