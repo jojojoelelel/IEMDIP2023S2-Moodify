@@ -94,7 +94,7 @@ export async function getDeviceID (access_token) {
             headers: authOptions.headers
         })
         console.log('Response => ', response)
-        return response;
+        return response.data;
     } catch (error) {
         console.error('Error => ', error)
         throw error;
@@ -166,12 +166,11 @@ export async function getFollowedArtists(access_token, limit) {
             headers: authOptions.headers
         })
         console.log('Response => ', response)
-        return response;
+        return response.data;
     } catch (error) {
         console.error('Error => ', error)
         throw error;
     }
-
 }
 
 export async function checkIfUserFollowsArtistsOrUsers(access_token, type, ids) {
@@ -236,6 +235,26 @@ export async function checkUserSavedTracks (access_token, ids) {
         console.error('Error => ', error)
         throw error;
     }   
+}
+
+export async function getCurrentUserPlaylist (access_token) {
+  // get a playlist owned/followed by a Spotify User
+  const authOptions = {
+      url: `https://api.spotify.com/v1/me/playlists`,
+      headers: {
+          'Authorization': 'Bearer ' + access_token
+      }
+  }
+  try {
+      const response = await axios.get(authOptions.url, {
+          headers: authOptions.headers
+      })
+      console.log('Response => ', response.data)
+      return response.data
+  } catch (error) {
+      console.error('Error => ', error)
+      throw error;
+  }   
 }
 
 export async function getUserPlaylist (access_token, user_id) {
@@ -386,4 +405,37 @@ export async function requestRefreshAccessToken (refresh_token) {
         console.error('Error => ', error)
         throw error;
     }
+}
+
+export async function getPlaylistDetails(access_token, playlist_id) {
+  const authOptions = {
+    url: `https://api.spotify.com/v1/playlists/${playlist_id}`,
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  };
+
+  try {
+    const response = await axios.get(authOptions.url, {
+      headers: authOptions.headers,
+    });
+    const tracksInfo = response.data.tracks.items.map(item => ({
+      id: item.track.id,
+      title: item.track.name,
+      artist: item.track.artists.map(artist => artist.name).join(', '),
+      cover:
+        item.track.album.images.length > 0
+          ? item.track.album.images[0].url
+          : '',
+      album: item.track.album.name,
+      duration_ms: item.track.duration_ms,
+      preview_url: item.track.preview_url,
+    }));
+
+    //console.log('Playlist Details Response => ', tracksInfo);
+    return tracksInfo; // Return the simplified playlist information
+  } catch (error) {
+    console.error('Error fetching playlist details => ', error);
+    throw error;
+  }
 }
