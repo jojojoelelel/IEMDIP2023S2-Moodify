@@ -1,13 +1,16 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Button, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {WebView} from 'react-native-webview';
-//For reference
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 //Third-party code available at: https://github.com/FaridSafi/react-native-gifted-chat/blob/master/README.md
 const ChatBotScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const [spotifyUri, setSpotifyUri] = useState(null);
-
+  const [chatbotReplied, setChatbotReplied] = useState(false);
   useEffect(() => {
     setMessages([
       {
@@ -26,7 +29,7 @@ const ChatBotScreen = ({navigation}) => {
   const onSend = useCallback((messages = []) => {
     if (messages.length > 0) {
       const message = messages[0];
-
+      setChatbotReplied(false);
       // Append user message first
       setMessages(previousMessages =>
         GiftedChat.append(previousMessages, messages),
@@ -44,7 +47,8 @@ const ChatBotScreen = ({navigation}) => {
         .then(data => {
           const reply = data.reply;
           const songUris = data.song_uris;
-
+          const songTitles = data.song_titles;
+          setChatbotReplied(true);
           if (songUris && songUris.length > 0) {
             setSpotifyUri(songUris[0]);
           }
@@ -69,7 +73,38 @@ const ChatBotScreen = ({navigation}) => {
         });
     }
   }, []);
+  //////////////////////////////////// Firebase songs saved
+  // Function to save song to Firebase
+  const saveSongToDiary = (songTitle, songUri, artistName) => {
+    const songRef = firebase.database().ref('songs');
+    const newSongRef = songRef.push();
+    newSongRef.set({
+      title: songTitle,
+      uri: songUri,
+      artist: artistName,
+      timestamp: Date.now(),
+    });
+  };
 
+  // Add a button to render save song to diary
+  const renderSaveButton = () => {
+    if (!chatbotReplied) return null;
+
+    return (
+      <TouchableOpacity
+        style={styles.saveButton}
+        onPress={() =>
+          saveSongToDiary(
+            currentSong.title,
+            currentSong.uri,
+            currentSong.artist,
+          )
+        }>
+        <Text style={styles.saveButtonText}>+ Save To Your Diary</Text>
+      </TouchableOpacity>
+    );
+  };
+  ////////////////////////////////////
   const renderBubble = props => {
     return (
       <Bubble
@@ -130,6 +165,7 @@ const ChatBotScreen = ({navigation}) => {
         renderInputToolbar={renderInputToolbar}
         textInputStyle={{color: '#fff'}}
       />
+      {renderSaveButton()}
       {renderSpotifyPlayer()}
     </View>
   );
@@ -139,7 +175,7 @@ export default ChatBotScreen;
 
 const styles = StyleSheet.create({
   title: {
-    color: 'white', // changed to white for visibility on dark background
+    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 25,
@@ -147,10 +183,29 @@ const styles = StyleSheet.create({
   },
   viewchat: {
     flex: 1,
-    backgroundColor: '#000', // changed to black for dark theme
+    backgroundColor: '#000',
+    justifyContent: 'space-between',
   },
   spotifyPlayer: {
     height: 80,
     width: '100%',
+    alignSelf: 'center',
+  },
+  saveButtonContainer: {
+    paddingHorizontal: 20, // Add padding if needed
+    paddingBottom: 10,
+  },
+  saveButton: {
+    backgroundColor: '#CBFB5E',
+    borderRadius: 5,
+    padding: 10,
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
