@@ -1,10 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat';
 import {View, StyleSheet, Text} from 'react-native';
+import {WebView} from 'react-native-webview';
 //For reference
 //Third-party code available at: https://github.com/FaridSafi/react-native-gifted-chat/blob/master/README.md
 const ChatBotScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
+  const [spotifyUri, setSpotifyUri] = useState(null);
 
   useEffect(() => {
     setMessages([
@@ -41,7 +43,11 @@ const ChatBotScreen = ({navigation}) => {
         .then(response => response.json())
         .then(data => {
           const reply = data.reply;
+          const songUris = data.song_uris;
 
+          if (songUris && songUris.length > 0) {
+            setSpotifyUri(songUris[0]);
+          }
           // Now append the bot's reply
           setMessages(previousMessages =>
             GiftedChat.append(previousMessages, [
@@ -100,6 +106,16 @@ const ChatBotScreen = ({navigation}) => {
       />
     );
   };
+  const renderSpotifyPlayer = () => {
+    if (!spotifyUri) return null;
+
+    const spotifyTrackId = spotifyUri.split(':').pop();
+    const spotifyEmbedUrl = `https://open.spotify.com/embed/track/${spotifyTrackId}`;
+
+    return (
+      <WebView source={{uri: spotifyEmbedUrl}} style={styles.spotifyPlayer} />
+    );
+  };
 
   return (
     <View style={styles.viewchat}>
@@ -114,6 +130,7 @@ const ChatBotScreen = ({navigation}) => {
         renderInputToolbar={renderInputToolbar}
         textInputStyle={{color: '#fff'}}
       />
+      {renderSpotifyPlayer()}
     </View>
   );
 };
@@ -131,5 +148,9 @@ const styles = StyleSheet.create({
   viewchat: {
     flex: 1,
     backgroundColor: '#000', // changed to black for dark theme
+  },
+  spotifyPlayer: {
+    height: 80,
+    width: '100%',
   },
 });
