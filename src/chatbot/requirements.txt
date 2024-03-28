@@ -4,3 +4,5 @@ pip3 install torch
 pip3 install langchain
 pip3 install flask_cors
 pip3 install python-dotenv
+pip install spotipy
+

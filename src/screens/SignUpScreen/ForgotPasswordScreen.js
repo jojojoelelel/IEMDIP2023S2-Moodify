@@ -33,11 +33,6 @@ const ForgotPasswordScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}>
-        <Text style={styles.backButtonText}>{`<`}</Text>
-      </TouchableOpacity>
       <View style={styles.forgotTitle}>
         <Text style={styles.title}>Forgot Password?</Text>
         <Text style={styles.description}>
