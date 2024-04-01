@@ -7,7 +7,8 @@ import App from './App';
 import {name as appName} from './app.json';
 import firebase from '@react-native-firebase/app';
 
-// Your web app's Firebase configuration (replace with your actual config values)
+//////config for firebase
+//add firebase config
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   databaseURL: process.env.FIREBASE_DATABASE_URL,
