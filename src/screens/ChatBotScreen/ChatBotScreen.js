@@ -3,14 +3,14 @@ import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat';
 import {View, StyleSheet, Text, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {WebView} from 'react-native-webview';
-import firebase from 'firebase/app';
-import 'firebase/database';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/database';
 
-//Third-party code available at: https://github.com/FaridSafi/react-native-gifted-chat/blob/master/README.md
 const ChatBotScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const [spotifyUri, setSpotifyUri] = useState(null);
   const [chatbotReplied, setChatbotReplied] = useState(false);
+  const [currentSong, setCurrentSong] = useState({});
   useEffect(() => {
     setMessages([
       {
@@ -49,7 +49,19 @@ const ChatBotScreen = ({navigation}) => {
           const songUris = data.song_uris;
           const songTitles = data.song_titles;
           setChatbotReplied(true);
-          if (songUris && songUris.length > 0) {
+          if (
+            songUris &&
+            songUris.length > 0 &&
+            songTitles &&
+            songTitles.length > 0
+          ) {
+            // Set the current song state
+            setCurrentSong({
+              uri: songUris[0],
+              title: songTitles[0].split(' by ')[0],
+              artist: songTitles[0].split(' by ')[1],
+            });
+
             setSpotifyUri(songUris[0]);
           }
           // Now append the bot's reply
@@ -76,14 +88,22 @@ const ChatBotScreen = ({navigation}) => {
   //////////////////////////////////// Firebase songs saved
   // Function to save song to Firebase
   const saveSongToDiary = (songTitle, songUri, artistName) => {
-    const songRef = firebase.database().ref('songs');
+    const songRef = firebase.database().ref('diary-songs');
     const newSongRef = songRef.push();
-    newSongRef.set({
-      title: songTitle,
-      uri: songUri,
-      artist: artistName,
-      timestamp: Date.now(),
-    });
+    newSongRef
+      .set({
+        uri: songUri,
+        title: songTitle,
+        artist: artistName,
+        timestamp: Date.now(),
+      })
+      .then(() => {
+        console.log('Current song details:', currentSong);
+        console.log('Data saved successfully!');
+      })
+      .catch(error => {
+        console.error('Failed to save data: ', error);
+      });
   };
 
   // Add a button to render save song to diary
