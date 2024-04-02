@@ -23,6 +23,7 @@ import MusicPlayerBar from '../components/MusicPlayerBar';
 import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
 import DiaryScreen from '../screens/AccountScreen/directDiary';
+import RecomScreen from '../screens/AccountScreen/RecomScreen';
 
 const Stack = createStackNavigator();
 
@@ -68,7 +69,10 @@ const AppNavigator = () => {
       <Stack.Screen
         name="DiaryScreen"
         component={DiaryScreen}
-        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="RecomScreen"
+        component={RecomScreen}
       />
       <Stack.Screen
         name="PIScreen"
