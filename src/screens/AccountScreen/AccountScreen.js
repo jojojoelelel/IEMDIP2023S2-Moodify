@@ -318,134 +318,136 @@ const AccountScreen = () => {
   );
 
   return (
-    <ImageBackground
-      source={require('../../assets/images/background.png')}
-      style={{flex: 1}}>
-      <View style={{height: '100%', alignItems: 'center'}}>
-        <View
-          style={{
-            height: pxToDp(250),
-            width: '95%',
-            backgroundColor: 'rgba(0,0,0,0.7)',
-            marginTop: '17%',
-            padding: 12,
-            elevation: 5,
-            borderRadius: 10,
-            shadowColor: '#303133',
-            flexDirection: 'column',
-          }}>
-          <TouchableOpacity
-            style={{position: 'absolute', top: 20, left: 20, zIndex: 999}}
-            onPress={goSettings}>
-            <Image
-              source={require('../../assets/icon/settings.png')}
-              style={{width: 25, height: 25}}
-            />
-          </TouchableOpacity>
-
-          <FlatList
-            data={circleData}
-            renderItem={renderCircle}
-            keyExtractor={item => item.key}
-            numColumns={1}
-            contentContainerStyle={styles.circleContainer}
-            style={{height: pxToDp(300), alignSelf: 'flat-end'}}
-          />
+    <ScrollView>
+      <ImageBackground
+        source={require('../../assets/images/background.png')}
+        style={{flex: 1}}>
+        <View style={{height: '100%', alignItems: 'center'}}>
           <View
             style={{
-              height: '55%',
-              width: '80%',
-              marginLeft: '10%',
+              height: pxToDp(250),
+              width: '95%',
+              backgroundColor: 'rgba(0,0,0,0.7)',
+              marginTop: '17%',
+              padding: 12,
+              elevation: 5,
+              borderRadius: 10,
+              shadowColor: '#303133',
               flexDirection: 'column',
-              marginTop: '-35%',
             }}>
-            <Image
-              source={{
-                uri: 'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608',
-              }}
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 120,
-                marginTop: '-15%',
-                marginBottom: '15%',
-                marginLeft: '19%',
-              }}
-            />
+            <TouchableOpacity
+              style={{position: 'absolute', top: 20, left: 20, zIndex: 999}}
+              onPress={goSettings}>
+              <Image
+                source={require('../../assets/icon/settings.png')}
+                style={{width: 25, height: 25}}
+              />
+            </TouchableOpacity>
 
+            <FlatList
+              data={circleData}
+              renderItem={renderCircle}
+              keyExtractor={item => item.key}
+              numColumns={1}
+              contentContainerStyle={styles.circleContainer}
+              style={{height: pxToDp(300), alignSelf: 'flat-end'}}
+            />
             <View
               style={{
-                marginTop: '-7%',
+                height: '55%',
+                width: '80%',
+                marginLeft: '10%',
+                flexDirection: 'column',
+                marginTop: '-35%',
               }}>
-              <TextInput
-                placeholder={name}
-                editable={false}
-                onChangeText={text => setName(text)}
-                value={name}
+              <Image
+                source={{
+                  uri: 'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608',
+                }}
                 style={{
-                  width: '70%',
-                  textAlign: 'center',
-                  alignSelf: 'flex-start',
-                  color: 'white',
-                  backgroundColor: 'rgba(200,200,200,0.4)',
-                  fontWeight: 'bold',
-                  fontSize: 17,
+                  height: 100,
+                  width: 100,
+                  borderRadius: 120,
+                  marginTop: '-15%',
+                  marginBottom: '15%',
+                  marginLeft: '19%',
                 }}
               />
-              <TouchableOpacity onPress={editProfile}>
-                <Image
-                  source={require('../../assets/icon/editprofile.png')} // Replace with your image source
-                  style={{width: 25, height: 25, marginLeft: '56%', top: -37}} // Adjust width and height as needed
+
+              <View
+                style={{
+                  marginTop: '-7%',
+                }}>
+                <TextInput
+                  placeholder={name}
+                  editable={false}
+                  onChangeText={text => setName(text)}
+                  value={name}
+                  style={{
+                    width: '70%',
+                    textAlign: 'center',
+                    alignSelf: 'flex-start',
+                    color: 'white',
+                    backgroundColor: 'rgba(200,200,200,0.4)',
+                    fontWeight: 'bold',
+                    fontSize: 17,
+                  }}
                 />
-              </TouchableOpacity>
+                <TouchableOpacity onPress={editProfile}>
+                  <Image
+                    source={require('../../assets/icon/editprofile.png')} // Replace with your image source
+                    style={{width: 25, height: 25, marginLeft: '56%', top: -37}} // Adjust width and height as needed
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <View
-            style={{
-              width: '80%',
-              marginTop: '5%',
-              alignSelf: 'center',
-              opacity: 0.3,
-              backgroundColor: '#606266',
-            }}
-          />
-        </View>
-        <View
-          style={{
-            height: '43%',
-            width: '95%',
-            padding: 10,
-            marginTop: '5%',
-            elevation: 5,
-            borderRadius: 10,
-            shadowColor: '#303133',
-            backgroundColor: 'rgba(0,0,0,0.7)',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <FlatList
-              data={boxData}
-              renderItem={renderBox}
-              keyExtractor={item => item.key}
-              numColumns={3}
-              contentContainerStyle={styles.container}
+            <View
+              style={{
+                width: '80%',
+                marginTop: '5%',
+                alignSelf: 'center',
+                opacity: 0.3,
+                backgroundColor: '#606266',
+              }}
             />
           </View>
           <View
             style={{
-              width: '90%',
-              alignSelf: 'center',
-              opacity: 0.3,
-              backgroundColor: '#606266',
-            }}
-          />
+              height: '43%',
+              width: '95%',
+              padding: 10,
+              marginTop: '5%',
+              elevation: 5,
+              borderRadius: 10,
+              shadowColor: '#303133',
+              backgroundColor: 'rgba(0,0,0,0.7)',
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <FlatList
+                data={boxData}
+                renderItem={renderBox}
+                keyExtractor={item => item.key}
+                numColumns={3}
+                contentContainerStyle={styles.container}
+              />
+            </View>
+            <View
+              style={{
+                width: '90%',
+                alignSelf: 'center',
+                opacity: 0.3,
+                backgroundColor: '#606266',
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <MusicPlayerBar />
-    </ImageBackground>
+        <MusicPlayerBar />
+      </ImageBackground>
+    </ScrollView>
   );
 };
 

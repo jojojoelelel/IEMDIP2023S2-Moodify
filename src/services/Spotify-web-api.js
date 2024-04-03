@@ -132,7 +132,7 @@ export async function getPreviewURL(data) {
 
 export async function getUserSavedTracks(access_token, limit, offset) {
   const authOptions = {
-    url: 'https://api.spotify.com/v1/me/tracks?offset=0&limit=1',
+    url: 'https://api.spotify.com/v1/me/tracks',
     headers: {
       Authorization: 'Bearer ' + access_token,
     },
@@ -281,6 +281,26 @@ export async function getUserPlaylist(access_token, user_id) {
   // get a playlist owned/followed by a Spotify User
   const authOptions = {
     url: `https://api.spotify.com/v1/users/${user_id}/playlists`,
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  try {
+    const response = await axios.get(authOptions.url, {
+      headers: authOptions.headers,
+    });
+    console.log('Response => ', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error => ', error);
+    throw error;
+  }
+}
+
+export async function getUserAlbums(access_token, user_id) {
+  // get a playlist owned/followed by a Spotify User
+  const authOptions = {
+    url: `https://api.spotify.com/v1/users/${user_id}/albums`,
     headers: {
       Authorization: 'Bearer ' + access_token,
     },
