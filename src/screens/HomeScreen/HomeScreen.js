@@ -42,7 +42,7 @@ const handleSearchPress = () => {
 
 
  const spotifyApi = new SpotifyWebApi();
- const access_token = 'BQBoXd2HU3jE-0yDeRG0vk3GbP6QrqoMSz8LhkxRQtyF2vZmQdDSe_3212O2LPWdIhOWbHapR50MRlesOQ4a8B_NvOuN-KUxXDoC4angQYxS6m_05IlVRek4hzHyf4sQCEJ58EKni_wVCsVLDtA1u7iTUcyeOyKCLVcxmSNroIrbVcHWLshzaYIiAlTGnECYAKXOmhBdl9Dsaa8hWVMlhcVkfwcr6PlRaoYNRj7yggRSjh_C7X8Oq_x-lnWl'; // Replace with your actual access token
+ const access_token = 'YOUR_ACCESS_TOKEN'; // Replace with your actual access token
 
 const getFollowedArtist2 = async () => {
     try {
