@@ -63,7 +63,7 @@ export default function SearchScreen({ navigation }) {
 
 
   const spotifyApi = new SpotifyWebApi();
-  const access_token = '"BQDmRnPpbjGAU7NM7wGoBU9u7Sw4_NZrW6kZbJ6Be0b8EhFrq-7WjSyErVC_PPPPFaQzAxRwpxxmgLozvaE9KyXvDrNZqJK4JPwYGLBdI-qc4zU0absxZcPIBNAP6q9-E4gJQQEqQKFyMrdiXa0c0dyT9Y7xKqHrHTa0Q2QsZUB18xsdds-zNswVndcdqmFw3UYycU8dY6nL6HK2NgIWEealFCti_cTZrstdYZvyN71lh9C-q_8VROfwjNhp'; // Replace with your actual access token
+  const access_token = 'YOUR_ACCESS_TOKEN'; // Replace with your actual access token
 
 /*  const searchTrack2 = async () => {
         try {
