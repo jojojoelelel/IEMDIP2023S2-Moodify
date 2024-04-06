@@ -74,12 +74,7 @@ const PlaylistsScreen = ({navigation}) => {
             keyExtractor={item => item.id}
             style={styles.listContainer}
           />
-          <MusicPlayerBar
-            songTitle="Song Title"
-            artistName="Artist Name"
-            coverImage="https://upload.wikimedia.org/wikipedia/en/f/fd/Coldplay_-_Parachutes.png"
-            onPlayPausePress={() => {}}
-          />
+          <MusicPlayerBar />
         </>
       ) : (
         <Text>NOT WORKING</Text>
@@ -117,7 +112,7 @@ export default PlaylistsScreen;
     imageUrl:
       'https://i.etsystatic.com/23258249/r/il/51aec6/2414536787/il_fullxfull.2414536787_2g5q.jpg',
   },
-  {
+  {//
     id: '3',
     title: 'Chilled Hits',
     creator: 'Spotify',
