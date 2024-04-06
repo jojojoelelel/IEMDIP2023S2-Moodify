@@ -92,13 +92,18 @@ const ChatBotScreen = ({navigation}) => {
   const saveSongToDiary = (songTitle, songUri, artistName, albumCover) => {
     const songRef = firebase.database().ref('diary-songs');
     const newSongRef = songRef.push();
+    const timestamp = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
     newSongRef
       .set({
         uri: songUri,
         title: songTitle,
         artist: artistName,
-        albumCover: albumCover,
-        timestamp: Date.now(),
+        timestamp: timestamp,
+        prompt:messages,
       })
       .then(() => {
         console.log('Current song details:', currentSong);

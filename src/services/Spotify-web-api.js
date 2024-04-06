@@ -1,13 +1,13 @@
 // import { View, Text, TouchableOpacity, TextInput, StyleSheet, Linking } from 'react-native'
 // import React, { useState } from 'react'
 import axios from 'axios'
-// import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env'
+import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET} from '@env'
 
 var Buffer = require('buffer/').Buffer
 
 const redirect_uri = 'http://localhost:8081/callback';
-const client_secret = process.env.REACT_APP_CLIENT_SECRET;
-const client_id = process.env.REACT_APP_CLIENT_ID;
+const client_secret = REACT_APP_CLIENT_SECRET;
+const client_id = REACT_APP_CLIENT_ID;
 
 export async function requestUserAuthorization () {
     // Login to Spotify to request authorization from the user to access
