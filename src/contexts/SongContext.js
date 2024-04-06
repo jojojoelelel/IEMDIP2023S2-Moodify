@@ -12,8 +12,8 @@ const MusicPlayerContext = createContext();
 
 const MusicPlayerProvider = ({children}) => {
   const [isPlaying, setIsPlaying] = useState();
-  const [currentTrack, setCurrentTrack] = useState(null);
-  const [playerState, setPlayerState] = useState(TrackPlayer.STATE_NONE); //Initial state
+  const [currentTrack, setCurrentTrack] = useState();
+  //const [playerState, setPlayerState] = useState(TrackPlayer.STATE_NONE); //Initial state
 
   useEffect(() => {
     // Track Player setup
@@ -72,7 +72,7 @@ const MusicPlayerProvider = ({children}) => {
     await TrackPlayer.stop();
     await TrackPlayer.skipToNext();
     await TrackPlayer.play();
-    //setIsPlaying(true);
+    setIsPlaying(true);
     setCurrentTrack(track);
     const q = await TrackPlayer.getQueue();
     console.log(q);

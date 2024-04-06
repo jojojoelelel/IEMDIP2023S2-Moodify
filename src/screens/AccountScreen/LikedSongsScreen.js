@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,12 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'; // For Ionicons
 import FontAwesome from 'react-native-vector-icons/FontAwesome'; // For FontAwesome icons
-
+import {getUserSavedTracks} from '../../services/Spotify-web-api';
+import {MusicPlayerContext} from '../../contexts/SongContext';
+import {AppContext} from '../../navigation/AppNavigation';
+import * as SpotifyAPI from '../../services/Spotify-web-api';
+import SongItem from '../../components/SongItem';
+import MusicPlayerBar from '../../components/MusicPlayerBar';
 // Dummy data for liked songs
 const likedSongsData = [
   // Add your song data here
@@ -53,33 +58,76 @@ const likedSongsData = [
 ];
 
 const LikedSongsScreen = () => {
+  const {access_token, setaccess_token} = useContext(AppContext);
+  const [songs, setSongs] = useState([]);
+  const {
+    isPlaying,
+    setIsPlaying,
+    currentTrack,
+    setCurrentTrack,
+    playTrack,
+    pauseTrack,
+    skipToNext,
+    skipToPrevious,
+  } = useContext(MusicPlayerContext);
+  const fetchSavedSongs = async () => {
+    try {
+      const tracks = await SpotifyAPI.getUserSavedTracks(access_token, 50, 0);
+      setSongs(tracks); // Assuming the returned value is directly the list of tracks
+    } catch (error) {
+      console.error('Failed to fetch saved song details:', error);
+    }
+  };
+  useEffect(() => {
+    fetchSavedSongs();
+  });
+  //
   const renderSong = ({item}) => (
-    <TouchableOpacity style={styles.songContainer}>
-      <Image source={{uri: item.albumCover}} style={styles.albumCover} />
-      <View style={styles.songDetails}>
-        <Text style={styles.songTitle}>{item.title}</Text>
-        <Text style={styles.songArtist}>{item.artist}</Text>
-      </View>
-      <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.iconButton}>
-          <Icon name="heart" size={20} color="#1DB954" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Icon name="play-circle-outline" size={20} color="#fff" />
-        </TouchableOpacity>
-        {/* Add more icons as needed */}
-      </View>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={styles.songContainer}>
+        <Image source={{uri: item.cover}} style={styles.albumCover} />
+        <View style={styles.songDetails}>
+          <Text style={styles.songTitle}>{item.title}</Text>
+          <Text style={styles.songArtist}>{item.artist}</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="heart" size={20} color="#1DB954" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="play-circle-outline" size={20} color="#fff" />
+          </TouchableOpacity>
+          {/* Add more icons as needed */}
+        </View>
+      </TouchableOpacity>
+      <MusicPlayerBar />
+    </>
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={likedSongsData}
+    <>
+      <View style={styles.container}>
+        {/* <FlatList
+        data={songs}
         renderItem={renderSong}
         keyExtractor={item => item.id}
-      />
-    </View>
+      /> */}
+        <FlatList
+          data={songs}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <SongItem
+              id={item.id}
+              title={item.title}
+              artist={item.artist}
+              cover={item.cover}
+              preview_url={item.preview_url}
+            />
+          )}
+        />
+      </View>
+      <MusicPlayerBar />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, {useState, createContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 //Import the screens here
@@ -23,82 +23,84 @@ import MusicPlayerBar from '../components/MusicPlayerBar';
 import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
 import DiaryScreen from '../screens/AccountScreen/directDiary';
+import AlbumsScreen from '../screens/AccountScreen/AlbumScreen';
 import RecomScreen from '../screens/AccountScreen/RecomScreen';
 
 const Stack = createStackNavigator();
 
 export const AppContext = createContext(null);
 
-const AppNavigator = () => { 
-  const [access_token, setaccess_token] = useState()
+const AppNavigator = () => {
+  const [access_token, setaccess_token] = useState();
 
   return (
     <AppContext.Provider value={{access_token, setaccess_token}}>
-    <Stack.Navigator>
-      <Stack.Screen name="GettingStarted" component={GettingStarted} />
-      <Stack.Screen name="SignInScreen" component={SignInScreen}/>
-      
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-      <Stack.Screen
-        name="ForgotPasswordScreen"
-        component={ForgotPasswordScreen}
-      />
+      <Stack.Navigator>
+        <Stack.Screen name="GettingStarted" component={GettingStarted} />
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
 
-      {/* Add more screens as needed */}
-      <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
-      <Stack.Screen name="PlaylistDetails" component={PlaylistDetailsScreen} />
-      {/* <Stack.Screen
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen
+          name="ForgotPasswordScreen"
+          component={ForgotPasswordScreen}
+        />
+
+        {/* Add more screens as needed */}
+        <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} />
+        <Stack.Screen
+          name="PlaylistDetails"
+          component={PlaylistDetailsScreen}
+        />
+        {/* <Stack.Screen
         name="FullMusicPlayerScreen"
         component={FullMusicPlayerScreen}
       /> */}
-      <Stack.Screen
-        name="FollowingScreen"
-        component={FollowingScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="FollowerScreen"
-        component={FollowerScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="AccountScreen"
-        component={AccountScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="DiaryScreen"
-        component={DiaryScreen}
-      />
-      <Stack.Screen
-        name="RecomScreen"
-        component={RecomScreen}
-      />
-      <Stack.Screen
-        name="PIScreen"
-        component={PIscreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SScreen"
-        component={SScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
-      <Stack.Screen
-        name="VrConcertScreen"
-        component={VrConcertScreen}
-        options={{title: 'VR Concert'}}
-      />
-      <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
-      <Stack.Screen name="SearchScreen" component={SearchScreen} />
-      <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
-      <Stack.Screen
-        name="Main"
-        component={BottomNavigation}
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
+        <Stack.Screen
+          name="FollowingScreen"
+          component={FollowingScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="FollowerScreen"
+          component={FollowerScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AccountScreen"
+          component={AccountScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DiaryScreen"
+          component={DiaryScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="PIScreen"
+          component={PIscreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SScreen"
+          component={SScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+        <Stack.Screen
+          name="VrConcertScreen"
+          component={VrConcertScreen}
+          options={{title: 'VR Concert'}}
+        />
+        <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
+        <Stack.Screen name="SearchScreen" component={SearchScreen} />
+        <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
+        <Stack.Screen name="AB" component={AlbumsScreen} />
+        <Stack.Screen
+          name="Main"
+          component={BottomNavigation}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
     </AppContext.Provider>
   );
 };

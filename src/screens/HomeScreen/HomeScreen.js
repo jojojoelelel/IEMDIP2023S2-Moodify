@@ -26,7 +26,7 @@ import * as SpotifyAPI from '../../services/Spotify-web-api';
 import {updatePassword} from 'firebase/auth';
 // import {access_token2} from '@env';
 
-import { AppContext } from '../../navigation/AppNavigation.js';
+import {AppContext} from '../../navigation/AppNavigation.js';
 
 // Other screens in Home
 import SearchScreen from './SearchScreen';
@@ -42,7 +42,7 @@ import {MusicPlayerContext} from '../../contexts/SongContext.js';
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
 
-  const { access_token, setaccess_token } = useContext(AppContext);
+  const {access_token, setaccess_token} = useContext(AppContext);
 
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
@@ -82,7 +82,7 @@ export default function HomeScreen({navigation}) {
   //   getFollowedArtist2();
   // }, []);
   //console.log(topArtists);c
-
+  //
   const getArtistAlbums2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistAlbums(
@@ -133,69 +133,81 @@ export default function HomeScreen({navigation}) {
   //   getArtistTopTracks2();
   // }, []);
   useEffect(() => {
-    if(access_token) {
+    if (access_token) {
       getArtistAlbums2();
       getFollowedArtist2();
       getArtistTopTracks2();
     }
-  }, [access_token])
+  }, [access_token]);
 
   const handleItemPress = item => {
     playTrack(item);
   };
 
+  const handleArtistPress = item => {
+    navigation.navigate('ArtistDetails');
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text
-          onPress={() => alert('This is the "Home" screen.')}
-          style={styles.text}>
-          Moodify
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SearchScreen')}
-          style={styles.searchIconContainer}>
-          <Ionicons
-            name="search"
-            size={24}
-            color="#fff"
-            style={styles.searchIcon}
-          />
-        </TouchableOpacity>
-      </View>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.header}>Recent Albums</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {topAlbums.map((item, index) => (
-            <AlbumCard item={item} key={index} imageUrl={item.imageUrl} />
-          ))}
-        </ScrollView>
-
-        <Text style={styles.header}>Top Artists</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {topArtists.map((item, index) => (
-            <ArtistCard item={item} key={index} imageUrl={item.imageUrl} />
-          ))}
-        </ScrollView>
-
-        <Text style={styles.header}>Recently Played</Text>
-        <View style={styles.trackContainer}>
-          <FlatList
-            data={topTracks} // Use topTracks instead of track
-            renderItem={({item}) => (
-              <TrackList
-                id={item.id}
-                title={item.title}
-                artist={item.artist}
-                cover={item.cover}
-                url={item.preview_url}
-                onPress={() => handleItemPress(item)}
-              />
-            )}
-          />
+    <>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text
+            onPress={() => alert('This is the "Home" screen.')}
+            style={styles.text}>
+            Moodify
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SearchScreen')}
+            style={styles.searchIconContainer}>
+            <Ionicons
+              name="search"
+              size={24}
+              color="#fff"
+              style={styles.searchIcon}
+            />
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </View>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <Text style={styles.header}>Recent Albums</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {topAlbums.map((item, index) => (
+              <AlbumCard item={item} key={index} imageUrl={item.imageUrl} />
+            ))}
+          </ScrollView>
+
+          <Text style={styles.header}>Top Artists</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {topArtists.map((item, index) => (
+              <ArtistCard
+                item={item}
+                key={index}
+                imageUrl={item.imageUrl}
+                onPress={() => handleArtistPress(item)}
+              />
+            ))}
+          </ScrollView>
+
+          <Text style={styles.header}>Recently Played</Text>
+          <View style={styles.trackContainer}>
+            <FlatList
+              data={topTracks} // Use topTracks instead of track
+              renderItem={({item}) => (
+                <TrackList
+                  id={item.id}
+                  title={item.title}
+                  artist={item.artist}
+                  cover={item.cover}
+                  url={item.preview_url}
+                  onPress={() => handleItemPress(item)}
+                />
+              )}
+            />
+          </View>
+        </ScrollView>
+        <MusicPlayerBar />
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({

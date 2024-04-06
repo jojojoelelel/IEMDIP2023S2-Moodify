@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MusicPlayerBar from '../../components/MusicPlayerBar';
 
 const DiscoverScreen = ({navigation}) => {
   // Create an animated value for opacity
@@ -62,6 +63,7 @@ const DiscoverScreen = ({navigation}) => {
           },
         ]}
       />
+      <MusicPlayerBar />
     </View>
   );
 };

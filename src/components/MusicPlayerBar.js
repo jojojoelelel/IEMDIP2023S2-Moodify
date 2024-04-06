@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#282828',
     borderTopWidth: 1,
     borderTopColor: '#000000',
+    position: 'absolute',
+    bottom: '0%',
   },
   coverImage: {
     width: 50,
