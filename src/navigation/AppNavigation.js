@@ -24,6 +24,7 @@ import MusicPlayerScreen from '../screens/MusicPlayerScreen';
 import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
 import DiaryScreen from '../screens/AccountScreen/directDiary';
 import AlbumsScreen from '../screens/AccountScreen/AlbumScreen';
+import RecomScreen from '../screens/AccountScreen/RecomScreen';
 
 const Stack = createStackNavigator();
 

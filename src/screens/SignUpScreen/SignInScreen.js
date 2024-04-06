@@ -12,8 +12,7 @@ import CustomForm from '../../components/CustomForm';
 
 import * as SpotifyAPI from '../../services/Spotify-web-api';
 
-import { AppContext } from '../../navigation/AppNavigation';
-
+import {AppContext} from '../../navigation/AppNavigation';
 
 const SignInScreen = ({navigation}) => {
   // State for form fields
@@ -26,8 +25,8 @@ const SignInScreen = ({navigation}) => {
   const [playerInfo, setplayerInfo] = useState();
   const [previewUrl, setpreviewUrl] = useState();
   const [refresh_token, setrefresh_Token] = useState();
-  
-  const { access_token, setaccess_token } = useContext(AppContext);
+
+  const {access_token, setaccess_token} = useContext(AppContext);
 
   const redirect_uri = 'http://localhost:8081/callback';
 
@@ -60,7 +59,6 @@ const SignInScreen = ({navigation}) => {
   };
   const requestAccessToken2 = async () => {
     try {
-      
       const response = await SpotifyAPI.requestAccessToken(return_Params);
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
@@ -76,7 +74,6 @@ const SignInScreen = ({navigation}) => {
       );
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
-      
     } catch (error) {
       console.error('Error in requestRefreshAccessToken => ', error);
     }
@@ -94,7 +91,6 @@ const SignInScreen = ({navigation}) => {
   useEffect(() => {
     if (return_Params) {
       requestAccessToken2();
-      
     }
   }, [return_Params]);
 
@@ -125,7 +121,7 @@ const SignInScreen = ({navigation}) => {
           <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
         </TouchableOpacity>
         <CustomButton
-          title="SIGN IN"
+          title="SIGN IN WITH SPOTIFY"
           onPress={() => {
             navigation.navigate('Main');
             loginToSpotify();
