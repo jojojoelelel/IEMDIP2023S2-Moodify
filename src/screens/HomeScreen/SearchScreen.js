@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, View, ScrollView, Pressable, TextInput, 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useState, useEffect } from 'react';
 import TrackList from '../../components/TrackList.js';
-import TrackListWithTimeStamp from '../../components/TrackListWithTimeStamp.js';
+import TrackListWithTimeStamp from '../../services/TrackListWithTimeStamp.js';
 import { debounce } from "lodash";
 
 // For API calls
