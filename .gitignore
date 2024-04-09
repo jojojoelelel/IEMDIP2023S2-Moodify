@@ -1,5 +1,6 @@
 *.env
 *google-services.json
+*myenv
 # OSX
 #
 .DS_Store
