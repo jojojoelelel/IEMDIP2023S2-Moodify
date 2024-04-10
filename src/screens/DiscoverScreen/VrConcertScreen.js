@@ -7,10 +7,16 @@ const VrConcertScreen = () => {
     <View style={styles.container}>
       <WebView
         source={{
-          uri: 'http://10.0.2.2:5501/src/screens/DiscoverScreen/a-saturday-night/index.html',
+          uri: 'http://10.0.2.2:5501/src/screens/DiscoverScreen/concert-back-up/index.html',
         }}
-        javaScriptEnabled={true} //default is true
+        javaScriptEnabled={true}
+        mixedContentMode="compatibility" // If you have mixed content (HTTP and HTTPS)
         style={styles.webView}
+        onError={syntheticEvent => {
+          const {nativeEvent} = syntheticEvent;
+          console.warn('WebView error: ', nativeEvent);
+        }}
+        onLoadEnd={() => console.log('WebView loaded')}
       />
     </View>
   );
