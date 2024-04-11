@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>A-Frame Scene with Audio Visualizer and Animated Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/HDRCubeTextureLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/EXRLoader.js"></script>
+    <script>
+      AFRAME.registerComponent('start-concert', {
+        init: function () {
+          // Add event listener for 'click' events on the element this component is attached to
+          this.el.addEventListener('click', () => {
+            // Start playing the background music
+            document.querySelector('#bg-music').play();
+          });
+        },
+      });
+
+      AFRAME.registerComponent('change-color-on-click', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            const newColor =
+              '#' + Math.floor(Math.random() * 16777215).toString(16);
+            this.el.setAttribute('material', 'color', newColor);
+          });
+        },
+      });
+
+      AFRAME.registerComponent('hdri-env', {
+        schema: {
+          path: {type: 'string'},
+          format: {default: 'hdr'}, // 'hdr' or 'exr'
+        },
+
+        init: function () {
+          const el = this.el;
+          const scene = el.sceneEl.object3D; // the Three.js scene object
+          const loader =
+            this.data.format === 'hdr'
+              ? new THREE.RGBELoader()
+              : new THREE.EXRLoader();
+
+          loader.setDataType(THREE.UnsignedByteType); // For HDRi, this might be needed depending on the format
+          loader.load(
+            this.data.path,
+            function (texture) {
+              texture.mapping = THREE.EquirectangularReflectionMapping;
+              scene.environment = texture;
+              scene.background = texture;
+            },
+            undefined,
+            function (err) {
+              console.error('An error occurred loading the HDRi file:', err);
+            },
+          );
+        },
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <audio
+          id="bg-music"
+          src="./sounds/Easy.mp3"
+          crossorigin="anonymous"></audio>
+        <a-asset-item
+          id="anime-girl"
+          src="./models/girl-model.glb"></a-asset-item>
+        <img id="sky" src="./models/skybox1.jpg" />
+      </a-assets>
+      <a-sky src="#sky"></a-sky>
+      <a-camera position="0 1.6 0"></a-camera>
+      <a-light type="ambient" color="#fff"></a-light>
+
+      <!-- Model facing the camera with interactive component to change color -->
+
+      <!-- Visualizer Plane -->
+      <a-plane
+        position="14 1 -7.904"
+        rotation="0 0 0"
+        width="30"
+        height="18"
+        material="color: #FFC0CB; transparent: true; opacity: 0.8;"
+        id="visualizer"></a-plane>
+    </a-scene>
+
+    <canvas
+      id="analyserCanvas"
+      width="512"
+      height="256"
+      style="display: none"></canvas>
+
+    <script src="./js/audio-visualizer.js"></script>
+    <script src="https://unpkg.com/aframe-extras"></script>
+    <script src="./js/model-dance.js"></script>
+  </body>
+</html>
