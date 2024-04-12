@@ -29,6 +29,7 @@ export default function SearchScreen({ navigation }) {
     const filteredTracks = tracks.filter((item) =>
     item.name.toLowerCase().includes(text.toLowerCase())
     )
+    // console.log('filteredTracks',filteredTracks)
     setSearchedTracks(filteredTracks);
   }
   const handleSearchQueryChange = (text) => {
@@ -47,11 +48,13 @@ export default function SearchScreen({ navigation }) {
 
   useEffect(() => {
     searchTrack2();
-    }, []);
+    }, [searchQuery]);
 
   useEffect(() => {
     setSearchedTracks([]); // Clear searchedTracks when searchQuery changes
     handleSearch(searchQuery);
+    // console.log('searchQuery', searchQuery)
+    // console.log('searchedTracks ',searchedTracks)
     }, [searchQuery, tracks]);
 
   /*const tracks = [
@@ -63,7 +66,7 @@ export default function SearchScreen({ navigation }) {
 
 
   const spotifyApi = new SpotifyWebApi();
-  const access_token = 'YOUR_ACCESS_TOKEN'; // Replace with your actual access token
+  const access_token = 'BQCo6t152Uj3h3tZSo9MFasXdciSdr08ke0RzgOKeqBw2mFgQkoO7NZm32pZFWES6L8g-sUkfaX0T5mv6La0yj5_gQjza4j4Ynj90umEvOk3aBjoNoVGUJMxMsWjpCJ4ZCaHPnhZENVWNCyfCeC3nlLp4jsOnEUuJSKmB4uTyMSCsqrMWcqC8ueW0zLCnSI1XutDSs5jdNjEF1pAvV33wW7VqTPvZoIWonv_Fz4lUlSbKcTAfCl6NHjG8Ied'; // Replace with your actual access token
 
 /*  const searchTrack2 = async () => {
         try {
@@ -97,8 +100,9 @@ export default function SearchScreen({ navigation }) {
     const searchTrack2 = async () => {
         try {
             // Search for tracks
-            const trackResponse = await SpotifyAPI.searchTrack(access_token, searchedTracks[0], 'track');
-            //console.log(trackResponse);
+            // const trackResponse = await SpotifyAPI.searchTrack(access_token, searchedTracks[0], 'track');
+            const trackResponse = await SpotifyAPI.searchTrack(access_token, searchQuery, 'track');
+            // console.log('trackresponse',trackResponse);
 
             // Process track data
             const tracksData = trackResponse.data.tracks.items.map(track => ({
@@ -109,47 +113,50 @@ export default function SearchScreen({ navigation }) {
             setTracks(tracksData);
 
             // Search for artists
-            const artistResponse = await SpotifyAPI.searchTrack(access_token, 'q', 'artist');
-            console.log(artistResponse);
+            // // const artistResponse = await SpotifyAPI.searchTrack(access_token, 'q', 'artist');
+            // const artistResponse = await SpotifyAPI.searchTrack(access_token, searchQuery, 'artist');
+            // // console.log(artistResponse);
 
-            // Process artist data
-            const artists = artistResponse.data.artists.items.map(artist => ({
-                name: artist.name,
-                imageUrl: artist.images.length > 0 ? artist.images[0].url : ''
-            }));
+            // // Process artist data
+            // const artists = artistResponse.data.artists.items.map(artist => ({
+            //     name: artist.name,
+            //     imageUrl: artist.images.length > 0 ? artist.images[0].url : ''
+            // }));
 
             // Search for albums
-            const albumResponse = await SpotifyAPI.searchTrack(access_token, 'q', 'album');
-            console.log(albumResponse);
+            // const albumResponse = await SpotifyAPI.searchTrack(access_token, 'q', 'album');
+            // const albumResponse = await SpotifyAPI.searchTrack(access_token, searchQuery, 'album');
+            // // console.log(albumResponse);
 
-            // Process album data
-            const albums = albumResponse.data.albums.items.map(album => ({
-                name: album.name,
-                imageUrl: album.images.length > 0 ? album.images[0].url : ''
-            }));
+            // // Process album data
+            // const albums = albumResponse.data.albums.items.map(album => ({
+            //     name: album.name,
+            //     imageUrl: album.images.length > 0 ? album.images[0].url : ''
+            // }));
 
             // Search for playlists
-            const playlistResponse = await SpotifyAPI.searchTrack(access_token, 'q', 'playlist');
-            console.log(playlistResponse);
+            // const playlistResponse = await SpotifyAPI.searchTrack(access_token, 'q', 'playlist');
+            // const playlistResponse = await SpotifyAPI.searchTrack(access_token, searchQuery, 'playlist');
+            // // console.log(playlistResponse);
 
-            // Process playlist data
-            const playlists = playlistResponse.data.playlists.items.map(playlist => ({
-                name: playlist.name,
-                imageUrl: playlist.images.length > 0 ? playlist.images[0].url : ''
-            }));
+            // // Process playlist data
+            // const playlists = playlistResponse.data.playlists.items.map(playlist => ({
+            //     name: playlist.name,
+            //     imageUrl: playlist.images.length > 0 ? playlist.images[0].url : ''
+            // }));
 
             // Update state
           setSearchedTracks({ tracks/* artists, albums, playlists*/ });
         } catch (error) {
-            console.error('Error in searchTrack2:', error);
+            // console.error('Error in searchTrack2:', error);
         }
     };
 
     const getSavedTracks2 = async () => {
         try {
             const response = await SpotifyAPI.getUserSavedTracks(access_token, 0, 3);
-            console.log(response);
-            console.log(response.data.items);
+            // console.log(response);
+            // console.log(response.data.items);
                 setSavedTracks(
                   response.data.items.map(track => ({
                     title: track.track.name,

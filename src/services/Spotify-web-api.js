@@ -144,7 +144,8 @@ export async function getUserSavedTracks (access_token, limit, offset) {
         const data = response.data
         const previewUrl = getPreviewURL(data)
         console.log('Preview URL: ', previewUrl)
-        return previewUrl;
+        // return previewUrl;
+        return response
     } catch (error) {
         console.error('Error => ', error)
         throw error;
@@ -362,7 +363,7 @@ export async function searchTrack (access_token, queryString, type) {
     const q = encodeURIComponent(queryString)
 
     const authOptions = {
-        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=1&offset=1`,
+        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=3&offset=1`,
         headers: {
             'Authorization': 'Bearer ' + access_token
         }
@@ -373,10 +374,11 @@ export async function searchTrack (access_token, queryString, type) {
         })
         // console.log('Response => ', response.data.tracks.items[0].preview_url)
         console.log('Response => ', response.data.tracks.items[0])
-        return response.data.tracks.items[0].preview_url
+        // return response.data.tracks.items[0].preview_url
+        return response
     } catch (error) {
-        console.error('Error => ', error)
-        throw error;
+        // console.error('Error => ', error)
+        // throw error;
     }  
 }
 
