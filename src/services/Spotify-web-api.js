@@ -15,17 +15,17 @@ export async function requestUserAuthorization () {
 
     const auth_endpoint = 'https://accounts.spotify.com/authorize';
     const response_type = 'code';
-    const scope = `user-read-private 
-    user-read-email 
-    user-modify-playback-state 
-    user-read-playback-state 
-    streaming 
-    user-library-read 
+    const scope = `user-read-private
+    user-read-email
+    user-modify-playback-state
+    user-read-playback-state
+    streaming
+    user-library-read
     user-follow-read
     playlist-read-private
     playlist-read-collaborative
     `;
-      
+
     const url = `${auth_endpoint}?response_type=${response_type}&client_id=${client_id}&scope=${scope}&redirect_uri=${redirect_uri}`;
 
     return url;
@@ -118,7 +118,7 @@ export async function getUserProfile (access_token, user_id) {
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function getPreviewURL (data) {
@@ -131,7 +131,7 @@ export async function getPreviewURL (data) {
 
 export async function getUserSavedTracks (access_token, limit, offset) {
     const authOptions = {
-        url : 'https://api.spotify.com/v1/me/tracks?offset=0&limit=1',
+        url : 'https://api.spotify.com/v1/me/tracks?offset=0&limit=3',
         headers : {
             'Authorization' : 'Bearer ' + access_token,
         },
@@ -141,16 +141,15 @@ export async function getUserSavedTracks (access_token, limit, offset) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        const data = response.data
+        const data = response
         const previewUrl = getPreviewURL(data)
         console.log('Preview URL: ', previewUrl)
-        // return previewUrl;
-        return response
+        return data;
     } catch (error) {
         console.error('Error => ', error)
         throw error;
     }
-   
+
 }
 
 export async function getFollowedArtists(access_token, limit) {
@@ -167,7 +166,7 @@ export async function getFollowedArtists(access_token, limit) {
             headers: authOptions.headers
         })
         console.log('Response => ', response)
-        return response.data;
+        return response;
     } catch (error) {
         console.error('Error => ', error)
         throw error;
@@ -235,7 +234,7 @@ export async function checkUserSavedTracks (access_token, ids) {
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function getCurrentUserPlaylist (access_token) {
@@ -255,7 +254,7 @@ export async function getCurrentUserPlaylist (access_token) {
   } catch (error) {
       console.error('Error => ', error)
       throw error;
-  }   
+  }
 }
 
 export async function getUserPlaylist (access_token, user_id) {
@@ -275,7 +274,7 @@ export async function getUserPlaylist (access_token, user_id) {
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function getArtist (access_token, id) {
@@ -290,12 +289,12 @@ export async function getArtist (access_token, id) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        console.log('Response => ', response.data)
-        return response.data
+        console.log('Response => ', response)
+        return response
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function getArtistAlbums (access_token, id) {
@@ -310,12 +309,12 @@ export async function getArtistAlbums (access_token, id) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        console.log('Response => ', response.data)
-        return response.data
+        console.log('Response => ', response)
+        return response
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function getArtistTopTracks (access_token, id, market) {
@@ -330,12 +329,12 @@ export async function getArtistTopTracks (access_token, id, market) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        console.log('Response => ', response.data)
-        return response.data
+        console.log('Response => ', response)
+        return response
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function getTrack (access_token, id) {
@@ -356,14 +355,14 @@ export async function getTrack (access_token, id) {
     } catch (error) {
         console.error('Error => ', error)
         throw error;
-    }   
+    }
 }
 
 export async function searchTrack (access_token, queryString, type) {
     const q = encodeURIComponent(queryString)
 
     const authOptions = {
-        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=3&offset=1`,
+        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=1&offset=1`,
         headers: {
             'Authorization': 'Bearer ' + access_token
         }
@@ -374,11 +373,10 @@ export async function searchTrack (access_token, queryString, type) {
         })
         // console.log('Response => ', response.data.tracks.items[0].preview_url)
         console.log('Response => ', response.data.tracks.items[0])
-        // return response.data.tracks.items[0].preview_url
-        return response
+        return response.data.tracks.items[0].preview_url
     } catch (error) {
-        // console.error('Error => ', error)
-        // throw error;
+        console.error('Error => ', error)
+        throw error;
     }  
 }
 
