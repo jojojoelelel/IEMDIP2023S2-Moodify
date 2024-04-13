@@ -556,6 +556,13 @@ footer a:hover {
 }
 
 /* RESPONSIVE */
+@media screen and (max-width: 1500px) {
+  /* HEADER */
+  header .navbar-brand img {
+    max-width: 30%;
+  }
+}
+
 @media screen and (max-width: 991.98px) {
   /* HEADER */
   header .navbar-brand {

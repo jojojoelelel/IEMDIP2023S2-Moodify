@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>A-Frame Scene with Audio Visualizer and Animated Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script>
+      AFRAME.registerComponent('start-concert', {
+        init: function () {
+          // Add event listener for 'click' events on the element this component is attached to
+          this.el.addEventListener('click', () => {
+            // Start playing the background music
+            document.querySelector('#bg-music').play();
+          });
+        },
+      });
+
+      AFRAME.registerComponent('change-color-on-click', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            const newColor =
+              '#' + Math.floor(Math.random() * 16777215).toString(16);
+            this.el.setAttribute('material', 'color', newColor);
+          });
+        },
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <audio
+          id="bg-music"
+          src="./sounds/Kill-This-Love.mp3"
+          crossorigin="anonymous"></audio>
+        <a-asset-item
+          id="anime-girl"
+          src="./models/girl-model.glb"></a-asset-item>
+        <img src="./models/kill-this-love.jpg" id="love-bg" />
+      </a-assets>
+
+      <!-- Stage with interactive component to start the concert -->
+      <!-- <a-box
+        position="0 0 -6"
+        rotation="0 0 0"
+        width="4"
+        depth="4"
+        height="0.2"
+        color="while"
+        start-concert></a-box> -->
+
+      <!-- Model facing the camera with interactive component to change color -->
+      <!-- <a-entity
+        gltf-model="#anime-girl"
+        position="0 0 -5"
+        rotation="0 0 0"
+        scale="1 1 1"
+        id="animated-girl"
+        animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 2000; easing: linear">
+        change-color-on-click></a-entity
+      > -->
+
+      <!-- Concert Environment -->
+      <!-- <a-entity
+        environment="preset: dream; dressingAmount: 200; dressingColor: pink; groundColor: pink; skyType: color; skyColor: pink;"></a-entity> -->
+      <a-sky src="#love-bg"></a-sky>
+
+      <!-- Ambient and Spotlights -->
+      <a-light type="ambient" color="#445451"></a-light>
+      <a-light
+        type="spot"
+        position="-2 4 -4"
+        target="#animated-girl"
+        angle="45"
+        penumbra="0.5"
+        intensity="1"
+        color="cyan"></a-light>
+      <a-light
+        type="spot"
+        position="2 4 -4"
+        target="#animated-girl"
+        angle="45"
+        penumbra="0.5"
+        intensity="1"
+        color="magenta"></a-light>
+
+      <!-- Visualizer Plane -->
+      <a-plane
+        position="14 1 -7.904"
+        rotation="0 0 0"
+        width="30"
+        height="18"
+        material="color: #FFC0CB; transparent: true; opacity: 0.8;"
+        id="visualizer"></a-plane>
+    </a-scene>
+
+    <canvas
+      id="analyserCanvas"
+      width="512"
+      height="256"
+      style="display: none"></canvas>
+
+    <script src="./js/audio-visualizer.js"></script>
+    <script src="https://unpkg.com/aframe-extras"></script>
+    <script src="./js/model-dance.js"></script>
+  </body>
+</html>

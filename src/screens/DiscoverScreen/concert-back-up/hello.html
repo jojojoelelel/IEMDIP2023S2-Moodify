@@ -38,6 +38,9 @@
         <a-asset-item
           id="anime-girl"
           src="./models/girl-model.glb"></a-asset-item>
+        <a-asset-item
+          id="island-model"
+          src="./models/island.gltf"></a-asset-item>
       </a-assets>
 
       <!-- Stage with interactive component to start the concert -->
@@ -62,8 +65,9 @@
       >
 
       <!-- Concert Environment -->
-      <a-entity
-        environment="preset: dream; dressingAmount: 200; dressingColor: pink; groundColor: pink; skyType: color; skyColor: pink;"></a-entity>
+      <!-- <a-entity
+        environment="preset: dream; dressingAmount: 200; dressingColor: pink; groundColor: pink; skyType: color; skyColor: pink;"></a-entity> -->
+      <a-entity gltf-model="#island-model" position="0 0 0"></a-entity>
 
       <!-- Ambient and Spotlights -->
       <a-light type="ambient" color="#445451"></a-light>
