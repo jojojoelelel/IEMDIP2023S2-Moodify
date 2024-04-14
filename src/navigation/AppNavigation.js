@@ -1,4 +1,4 @@
-import React, {useState, createContext} from 'react';
+import React, {useState, createContext, useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 //Import the screens here
@@ -17,6 +17,7 @@ import PIscreen from '../screens/AccountScreen/directProfileInfo';
 import SScreen from '../screens/AccountScreen/directSetting';
 // import FullMusicPlayerScreen from '../screens/MusicPlayerScreen/FullMusicPlayerScreen';
 import SearchScreen from '../screens/HomeScreen/SearchScreen';
+import AlbumDetailsScreen from '../screens/HomeScreen/AlbumDetailsScreen';
 import ChatBotScreen from '../screens/ChatBotScreen/ChatBotScreen';
 import VrConcertScreen from '../screens/DiscoverScreen/VrConcertScreen';
 import MusicPlayerBar from '../components/MusicPlayerBar';
@@ -97,6 +98,7 @@ const AppNavigator = () => {
         />
         <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} />
+        <Stack.Screen name ='AlbumDetails' component={AlbumDetailsScreen} />
         <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} />
         <Stack.Screen name="AB" component={AlbumsScreen} />
         <Stack.Screen
