@@ -75,10 +75,7 @@ const AppNavigator = () => {
           component={DiaryScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen
-        name="RecomScreen"
-        component={RecomScreen}
-      />
+        <Stack.Screen name="RecomScreen" component={RecomScreen} />
         <Stack.Screen
           name="PIScreen"
           component={PIscreen}
