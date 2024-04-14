@@ -48,6 +48,7 @@ const ChatBotScreen = ({navigation}) => {
           const reply = data.reply;
           const songUris = data.song_uris;
           const songTitles = data.song_titles;
+          const albumCovers = data.image_urls;
           setChatbotReplied(true);
           if (
             songUris &&
@@ -60,6 +61,7 @@ const ChatBotScreen = ({navigation}) => {
               uri: songUris[0],
               title: songTitles[0].split(' by ')[0],
               artist: songTitles[0].split(' by ')[1],
+              albumCover: albumCovers ? albumCovers[0] : null,
             });
 
             setSpotifyUri(songUris[0]);
@@ -87,7 +89,7 @@ const ChatBotScreen = ({navigation}) => {
   }, []);
   //////////////////////////////////// Firebase songs saved
   // Function to save song to Firebase
-  const saveSongToDiary = (songTitle, songUri, artistName) => {
+  const saveSongToDiary = (songTitle, songUri, artistName, albumCover) => {
     const songRef = firebase.database().ref('diary-songs');
     const newSongRef = songRef.push();
     const timestamp = new Date().toLocaleDateString('en-US', {
@@ -124,6 +126,7 @@ const ChatBotScreen = ({navigation}) => {
             currentSong.title,
             currentSong.uri,
             currentSong.artist,
+            currentSong.albumCover,
           )
         }>
         <Text style={styles.saveButtonText}>+ Save To Your Diary</Text>

@@ -26,17 +26,18 @@ def setup_spotipy():
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     return sp
+
 sp = setup_spotipy()
 
 def get_spotify_uri(song_title, artist_name):
-    # Search for the song on Spotify
-    results = sp.search(q='track:{} artist:{}'.format(song_title, artist_name), type='track', limit=1)
+    results = sp.search(q=f'track:{song_title} artist:{artist_name}', type='track', limit=1)
     tracks = results['tracks']['items']
     if tracks:
-        # Return the first result's URI
-        return tracks[0]['uri']
+        uri = tracks[0]['uri']
+        image_url = tracks[0]['album']['images'][0]['url'] if tracks[0]['album']['images'] else None
+        return uri, image_url
     else:
-        return None
+        return None, None
 
 def load_model():
     # print(os.getenv('OPENAI_API_KEY'))
@@ -69,28 +70,34 @@ def extract_song_titles(chatbot_response_content):
 
 @app.route('/chat', methods=['POST'])
 def chat():
-        data = request.json
-        user_message = data['message']
-        chat_history.add_user_message(user_message)
-        chatbot_response = chatbotreply.invoke(
-            {
-                "messages": chat_history.messages,
-            }
-        )
-        chat_history.add_ai_message(chatbot_response)
-        # Unpack both song_titles and song_uris from the function's return
-        song_titles, song_uris = extract_song_titles(chatbot_response.content)
-        
-        # Prepare the response data
-        response_data = {
+    data = request.json
+    user_message = data['message']
+    chat_history.add_user_message(user_message)
+    chatbot_response = chatbotreply.invoke(
+        {
+            "messages": chat_history.messages,
+        }
+    )
+    chat_history.add_ai_message(chatbot_response)
+    # Unpack both song_titles and song_uris from the function's return
+    song_titles, song_uris = extract_song_titles(chatbot_response.content)
+    
+    # Extract URIs and image URLs separately
+    uris = [uri[0] for uri in song_uris if uri[0] is not None]
+    image_urls = [uri[1] for uri in song_uris if uri[1] is not None]
+    
+    # Prepare the response data
+    response_data = {
         'reply': chatbot_response.content, 
         'song_titles': song_titles, 
-        'song_uris': song_uris
-        }
+        'song_uris': uris,
+        'image_urls': image_urls
+    }
     
-        # Print the response data
-        print(response_data)
-        return jsonify(response_data)
+    # Print the response data
+    print(response_data)
+    return jsonify(response_data)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
