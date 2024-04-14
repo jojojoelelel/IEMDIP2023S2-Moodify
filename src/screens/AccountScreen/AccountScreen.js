@@ -321,14 +321,14 @@ const AccountScreen = () => {
     <ScrollView>
       <ImageBackground
         source={require('../../assets/images/background.png')}
-        style={{flex: 1}}>
-        <View style={{height: '100%', alignItems: 'center'}}>
+        style={{flex: 1, paddingBottom: '27%'}}>
+        <View style={{height: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
           <View
             style={{
               height: pxToDp(250),
               width: '95%',
               backgroundColor: 'rgba(0,0,0,0.7)',
-              marginTop: '17%',
+              marginTop: '10%',
               padding: 12,
               elevation: 5,
               borderRadius: 10,

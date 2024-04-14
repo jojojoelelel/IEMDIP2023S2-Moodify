@@ -26,7 +26,7 @@ const SignInScreen = ({navigation}) => {
   const [previewUrl, setpreviewUrl] = useState();
   const [refresh_token, setrefresh_Token] = useState();
 
-  const {access_token, setaccess_token} = useContext(AppContext);
+  const {access_token, setaccess_token, colorTheme, setColorTheme} = useContext(AppContext);
 
   const redirect_uri = 'http://localhost:8081/callback';
 
@@ -39,7 +39,8 @@ const SignInScreen = ({navigation}) => {
       // Extract the query parameters from the URL
       const params = url.split('?code=')[1];
       // Do something with the query parameters (e.g., parse them and handle the response)
-      console.log('Response query parameters:', params);
+      // console.log('Response query parameters:', params);
+      console.log('api call getreturnparams')
       setreturn_Params(params);
     }
   };
@@ -52,6 +53,7 @@ const SignInScreen = ({navigation}) => {
     // // const state = generateRandomString(16);
     try {
       const url = await SpotifyAPI.requestUserAuthorization();
+      console.log('api call requestuserauthorization')
       Linking.openURL(url);
     } catch (error) {
       console.error('Error in requestAccessToken => ', error);
@@ -60,6 +62,7 @@ const SignInScreen = ({navigation}) => {
   const requestAccessToken2 = async () => {
     try {
       const response = await SpotifyAPI.requestAccessToken(return_Params);
+      console.log('api call requestaccesstoken')
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
     } catch (error) {
@@ -81,7 +84,7 @@ const SignInScreen = ({navigation}) => {
 
   useEffect(() => {
     const refreshInterval = setInterval(
-      requestRefreshAccessToken2,
+      requestRefreshAccessToken2(),
       3600 * 1000,
     );
 
@@ -111,7 +114,7 @@ const SignInScreen = ({navigation}) => {
   ];
   return (
     <ImageBackground
-      source={require('../../assets/images/sign-in-bg.jpg')} // Replace with your actual background image path
+      source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/sign-in-bgLight.jpg')} // Replace with your actual background image path
       style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>SIGN IN</Text>
@@ -126,12 +129,13 @@ const SignInScreen = ({navigation}) => {
             navigation.navigate('Main');
             loginToSpotify();
           }}
-          style={styles.button}
+          buttonStyle={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}
+          buttonTextStyle={colorTheme === 'Dark' ? styles.signInButtonTextDark : styles.signInButtonTextLight}
         />
         <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
           <Text style={styles.signUpText}>
             Don't have an account?{' '}
-            <Text style={styles.signUpButtonText}>Sign Up</Text>
+            <Text style={colorTheme === 'Dark' ? styles.signUpButtonTextDark : styles.signUpButtonTextLight}>Sign Up</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -168,10 +172,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     // Add other styles for forgot password text
   },
-  button: {
+  buttonDark: {
     marginTop: 30,
     marginBottom: 30,
     width: '100%',
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`,
+    // Add other styles for button
+  },
+  buttonLight: {
+    marginTop: 30,
+    marginBottom: 30,
+    width: '100%',
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
     // Add other styles for button
   },
   connectText: {
@@ -182,8 +194,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     // Add other styles for sign up txt
   },
-  signUpButtonText: {
-    color: '#CBFB5E',
+  signUpButtonTextDark: {
+    color: `${process.env.REACT_APP_DARKACCENT}`,
+    textAlign: 'center',
+    // Add other styles for sign up txt
+  },
+  signUpButtonTextLight: {
+    color: '#42ffea',
+    textAlign: 'center',
+    // Add other styles for sign up txt
+  },
+  signInButtonTextDark: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontWeight: 'bold',
+    // Add other styles for sign up button text
+  },
+  signInButtonTextLight: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     fontWeight: 'bold',
     // Add other styles for sign up button text
   },

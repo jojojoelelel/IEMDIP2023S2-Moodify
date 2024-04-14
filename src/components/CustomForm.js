@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 
+import {AppContext} from '../navigation/AppNavigation';
+
 const CustomForm = ({fields}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   return (
     <View style={styles.formContainer}>
       {fields.map((field, index) => (
         <TextInput
           key={index}
           placeholder={field.placeholder}
-          placeholderTextColor={field.placeholderTextColor || '#9f9f9f'}
-          style={[styles.input, field.style]}
+          placeholderTextColor={colorTheme === 'Dark' ? '#9f9f9f' : '#42ffea'}
+          style={colorTheme === 'Dark' ? [styles.inputDark, field.style] : [styles.inputLight, field.style]}
           keyboardType={field.keyboardType || 'default'}
           secureTextEntry={field.secureTextEntry || false}
           onChangeText={field.onChangeText}
@@ -25,12 +28,24 @@ const styles = StyleSheet.create({
     width: '100%',
     // You might want to add more styling here depending on your design
   },
-  input: {
+  inputDark: {
     width: '100%',
     marginVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#9f9f9f',
     padding: 10,
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
+    // Add any additional input styles you need
+  },
+  inputLight: {
+    width: '100%',
+    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    padding: 10,
+    color: `${process.env.REACT_APP_LIGHTACCENT}`, 
+    // backgroundColor: '#42ffea', //teal
+    borderRadius: 5,
     // Add any additional input styles you need
   },
 });

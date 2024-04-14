@@ -1,19 +1,21 @@
 //Component for individual artist card
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {AppContext} from '../navigation/AppNavigation';
 
 const ArtistCard = ({item, onPress, imageUrl}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   return (
     <View style={{margin: 10}}>
       <Image
-        style={{width: 200, height: 200, borderRadius: 5}}
+        style={{width: 200, height: 200, borderRadius: 5, borderWidth: 1, borderColor: `${process.env.REACT_APP_DARKTHEME}`}}
         source={{uri: imageUrl}}
       />
       <Text
         style={{
           fontSize: 13,
           fontWeight: '500',
-          color: 'white',
+          color: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_LIGHTTHEME}` : `${process.env.REACT_APP_DARKTHEME}`}`,
           marginTop: 10,
         }}>
         {item?.name}

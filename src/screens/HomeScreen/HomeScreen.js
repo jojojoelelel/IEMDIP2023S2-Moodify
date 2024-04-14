@@ -42,7 +42,7 @@ import {MusicPlayerContext} from '../../contexts/SongContext.js';
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
 
-  const {access_token, setaccess_token} = useContext(AppContext);
+  const {colorTheme, setColorTheme, access_token, setaccess_token} = useContext(AppContext);
 
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
@@ -63,6 +63,7 @@ export default function HomeScreen({navigation}) {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
       // console.log(response.artists.items); // Log the response object
+      console.log('api call getfollowedartist')
       setTopArtists(prevData => [
         ...prevData,
         ...response.artists.items.map(artist => ({
@@ -122,7 +123,8 @@ export default function HomeScreen({navigation}) {
         'SG',
       );
       //console.log(response);
-      console.log(response.tracks);
+      // console.log(response.tracks);
+      console.log('api call getartisttoptrack')
       setTopTracks(
         response.tracks.map(track => ({
           title: track.name,
@@ -156,12 +158,15 @@ export default function HomeScreen({navigation}) {
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
+    // <ImageBackground
+    //   source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/sign-in-bgLight.jpg')} // Replace with your actual background image path
+    //   style={styles.background}>
+        <>
+      <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+        <View style={colorTheme === 'Dark' ? styles.headerContainerDark : styles.headerContainerLight}>
           <Text
             onPress={() => alert('This is the "Home" screen.')}
-            style={styles.text}>
+            style={colorTheme === 'Dark' ? styles.textDark : styles.textLight}>
             Moodify
           </Text>
           <TouchableOpacity
@@ -170,13 +175,13 @@ export default function HomeScreen({navigation}) {
             <Ionicons
               name="search"
               size={24}
-              color="#fff"
+              color={colorTheme === 'Dark' ? process.env.REACT_APP_LIGHTTHEME : process.env.REACT_APP_DARKTHEME}
               style={styles.searchIcon}
             />
           </TouchableOpacity>
         </View>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <Text style={styles.header}>Recent Albums</Text>
+          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Recent Albums</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {topAlbums.map((item, index) => (
             <AlbumCard item={item}
@@ -186,7 +191,7 @@ export default function HomeScreen({navigation}) {
           ))}
           </ScrollView>
 
-          <Text style={styles.header}>Top Artists</Text>
+          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Top Artists</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {topArtists.map((item, index) => (
               <ArtistCard
@@ -198,7 +203,7 @@ export default function HomeScreen({navigation}) {
             ))}
           </ScrollView>
 
-          <Text style={styles.header}>Recently Played</Text>
+          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Recently Played</Text>
           <View style={styles.trackContainer}>
             <FlatList
               data={topTracks} // Use topTracks instead of track
@@ -217,26 +222,54 @@ export default function HomeScreen({navigation}) {
         </ScrollView>
         <MusicPlayerBar />
       </View>
+    {/* </ImageBackground> */}
     </>
   );
 }
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: '#000',
-    justifyContent: 'flex-start',
-    paddingTop: 20,
+    justifyContent: 'center',
   },
-  headerContainer: {
+  containerDark: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_DARKTHEME}`,
+    justifyContent: 'flex-start',
+    paddingTop: 10,
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    justifyContent: 'flex-start',
+    paddingTop: 10,
+  },
+  headerContainerDark: {
     flexDirection: 'row',
     alignItems: 'center', // Align items vertically
     paddingRight: 20,
     paddingLeft: 20,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: `${process.env.REACT_APP_DARKACCENT}`,
   },
-  text: {
+  headerContainerLight: {
+    flexDirection: 'row',
+    alignItems: 'center', // Align items vertically
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  textDark: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#fff',
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
+  },
+  textLight: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_DARKTHEME}`,
   },
   searchIconContainer: {
     marginLeft: 'auto', // Push the icon to the right
@@ -248,8 +281,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'flex-start',
   },
-  header: {
-    color: '#fff',
+  headerDark: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 20,
+  },
+  headerLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
     fontSize: 24,
     fontWeight: 'bold',
     padding: 20,
@@ -272,6 +311,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     shadowColor: '#303133',
     flexDirection: 'column',
-    paddingLeft: 20,
+    // paddingLeft: 20,
+    alignSelf: 'center',
   },
 });

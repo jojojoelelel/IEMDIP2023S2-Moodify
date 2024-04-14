@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useContext} from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 
+import {AppContext} from '../../navigation/AppNavigation.js';
+
 const GettingStarted = ({navigation}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   // Create an animated value for opacity
   const shakeAnimation = useRef(new Animated.Value(0)).current;
 
@@ -64,26 +67,26 @@ const GettingStarted = ({navigation}) => {
     outputRange: ['0deg', '360deg'],
   });
   return (
-    <View style={styles.container}>
+    <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
       <ScrollView
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         style={{overflow: 'visible'}}>
         <Image
-          source={require('../../assets/images/getting_started.jpg')}
+          source={colorTheme === 'Dark' ? require('../../assets/images/getting_startedDark.jpg') : require('../../assets/images/getting_startedLight.jpg')}
           style={styles.image}
         />
         <Image
-          source={require('../../assets/images/getting_started.jpg')}
+          source={colorTheme === 'Dark' ? require('../../assets/images/getting_startedDark.jpg') : require('../../assets/images/getting_startedLight.jpg')}
           style={styles.image}
         />
       </ScrollView>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>WELCOME TO MOODIFY APP</Text>
-        <Text style={styles.subtitle}>All-in-one music sharing platform</Text>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>WELCOME TO MOODIFY APP</Text>
+        <Text style={colorTheme === 'Dark' ? styles.subtitleDark : styles.subtitleLight}>All-in-one music sharing platform</Text>
         <Animated.Image
-          source={require('../../assets/images/musicNote.png')}
+          source={colorTheme === 'Dark' ? require('../../assets/images/musicNoteDark.png') : require('../../assets/images/musicNoteLight.png')}
           style={[
             styles.gif,
             {
@@ -97,17 +100,24 @@ const GettingStarted = ({navigation}) => {
       <CustomButton
         title="GETTING STARTED"
         onPress={() => navigation.navigate('SignInScreen')}
-        style={styles.button}
+        buttonStyle={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}
+        buttonTextStyle={colorTheme === 'Dark' ? styles.buttonTextDark : styles.buttonTextLight}
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#000', //change when needed
+    backgroundColor: `${process.env.REACT_APP_DARKTHEME}`,
+  },
+  containerLight: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
   },
   sliderContainer: {
     height: '50%', // Adjust as needed
@@ -122,31 +132,58 @@ const styles = StyleSheet.create({
     // justifyContent: 'flex-end',
     flex: 1,
   },
-  title: {
+  titleDark: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     textAlign: 'center',
   },
-  subtitle: {
+  titleLight: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    textAlign: 'center',
+  },
+  subtitleDark: {
     fontSize: 16,
-    color: '#fff', // Adjust as needed
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     textAlign: 'center',
   },
-  button: {
+  subtitleLight: {
+    fontSize: 16,
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    textAlign: 'center',
+  },
+  buttonDark: {
     paddingHorizontal: 40,
     paddingVertical: 15,
-    backgroundColor: '#CBFB5E', // Spotify green color
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`, // Green color
     borderRadius: 5,
     marginBottom: 100,
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: {width: 0, height: 2},
   },
-  buttonText: {
+  buttonLight: {
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`, // Pink color
+    borderRadius: 5,
+    marginBottom: 100,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: {width: 0, height: 2},
+  },
+  buttonTextDark: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#fff', // Adjust as needed
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    textAlign: 'center',
+  },
+  buttonTextLight: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: `${process.env.REACT_APP_LIGHTTHEME}`, 
     textAlign: 'center',
   },
   gif: {
