@@ -1,20 +1,28 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useCallback, useEffect} from 'react';
+import { useNavigation} from '@react-navigation/native';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { WebView } from 'react-native-webview';
+
+
+const MusicPlayer = (spotifyUri ) => {
+  if (!spotifyUri) return null; // If no URI, don't render anything
+  const spotifyTrackId = spotifyUri.split(':').pop();
+  const spotifyEmbedUrl = `https://open.spotify.com/embed/track/${spotifyTrackId}`;
+  return (<><WebView source={{ uri: spotifyEmbedUrl }} style={styles.spotifyPlayer} /></>);
+};
 
 const RecomScreen = ({ route }) => {
-  const navigation = useNavigation();
+  const { songName, artist, songUri, selectedDate } = route.params;
+  console.log(songUri);
+  const [showPlayer, setShowPlayer] = useState(true); // Control visibility of the Music Player
 
   const handlePlay = () => {
-    // Navigate to 'MusicPlayerScreen' screen
-    navigation.navigate('MusicPlayerScreen');
+    setShowPlayer(true); // Set showPlayer to true when the button is pressed
   };
-
-  const { songName, artist, songUri, selectedDate } = route.params;
 
   return (
     <ImageBackground
-      source={require('../../assets/images/background.png')} // Adjust the path according to your image
+      source={require('../../assets/images/background.png')}
       style={styles.background}
       resizeMode="cover">
       <View style={styles.transparentContainer}>
@@ -22,13 +30,7 @@ const RecomScreen = ({ route }) => {
           <Text style={styles.date}>{selectedDate}</Text>
           <Text style={styles.songName}>{songName}</Text>
           <Text style={styles.singer}>{artist}</Text>
-          {/* Assuming albumCover is passed as a prop */}
-          <Image source={require('../../assets/images/User1.jpg')} style={styles.albumCover} />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handlePlay}>
-              <Text style={styles.buttonText}>Play</Text>
-            </TouchableOpacity>
-          </View>
+          {MusicPlayer(songUri)}
         </View>
       </View>
     </ImageBackground>
@@ -46,11 +48,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255, 0.3)', // Transparent background
     justifyContent: 'center',
     alignItems: 'center',
+    width: '80%',
   },
   container: {
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
+    // alignItems: 'center',
     padding: 20,
+    width: '100%',
   },
   date: {
     fontSize: 18,
@@ -63,11 +69,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'darkblue',
+    top:'5%',
   },
   singer: {
     fontSize: 23,
     marginBottom: 10,
     color: 'darkblue',
+    right:'-50%',
+    top:'5%',
   },
   albumCover: {
     width: 200,
@@ -88,6 +97,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  spotifyPlayer: {
+    height: '100%',
+    width: '100%',
+    // alignSelf: 'center', 
+    backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    top:'10%',
+  }
 });
 
 export default RecomScreen;
