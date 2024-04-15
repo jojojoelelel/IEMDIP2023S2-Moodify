@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>A-Frame Scene with Audio Visualizer and Animated Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <audio id="bg-music" src="./sounds/Happy.mp3" preload="auto"></audio>
+        <img id="happy-bg" src="./models/happy-bg.jpg" />
+        <a-asset-item
+          id="wiking-face-model"
+          src="./models/smile_tears.glb"></a-asset-item>
+        <a-asset-item
+          id="pixel-smile-model"
+          src="./models/3d_in_love_emoji.glb"></a-asset-item>
+      </a-assets>
+
+      <a-sky src="#happy-bg"></a-sky>
+
+      <!-- Models -->
+      <a-entity
+        gltf-model="#wiking-face-model"
+        position="-1 1 -10"
+        scale="0.5 0.5 0.5"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 1000"></a-entity>
+      <a-entity
+        gltf-model="#pixel-smile-model"
+        position="1 1 -10"
+        scale="0.05 0.05 0.05"
+        animation="property: rotation; to: 0 -360 0; loop: true; dur: 1000"></a-entity>
+
+      <!-- Additional Models for fun -->
+      <a-entity
+        gltf-model="#wiking-face-model"
+        position="-3 2.217 -8"
+        scale="0.4 0.4 0.4"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 500"></a-entity>
+      <a-entity
+        gltf-model="#wiking-face-model"
+        position="3 0.5 -12"
+        scale="0.7 0.7 0.7"
+        animation="property: rotation; to: 0 -360 0; loop: true; dur: 800"></a-entity>
+      <a-entity
+        gltf-model="#pixel-smile-model"
+        position="0 -1.047 -15"
+        scale="0.03 0.03 0.03"
+        animation="property: rotation; to: 360 0 360; loop: true; dur: 1200"></a-entity>
+      <a-entity
+        gltf-model="#wiking-face-model"
+        position="-1 1 -10"
+        scale="0.5 0.5 0.5"
+        animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 1000"
+        animation__pos="property: position; from: -3 0.5 -12; to: -3 1.5 -12; dir: alternate; loop: true; dur: 2000"></a-entity>
+      <a-entity
+        gltf-model="#wiking-face-model"
+        position="-1 1 -10"
+        scale="0.5 0.5 0.5"
+        animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 1000"
+        animation__pos="property: position; from: 3 0.5 -12; to: 3 1.5 -12; dir: alternate; loop: true; dur: 2000"></a-entity>
+
+      <!-- Visualizer Plane -->
+      <a-plane
+        position="0 1 -200"
+        rotation="0 0 0"
+        scale="4 4 2"
+        width="30"
+        height="18"
+        color="#FFC0CB"></a-plane>
+
+      <!-- Camera -->
+      <a-camera id="rotating-camera"></a-camera>
+    </a-scene>
+
+    <script>
+      document.body.addEventListener('click', () => {
+        var audio = document.querySelector('#bg-music');
+        var visualizerPlane = document.querySelector('a-plane');
+        if (!audio.isPlaying) {
+          audio.play();
+          audio.isPlaying = true;
+
+          // Setup the audio context only after user interaction
+          var audioContext = new AudioContext();
+          var analyser = audioContext.createAnalyser();
+          var source = audioContext.createMediaElementSource(audio);
+          source.connect(analyser);
+          analyser.connect(audioContext.destination);
+
+          var dataArray = new Uint8Array(analyser.frequencyBinCount);
+          var canvas = document.createElement('canvas');
+          canvas.width = 256;
+          canvas.height = 256;
+          var ctx = canvas.getContext('2d');
+
+          // Update the visualizer each frame
+          function updateVisualizer() {
+            requestAnimationFrame(updateVisualizer);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < dataArray.length; i++) {
+              var barHeight = dataArray[i];
+              var r = barHeight + 25 * (i / dataArray.length);
+              var g = 250 * (i / dataArray.length);
+              var b = 50;
+              ctx.fillStyle = `rgb(${r},${g},${b})`;
+              ctx.fillRect(
+                i * (canvas.width / dataArray.length),
+                canvas.height - barHeight,
+                canvas.width / dataArray.length,
+                barHeight,
+              );
+            }
+
+            // Set the canvas as the texture for the plane
+            var texture = new THREE.Texture(canvas);
+            texture.needsUpdate = true;
+            visualizerPlane.getObject3D('mesh').material.map = texture;
+            visualizerPlane.getObject3D('mesh').material.needsUpdate = true;
+          }
+
+          updateVisualizer();
+        }
+      });
+
+      //   Script for camera
+      var sceneEl = document.querySelector('a-scene');
+      var cameraEl = document.getElementById('rotating-camera');
+      var radius = 10;
+      var angle = 0;
+
+      sceneEl.addEventListener('loaded', function () {
+        setInterval(function () {
+          angle += 0.01;
+          var x = radius * Math.cos(angle);
+          var z = radius * Math.sin(angle);
+          cameraEl.setAttribute('position', {x: x, y: 1.6, z: z});
+          cameraEl.setAttribute('rotation', {
+            x: 0,
+            y: angle * (180 / Math.PI) + 90,
+            z: 0,
+          });
+        }, 10);
+      });
+    </script>
+  </body>
+</html>

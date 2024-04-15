@@ -51,7 +51,7 @@ const DiscoverScreen = ({navigation}) => {
         style={styles.button}
         onPress={() => navigation.navigate('VrConcertScreen')}
         activeOpacity={0.7}>
-        <Text style={styles.buttonText}>VR Concert</Text>
+        <Text style={styles.buttonText}>VR Experience</Text>
       </TouchableOpacity>
       <Animated.Image
         source={require('../../assets/images/imagediscoverscreen.png')}
