@@ -67,7 +67,8 @@ export default function SearchScreen({ navigation }) {
   const debouncedSearch = debounce(handleSearch,800)
   function handleSearch (text) {
     const filteredTracks = tracks.filter((item) =>
-    item.name.toLowerCase().includes(text.toLowerCase())
+    //item.name.toLowerCase().includes(text.toLowerCase())
+    item.title.toLowerCase().includes(text.toLowerCase())
     )
     //console.log('filteredTracks', filteredTracks)
     setSearchedTracks(filteredTracks);
@@ -86,8 +87,13 @@ export default function SearchScreen({ navigation }) {
     setIsFocused(false);
     };
 
-  useEffect(() => {
-    searchTrack2();
+    //timeout for API calls
+    useEffect(() => {
+    const delay = setTimeout(() => {
+      searchTrack2()
+    }, 30000);
+
+    return () => clearTimeout(delay);
     }, [searchQuery]);
 
   useEffect(() => {
@@ -158,7 +164,8 @@ export default function SearchScreen({ navigation }) {
 
             // Process track data
             const tracksData = trackResponse.data.tracks.items.map(track => ({
-                name: track.name,
+                //name: track.name,
+                title: track.name,
                 artist: track.album.artists.map(artist => artist.name).join(', '),
                 cover: track.album.images.length > 0 ? track.album.images[0].url : '',
                 url: track.preview_url,
@@ -224,7 +231,7 @@ export default function SearchScreen({ navigation }) {
                 <View style={styles.savedTrackWrapper}>
                   <TrackList
                     id={item.id}
-                    title={item.name}
+                    title={item.title}
                     artist={item.artist}
                     url={item.preview_url}
                     cover={item.cover}
@@ -244,7 +251,7 @@ export default function SearchScreen({ navigation }) {
           renderItem={({ item }) => (
             <View style={styles.savedTrackWrapper}>
               <TrackListWithTimeStamp
-                title={item.name}
+                title={item.title}
                 artist={item.artist}
                 dateAdded={item.dateAdded}
                 url={item.url}
