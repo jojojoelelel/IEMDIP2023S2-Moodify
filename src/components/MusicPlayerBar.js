@@ -33,7 +33,7 @@ const MusicPlayerBar = () => {
         <Text style={styles.songTitle}>{currentTrack.title}</Text>
         <Text style={styles.artistName}>{currentTrack.artist}</Text>
       </View>
-      <TouchableOpacity onPress={playOrPauseTrack}>
+      <TouchableOpacity onPress={playOrPauseTrack} style={styles.playButton}>
         <Ionicons
           name={isPlaying ? 'pause' : 'play'}
           size={30}
@@ -74,6 +74,11 @@ const styles = StyleSheet.create({
   artistName: {
     color: '#FFFFFF',
     fontSize: 14,
+  },
+  playButton: {
+    marginRight: 20, // Increase padding to enhance the touch area
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
