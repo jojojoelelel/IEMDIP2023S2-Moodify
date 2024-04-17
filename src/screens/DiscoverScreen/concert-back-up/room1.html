@@ -8,9 +8,33 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="js/aframe-spe-particles-component.js"></script>
     <script src="js/aframe-sprite-particles-component.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
+    <!-- Import Map for Three.js and its modules -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.137.5/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.137.5/examples/jsm/"
+        }
+      }
+    </script>
   </head>
   <body>
     <a-scene>
+      <a-assets>
+        <audio
+          id="bg-music"
+          src="./sounds/SkyFullOfStars.mp3"
+          preload="auto"></audio>
+        <img id="coldplay-bg" src="./img/room1sky.jpg" />
+        <img id="bubblestar" src="./img/bubblestar.png" />
+        <a-asset-item
+          id="skeleton"
+          response-type="arraybuffer"
+          src="./models/skeleton_grup.glb"></a-asset-item>
+      </a-assets>
+
+      <a-sky src="#coldplay-bg"></a-sky>
       <a-entity
         spe-particles="
         texture: img/bubblestar.png; 
@@ -26,67 +50,19 @@
         maxAge: 100; 
         emitter-scale: 200
         angle-spread: 10 2 10;"></a-entity>
-      <a-assets>
-        <audio
-          id="bg-music"
-          src="./sounds/SkyFullOfStars.mp3"
-          preload="auto"></audio>
-        <img id="coldplay-bg" src="./img/room1sky.jpg" />
-        <img id="bubblestar" src="./img/bubblestar.png" />
-        <a-asset-item
-          id="wiking-face-model"
-          src="./models/smile_tears.glb"></a-asset-item>
-        <a-asset-item
-          id="pixel-smile-model"
-          src="./models/3d_in_love_emoji.glb"></a-asset-item>
-      </a-assets>
-
-      <a-sky src="#coldplay-bg"></a-sky>
 
       <!-- Models -->
-
-      <!-- <a-entity
-        gltf-model="#wiking-face-model"
-        position="-1 1 -10"
-        scale="0.5 0.5 0.5"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 1000"></a-entity> -->
-      <!-- <a-entity
-        gltf-model="#pixel-smile-model"
-        position="1 1 -10"
-        scale="0.05 0.05 0.05"
-        animation="property: rotation; to: 0 -360 0; loop: true; dur: 1000"></a-entity> -->
-
-      <!-- Additional Models for fun -->
-      <!-- <a-entity
-        gltf-model="#wiking-face-model"
-        position="-3 2.217 -8"
-        scale="0.4 0.4 0.4"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 500"></a-entity>
       <a-entity
-        gltf-model="#wiking-face-model"
-        position="3 0.5 -12"
-        scale="0.7 0.7 0.7"
-        animation="property: rotation; to: 0 -360 0; loop: true; dur: 800"></a-entity>
-      <a-entity
-        gltf-model="#pixel-smile-model"
-        position="0 -1.047 -15"
-        scale="0.03 0.03 0.03"
-        animation="property: rotation; to: 360 0 360; loop: true; dur: 1200"></a-entity>
-      <a-entity
-        gltf-model="#wiking-face-model"
-        position="-1 1 -10"
-        scale="0.5 0.5 0.5"
-        animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 1000"
-        animation__pos="property: position; from: -3 0.5 -12; to: -3 1.5 -12; dir: alternate; loop: true; dur: 2000"></a-entity>
-      <a-entity
-        gltf-model="#wiking-face-model"
-        position="-1 1 -10"
-        scale="0.5 0.5 0.5"
-        animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 1000"
-        animation__pos="property: position; from: 3 0.5 -12; to: 3 1.5 -12; dir: alternate; loop: true; dur: 2000"></a-entity> -->
+        gltf-model="#skeleton"
+        position="-0.28 1 -1.8"
+        scale="10 10 10"
+        rotate="0 -30 0"
+        animation-mixer="clip: Take 001; loop: infinite"
+        rotation="0 28 0"></a-entity>
 
       <!-- Visualizer Plane -->
       <a-plane
+        id="visualizer"
         position="0 1 -200"
         rotation="0 0 0"
         scale="4 4 2"
@@ -99,6 +75,31 @@
     </a-scene>
 
     <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var models = document.querySelectorAll('a-entity[gltf-model]');
+        models.forEach(model => {
+          model.addEventListener('model-loaded', () => {
+            console.log(
+              'Model has been loaded successfully:',
+              model.getAttribute('gltf-model'),
+            );
+          });
+          model.addEventListener('loaded', () => {
+            console.log(
+              'Entity has been attached successfully:',
+              model.getAttribute('gltf-model'),
+            );
+          });
+          model.addEventListener('error', e => {
+            console.error(
+              'Error loading model',
+              model.getAttribute('gltf-model'),
+              e.detail,
+            );
+          });
+        });
+      });
+
       document.body.addEventListener('click', () => {
         var audio = document.querySelector('#bg-music');
         var visualizerPlane = document.querySelector('a-plane');
@@ -172,3 +173,5 @@
     </script>
   </body>
 </html>
+
+<!--This work is based on "Solar Eclipse 2024" (https://sketchfab.com/3d-models/solar-eclipse-2024-357e6b38d74b414aae11cf9d948251fd) by tamminen (https://sketchfab.com/tamminen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)-->
