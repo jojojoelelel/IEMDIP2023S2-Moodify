@@ -114,14 +114,14 @@ const SignInScreen = ({navigation}) => {
   ];
   return (
     <ImageBackground
-      source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/sign-in-bgLight.jpg')} // Replace with your actual background image path
+      source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
       style={styles.background}>
       <View style={styles.container}>
-        <Text style={styles.title}>SIGN IN</Text>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>SIGN IN</Text>
         <CustomForm fields={formFields} />
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-          <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
+          <Text style={colorTheme === 'Dark' ? styles.forgotPasswordTextDark : styles.forgotPasswordTextLight}>Forgot Password ?</Text>
         </TouchableOpacity>
         <CustomButton
           title="SIGN IN WITH SPOTIFY"
@@ -133,7 +133,7 @@ const SignInScreen = ({navigation}) => {
           buttonTextStyle={colorTheme === 'Dark' ? styles.signInButtonTextDark : styles.signInButtonTextLight}
         />
         <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-          <Text style={styles.signUpText}>
+          <Text style={colorTheme === 'Dark' ? styles.signUpTextDark : styles.signUpTextLight}>
             Don't have an account?{' '}
             <Text style={colorTheme === 'Dark' ? styles.signUpButtonTextDark : styles.signUpButtonTextLight}>Sign Up</Text>
           </Text>
@@ -152,10 +152,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     padding: 20,
   },
-  title: {
+  titleDark: {
     fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
+  titleLight: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     marginBottom: 20,
     textAlign: 'left',
   },
@@ -166,10 +173,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#9f9f9f',
     // Add other styles for input
   },
-  forgotPasswordText: {
+  forgotPasswordTextDark: {
     marginTop: 30,
     textAlign: 'right',
     color: '#fff',
+    // Add other styles for forgot password text
+  },
+  forgotPasswordTextLight: {
+    marginTop: 30,
+    textAlign: 'right',
+    color: '#54b5cc',
     // Add other styles for forgot password text
   },
   buttonDark: {
@@ -189,8 +202,13 @@ const styles = StyleSheet.create({
   connectText: {
     // Styles for the connect text
   },
-  signUpText: {
+  signUpTextDark: {
     color: '#fff',
+    textAlign: 'center',
+    // Add other styles for sign up txt
+  },
+  signUpTextLight: {
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     textAlign: 'center',
     // Add other styles for sign up txt
   },
@@ -200,7 +218,7 @@ const styles = StyleSheet.create({
     // Add other styles for sign up txt
   },
   signUpButtonTextLight: {
-    color: '#42ffea',
+    color: '#54b5cc',
     textAlign: 'center',
     // Add other styles for sign up txt
   },

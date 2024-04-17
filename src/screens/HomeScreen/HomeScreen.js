@@ -158,11 +158,12 @@ export default function HomeScreen({navigation}) {
   };
 
   return (
-    // <ImageBackground
-    //   source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/sign-in-bgLight.jpg')} // Replace with your actual background image path
-    //   style={styles.background}>
-        <>
-      <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+    <ImageBackground
+      source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
+      style={styles.background}>
+      {/* <> */}
+      {/* <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}> */}
+        
         <View style={colorTheme === 'Dark' ? styles.headerContainerDark : styles.headerContainerLight}>
           <Text
             onPress={() => alert('This is the "Home" screen.')}
@@ -221,15 +222,16 @@ export default function HomeScreen({navigation}) {
           </View>
         </ScrollView>
         <MusicPlayerBar />
-      </View>
-    {/* </ImageBackground> */}
-    </>
+      {/* </View> */}
+    </ImageBackground>
+    // </>
   );
 }
 const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: 'center',
+    paddingTop: 10,
   },
   containerDark: {
     flex: 1,

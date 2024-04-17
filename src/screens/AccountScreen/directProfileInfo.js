@@ -19,7 +19,7 @@ import * as SpotifyAPI from '../../services/Spotify-web-api';
 import { AppContext } from '../../navigation/AppNavigation';
 
 const PIscreen = () => {
-  const { access_token, setaccess_token } = useContext(AppContext);
+  const { access_token, setaccess_token, colorTheme, setColorTheme } = useContext(AppContext);
 
   const initialUserData = [
     {label: 'Account Name', value: 'Andy'},
@@ -66,9 +66,9 @@ const PIscreen = () => {
   }, []);
 
   const renderItem = ({item, index}) => (
-    <View style={styles.itemContainer}>
+    <View style={colorTheme === 'Dark' ? styles.itemContainerDark : styles.itemContainerLight}>
       <View style={styles.item}>
-        <Text style={styles.label}>{item.label}:</Text>
+        <Text style={colorTheme === 'Dark' ? styles.labelDark : styles.labelLight}>{item.label}:</Text>
         {isEditing ? (
           <TextInput
             style={styles.input}
@@ -76,40 +76,71 @@ const PIscreen = () => {
             onChangeText={text => handleInputChange(text, index)}
           />
         ) : (
-          <Text style={styles.value}>{item.value}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.valueDark : styles.valueLight}>{item.value}</Text>
         )}
       </View>
     </View>
   );
-
-  return (
-    <ImageBackground
-      source={require('../../assets/images/background.png')}
-      style={{flex: 1}}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <TouchableOpacity onPress={backNav}>
+  if (colorTheme === 'Dark') {
+    return (
+      <ImageBackground
+        source={require('../../assets/images/background.png')}
+        style={{flex: 1}}>
+        <ScrollView contentContainerStyle={styles.container}>
+          {/* <TouchableOpacity onPress={backNav}>
+            <Image
+              source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
+              style={{width: 50, height: 50}} // Adjust the width and height according to your preference
+            />
+          </TouchableOpacity> */}
           <Image
-            source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
-            style={{width: 50, height: 50}} // Adjust the width and height according to your preference
+            source={require('../../assets/icon/profile.jpg')}
+            style={styles.profileImage}
           />
-        </TouchableOpacity>
-        <Image
-          source={require('../../assets/icon/profile.jpg')}
-          style={styles.profileImage}
-        />
-        <FlatList
-          data={userData}
-          renderItem={renderItem}
-          keyExtractor={item => item.label}
-        />
-        <TouchableOpacity onPress={handleEditProfile} style={styles.editButton}>
-          <Text style={styles.editButtonText}>
-            {isEditing ? 'Save Changes' : 'Update Profile Info'}
-          </Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </ImageBackground>
-  );
+          <FlatList
+            data={userData}
+            renderItem={renderItem}
+            keyExtractor={item => item.label}
+          />
+          <TouchableOpacity onPress={handleEditProfile} style={styles.editButton}>
+            <Text style={styles.editButtonText}>
+              {isEditing ? 'Save Changes' : 'Update Profile Info'}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </ImageBackground>
+    );
+  } else { // light mode
+    return (
+      // <View style={styles.mainContainerLight}>
+        <ImageBackground source={require('../../assets/images/backgroundLight.jpg')} style={styles.mainContainerLight}>
+        <ScrollView contentContainerStyle={styles.container}>
+          {/* <TouchableOpacity onPress={backNav}>
+            <Image
+              source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
+              style={{width: 50, height: 50}} // Adjust the width and height according to your preference
+            />
+          </TouchableOpacity> */}
+          <Image
+            source={require('../../assets/icon/profile.jpg')}
+            style={styles.profileImage}
+          />
+          <FlatList
+            data={userData}
+            renderItem={renderItem}
+            keyExtractor={item => item.label}
+          />
+          <TouchableOpacity onPress={handleEditProfile} style={styles.editButtonLight}>
+            <Text style={styles.editButtonTextLight}>
+              {isEditing ? 'Save Changes' : 'Update Profile Info'}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      {/* </View> */}
+      </ImageBackground>
+    );
+  }
+  
 };
 
 const styles = StyleSheet.create({
@@ -118,6 +149,10 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 40,
   },
+  mainContainerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+  },
   profileImage: {
     height: pxToDp(80),
     width: pxToDp(80),
@@ -125,36 +160,69 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 20,
   },
-  itemContainer: {
+  itemContainerDark: {
     backgroundColor: 'rgba(0,0,0,0.7)',
     borderRadius: 10,
     marginBottom: 10,
     elevation: 3,
   },
+  itemContainerLight: {
+    // backgroundColor: 'rgba(0,0,0,0.7)',
+    // backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor:`${process.env.REACT_APP_LIGHTACCENT}`,
+    // elevation: 3,
+  },
   item: {
     flexDirection: 'row',
     padding: 20,
   },
-  label: {
+  labelDark: {
     color: 'white',
     fontWeight: 'bold',
     marginRight: 10,
     fontSize: 15,
   },
-  value: {
+  labelLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontWeight: 'bold',
+    marginRight: 10,
+    fontSize: 15,
+  },
+  valueDark: {
     color: 'white',
     flex: 1,
     fontSize: 15,
   },
-  editButton: {
+  valueLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    flex: 1,
+    fontSize: 15,
+  },
+  editButtonDark: {
     backgroundColor: '#A4EC0A',
     borderRadius: 5,
     padding: 10,
     alignItems: 'center',
     marginBottom: 130,
   },
-  editButtonText: {
+  editButtonLight: {
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    borderRadius: 5,
+    padding: 10,
+    alignItems: 'center',
+    marginBottom: 130,
+  },
+  editButtonTextDark: {
     color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  editButtonTextLight: {
+    color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useContext} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Animated, ImageBackground} from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
@@ -42,7 +42,9 @@ const DiscoverScreen = ({navigation}) => {
   }, []);
 
   return (
-    <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+    <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
+    style={styles.background}>
+    {/* <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}> */}
       <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>Discover New Experiences</Text>
       <TouchableOpacity
         style={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}
@@ -67,13 +69,18 @@ const DiscoverScreen = ({navigation}) => {
         ]}
       />
       <MusicPlayerBar />
-    </View>
+    {/* </View> */}
+    </ImageBackground>
   );
 };
 
 export default DiscoverScreen;
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    padding: 20,
+  },
   containerDark: {
     flex: 1,
     padding: 20,

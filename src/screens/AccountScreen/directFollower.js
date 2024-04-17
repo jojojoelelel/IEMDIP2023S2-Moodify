@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import { AppContext } from '../../navigation/AppNavigation';
 
 // Sample data of people you are follower
 const followerData = [
@@ -21,6 +23,7 @@ const followerData = [
 
 // followerNum component to display the total number of users follower
 const FollowerNum = ({ followerCount }) => {
+  const { colorTheme, setColorTheme } = useContext(AppContext);
   const navigation = useNavigation();
 
   const backNav = () => {
@@ -29,23 +32,24 @@ const FollowerNum = ({ followerCount }) => {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={backNav}>
+      {/* <TouchableOpacity onPress={backNav}>
         <Image
           source={require('../../assets/icon/backbtn.png')}
           style={{ width: 50, height: 50 }}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={styles.headerTextContainer}>
-        <Image style={styles.headerImage} source={require('../../assets/icon/follow.png')} />
-        <Text style={styles.headerText}>People who follow you  {'\n'}</Text>
+        <Image style={styles.headerImage} source={colorTheme === 'Dark' ? require('../../assets/icon/follow.png') : require('../../assets/icon/followLight.png')} />
+        <Text style={colorTheme === 'Dark' ? styles.headerTextDark : styles.headerTextLight}>People who follow you  {'\n'}</Text>
       </View>
       
-      <Text style={styles.fNumText}>{followerCount}</Text>
+      <Text style={colorTheme === 'Dark' ? styles.fNumTextDark : styles.fNumTextLight}>{followerCount}</Text>
     </View>
   );
 };
 
 const FollowerScreen = () => {
+  const { colorTheme, setColorTheme } = useContext(AppContext);
   // State to hold the list of users
   const [follower, setFollower] = useState([]);
 
@@ -64,17 +68,18 @@ const FollowerScreen = () => {
   // Render each user item in the list
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleUserClick(item.id)}>
-      <ImageBackground source={require('../../assets/images/background.png')} style={styles.imageBackground}>
-        <View style={styles.itemContainer}>
+      <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/background.png') : require('../../assets/images/backgroundLight.jpg')} 
+      style={styles.imageBackground}>
+        <View style={colorTheme === 'Dark' ? styles.itemContainerDark : styles.itemContainerLight}>
           <Image source={item.profilePic} style={styles.profilePic} />
-          <Text style={styles.userName}>{item.name}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.userNameDark : styles.userNameLight}>{item.name}</Text>
         </View>
       </ImageBackground>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
       <FollowerNum followerCount={follower.length} />
       <FlatList
         data={follower}
@@ -86,10 +91,17 @@ const FollowerScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     marginTop: 0,
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.7)', // Set background color to grey
+    paddingTop: 10,
+  },
+  containerLight: {
+    marginTop: 0,
+    flex: 1,
+    // backgroundColor: 'rgba(0,0,0,0.7)', // Set background color to grey
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
     paddingTop: 10,
   },
   header: {
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  headerText: {
+  headerTextDark: {
     marginLeft: 10,
     fontSize: 20,
     fontWeight: 'bold',
@@ -112,14 +124,29 @@ const styles = StyleSheet.create({
     top: -15,
     right: 30
   },
-  fNumText: {
+  headerTextLight: {
+    marginLeft: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    top: -15,
+    right: 30
+  },
+  fNumTextDark: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'white',
     top: 20,
     right: 150
   },
-  itemContainer: {
+  fNumTextLight: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    top: 20,
+    right: 150
+  },
+  itemContainerDark: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
@@ -135,15 +162,36 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84, // Radius of the shadow
     elevation: 5, // Android only
   },
+  itemContainerLight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`
+    // borderBottomColor: 'grey',
+    // backgroundColor: 'rgba(0,0,0,0.7)',
+    // shadowColor: '#000', // Shadow color
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25, // Opacity of the shadow
+    // shadowRadius: 3.84, // Radius of the shadow
+    // elevation: 5, // Android only
+  },
   profilePic: {
     width: 50,
     height: 50,
     borderRadius: 25,
     marginRight: 10,
   },
-  userName: {
+  userNameDark: {
     fontSize: 18,
     color: 'white',
+  },
+  userNameLight: {
+    fontSize: 18,
+    color: `${process.env.REACT_APP_DARKTHEME}`,
   },
   headerImage: {
     width: 40,

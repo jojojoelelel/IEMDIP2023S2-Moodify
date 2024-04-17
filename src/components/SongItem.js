@@ -4,8 +4,10 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Sound from 'react-native-sound';
 import {MusicPlayerContext} from '../contexts/SongContext';
+import {AppContext} from '../navigation/AppNavigation';
 
 const SongItem = ({id, title, artist, cover, preview_url}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const {playTrack, playOrPauseTrack, currentTrack} =
     useContext(MusicPlayerContext);
 
@@ -44,8 +46,8 @@ const SongItem = ({id, title, artist, cover, preview_url}) => {
     <TouchableOpacity style={styles.songContainer} onPress={handlePress}>
       <Image source={{uri: cover}} style={styles.coverImage} />
       <View style={styles.textContainer}>
-        <Text style={styles.songTitle}>{title}</Text>
-        <Text style={styles.artistName}>{artist}</Text>
+        <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{title}</Text>
+        <Text style={colorTheme === 'Dark' ? styles.artistNameDark : styles.artistNameLight}>{artist}</Text>
       </View>
       <Ionicons name="ellipsis-horizontal" size={20} color="#ffffff" />
     </TouchableOpacity>
@@ -82,13 +84,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  songTitle: {
+  songTitleDark: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  artistName: {
+  songTitleLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  artistNameDark: {
     color: '#FFFFFF',
+    fontSize: 14,
+  },
+  artistNameLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
     fontSize: 14,
   },
   // Add any additional styles you need

@@ -40,10 +40,10 @@ const SignUpScreen = ({navigation}) => {
   ];
   return (
     <ImageBackground
-      source={colorTheme === 'Dark' ? require('../../assets/images/sign-up-bgDark.jpg') : require('../../assets/images/sign-up-bgLight.jpg')} // Replace with your actual background image path
+      source={colorTheme === 'Dark' ? require('../../assets/images/sign-up-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
       style={styles.background}>
       <View style={styles.container}>
-        <Text style={styles.title}>SIGN UP</Text>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>SIGN UP</Text>
         <CustomForm fields={formFields} />
         <CustomButton
           title="SIGN UP"
@@ -65,10 +65,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     padding: 20,
   },
-  title: {
+  titleDark: {
     fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
+  titleLight: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     marginBottom: 20,
     textAlign: 'left',
   },

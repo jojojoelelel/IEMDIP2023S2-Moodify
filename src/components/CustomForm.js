@@ -11,7 +11,7 @@ const CustomForm = ({fields}) => {
         <TextInput
           key={index}
           placeholder={field.placeholder}
-          placeholderTextColor={colorTheme === 'Dark' ? '#9f9f9f' : '#42ffea'}
+          placeholderTextColor={colorTheme === 'Dark' ? '#9f9f9f' : `${process.env.REACT_APP_LIGHTACCENT}`}
           style={colorTheme === 'Dark' ? [styles.inputDark, field.style] : [styles.inputLight, field.style]}
           keyboardType={field.keyboardType || 'default'}
           secureTextEntry={field.secureTextEntry || false}

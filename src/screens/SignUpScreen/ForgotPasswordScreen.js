@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomForm from '../../components/CustomForm';
@@ -35,7 +36,10 @@ const ForgotPasswordScreen = ({navigation}) => {
   };
 
   return (
-    <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+    // <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+      <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
+      style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}
+      >
       <View style={styles.forgotTitle}>
         <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>Forgot Password?</Text>
         <Text style={colorTheme === 'Dark' ? styles.descriptionDark : styles.descriptionLight}>
@@ -52,7 +56,8 @@ const ForgotPasswordScreen = ({navigation}) => {
         buttonStyle={colorTheme === 'Dark' ? styles.sendButtonDark : styles.sendButtonLight}
         buttonTextStyle={colorTheme === 'Dark' ? styles.sendButtonTextDark : styles.sendButtonTextLight}
       />
-    </View>
+    {/* </View> */}
+    </ImageBackground>
   );
 };
 
