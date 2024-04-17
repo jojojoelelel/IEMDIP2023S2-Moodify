@@ -91,7 +91,7 @@ export default function SearchScreen({ navigation }) {
     useEffect(() => {
     const delay = setTimeout(() => {
       searchTrack2()
-    }, 30000);
+    }, 3000);
 
     return () => clearTimeout(delay);
     }, [searchQuery]);
