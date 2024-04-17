@@ -81,32 +81,39 @@ export default function HomeScreen({navigation}) {
   // useEffect(() => {
   //   getFollowedArtist2();
   // }, []);
-  //console.log(topArtists);c
+  //console.log(topArtists);
   //
   const getArtistAlbums2 = async () => {
     try {
-      const response = await SpotifyAPI.getArtistAlbums(
-        access_token,
-        '1hGdQOfaZ5saQ6JWVuxVDZ',
-      );
-      console.log(response.items);
-      const mappedAlbums = response.items.map(album => ({
-        ...album,
-        imageUrl:
-          album.images && album.images.length > 0
-            ? album.images[0].url
-            : 'default_image_url_here', // Add your default image URL
-      }));
-      setTopAlbums(prevData => [...prevData, ...mappedAlbums]);
-    } catch (error) {
-      console.error('Error in getArtistAlbums => ', error);
-    }
-  };
+      const response = await SpotifyAPI.getArtistAlbums( access_token, '1hGdQOfaZ5saQ6JWVuxVDZ',);
+    console.log(response.data.items);
+            setTopAlbums((prevData) => [
+                ...prevData,
+                ...response.data.items.map(album => ({
+                    id: album.id,
+                    name: album.name,
+                    artist: album.artists.map(artist => artist.name).join(', '),
+                    imageUrl: album.images && album.images.length > 0
+                    ? album.images[0].url
+                    : '' // Provide a default image URL as fallback
+                }))
+            ]);
+  } catch (error) {
+    console.error('Error in getArtistAlbums => ', error);
+  }
+};
 
-  // useEffect(() => {
-  //   getArtistAlbums2();
-  // }, []);
-  //
+  useEffect(() => {
+  getArtistAlbums2();
+  }, []);
+
+
+    // Function to handle item press if needed
+    const handleAlbumPress = album => {
+      // To navigate to a album detail screen:
+      navigation.navigate('AlbumDetails', {album, artist: album.artist});
+    };
+
   const getArtistTopTracks2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistTopTracks(
@@ -172,8 +179,11 @@ export default function HomeScreen({navigation}) {
           <Text style={styles.header}>Recent Albums</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {topAlbums.map((item, index) => (
-              <AlbumCard item={item} key={index} imageUrl={item.imageUrl} />
-            ))}
+            <AlbumCard item={item}
+                        key={index}
+                        imageUrl={item.imageUrl}
+                        onPress={() => handleAlbumPress(item)}/>
+          ))}
           </ScrollView>
 
           <Text style={styles.header}>Top Artists</Text>

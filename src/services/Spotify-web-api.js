@@ -147,6 +147,7 @@ export async function getUserSavedTracks(access_token, limit, offset) {
       id: item.track.id,
       title: item.track.name,
       artist: item.track.artists.map(artist => artist.name).join(', '),
+      dateAdded: item.added_at,
       cover:
         item.track.album.images.length > 0
           ? item.track.album.images[0].url
@@ -309,10 +310,61 @@ export async function getUserAlbums(access_token, user_id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
-    return response.data;
+    console.log('Response => ', response);
+    return response;
   } catch (error) {
     console.error('Error => ', error);
+    throw error;
+  }
+}
+// Get my albums
+export async function getArtistAlbums (access_token, id) {
+    // get artist albums
+    const authOptions = {
+        url: `https://api.spotify.com/v1/artists/${id}/albums`,
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        }
+    }
+    try {
+        const response = await axios.get(authOptions.url, {
+            headers: authOptions.headers
+        })
+        console.log('Response => ', response)
+        return response
+    } catch (error) {
+        console.error('Error => ', error)
+        throw error;
+    }
+}
+// Get my Album details
+export async function getAlbumDetails(access_token, album_id) {
+  const authOptions = {
+    url: `https://api.spotify.com/v1/albums/${album_id}/tracks`,
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  };
+
+  try {
+    const response = await axios.get(authOptions.url, {
+      headers: authOptions.headers,
+    });
+    const tracksInfo = response.data.items.map(item => ({
+      id: item.id,
+      name: item.name,
+      artist: item.artists.map(artist => artist.name).join(', '),
+      duration_ms: item.duration_ms,
+      /*imageUrl: album.images && album.images.length > 0
+      ? album.images[0].url
+      : '', // Provide a default image URL as fallback */
+      preview_url: item.preview_url,
+    }));
+//
+    console.log('Album Details Response => ', tracksInfo);
+    return tracksInfo; // Return the simplified album information
+  } catch (error) {
+    console.error('Error fetching album details => ', error);
     throw error;
   }
 }
@@ -321,26 +373,6 @@ export async function getArtist(access_token, id) {
   // get artist information
   const authOptions = {
     url: `https://api.spotify.com/v1/artists/${id}`,
-    headers: {
-      Authorization: 'Bearer ' + access_token,
-    },
-  };
-  try {
-    const response = await axios.get(authOptions.url, {
-      headers: authOptions.headers,
-    });
-    console.log('Response => ', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error => ', error);
-    throw error;
-  }
-}
-
-export async function getArtistAlbums(access_token, id) {
-  // get artist albums
-  const authOptions = {
-    url: `https://api.spotify.com/v1/artists/${id}/albums`,
     headers: {
       Authorization: 'Bearer ' + access_token,
     },
@@ -402,9 +434,9 @@ export async function searchTrack(access_token, queryString, type) {
   const q = encodeURIComponent(queryString);
 
   const authOptions = {
-    url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=1&offset=1`,
+    url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=3&offset=1`,
     headers: {
-      Authorization: 'Bearer ' + access_token,
+      'Authorization': 'Bearer ' + access_token,
     },
   };
   try {
@@ -412,8 +444,10 @@ export async function searchTrack(access_token, queryString, type) {
       headers: authOptions.headers,
     });
     // console.log('Response => ', response.data.tracks.items[0].preview_url)
+    // console.log('Response => ', response;
     console.log('Response => ', response.data.tracks.items[0]);
-    return response.data.tracks.items[0].preview_url;
+    //return response.data.tracks.items[0].preview_url;
+    return response
   } catch (error) {
     console.error('Error => ', error);
     throw error;
