@@ -1,79 +1,35 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Moodify 🎵
 
-# Getting Started
+**Moodify** is a mobile app developed by 6 Information Engineering and Media students from Nanyang Technological University for their Design & Innovation Project. This React Native app aims to enhance music streaming by addressing current limitations. It features unique song recommendations tailored to user preferences, a chatbot for song suggestions and VR concerts for immersive experiences
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 🌟 Features
 
-## Step 1: Start the Metro Server hi
+- **Personalized Chatbot**: Dive into a smarter way to discover music with our AI-driven chatbot. Get song recommendations that truly match your mood and preferences.
+- **Music Diary**: Keep a log of your musical journey. Save and revisit your favorite song recommendations anytime.
+- **Virtual Reality Experience**: Join VR concerts for a shared, immersive music experience.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## 🚀 Tech Stack
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- **Design**: Figma
+- **Frontend**: React Native
+- **Backend**: Flask and Firebase
+- **VR Experience**: WebVR powered by A-Frame
+- **AI**: OpenAI GPT
 
-```bash
-# using npm
-npm start
+## 🚀 Setup
 
-# OR using Yarn
-yarn start
-```
+To get started with Moodify on your local machine, follow these steps:
 
-## Step 2: Start your Application
+1. **Environment Setup**: Ensure you have React Native and Android Studio installed on your computer.
+2. **Clone the Project**: Clone this repository to your desired directory.
+3. **Install Dependencies**: Run the command `npm install` in your project directory.
+4. **Run the App**: Execute `npx react-native run-android` to start the app on your Android device or emulator.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+## 🔗 Resources
 
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **Project Poster**: [Coming Soon]
+- **Demo Video**: [Coming Soon]
+- **Detailed Project Report**: [Coming Soon]
+- **Source Code**: [GitHub](link)
+- **Design Mockups**: [Figma](https://www.figma.com/file/PIrCqD1mhsYIUOuYPMtuh0/Moodify-Wireframe?type=design&node-id=0%3A1&mode=design&t=OEb2wFAiG3Ny2Y8G-1)
+- **Project Management**: [Jira](link)
