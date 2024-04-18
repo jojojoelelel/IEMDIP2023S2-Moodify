@@ -389,26 +389,6 @@ export async function getArtist(access_token, id) {
   }
 }
 
-export async function getArtistAlbums(access_token, id) {
-  // get artist albums
-  const authOptions = {
-    url: `https://api.spotify.com/v1/artists/${id}/albums`,
-    headers: {
-      Authorization: 'Bearer ' + access_token,
-    },
-  };
-  try {
-    const response = await axios.get(authOptions.url, {
-      headers: authOptions.headers,
-    });
-    // console.log('Response => ', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error => ', error);
-    throw error;
-  }
-}
-
 export async function getArtistTopTracks(access_token, id, market) {
   // get artist top tracks
   const authOptions = {

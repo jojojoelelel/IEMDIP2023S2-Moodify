@@ -1,8 +1,9 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import { useNavigation} from '@react-navigation/native';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 
+import {AppContext} from '../../navigation/AppNavigation';
 
 const MusicPlayer = (spotifyUri ) => {
   if (!spotifyUri) return null; // If no URI, don't render anything
@@ -12,6 +13,7 @@ const MusicPlayer = (spotifyUri ) => {
 };
 
 const RecomScreen = ({ route }) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const { songName, artist, songUri, selectedDate } = route.params;
   console.log(songUri);
   const [showPlayer, setShowPlayer] = useState(true); // Control visibility of the Music Player
@@ -22,14 +24,14 @@ const RecomScreen = ({ route }) => {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/background.png')}
+      source={colorTheme === 'Dark' ? require('../../assets/images/background.png') : require('../../assets/images/backgroundLight.jpg')}
       style={styles.background}
       resizeMode="cover">
-      <View style={styles.transparentContainer}>
+      <View style={colorTheme === 'Dark' ? styles.transparentContainerDark : styles.transparentContainerLight}>
         <View style={styles.container}>
-          <Text style={styles.date}>{selectedDate}</Text>
-          <Text style={styles.songName}>{songName}</Text>
-          <Text style={styles.singer}>{artist}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.dateDark : styles.dateLight}>{selectedDate}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.songNameDark : styles.songNameLight}>{songName}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.singerDark : styles.singerLight}>{artist}</Text>
           {MusicPlayer(songUri)}
         </View>
       </View>
@@ -43,9 +45,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  transparentContainer: {
+  transparentContainerDark: {
     flex: 1,
     backgroundColor: 'rgba(255,255,255, 0.3)', // Transparent background
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '80%',
+  },
+  transparentContainerLight: {
+    flex: 1,
+    backgroundColor: 'rgba(255,255,255, 0.6)', // Transparent background
     justifyContent: 'center',
     alignItems: 'center',
     width: '80%',
@@ -58,23 +67,37 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '100%',
   },
-  date: {
+  dateDark: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'white',
   },
-  songName: {
+  songNameDark: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'darkblue',
     top:'5%',
   },
-  singer: {
+  songNameLight: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
+    top:'5%',
+  },
+  singerDark: {
     fontSize: 23,
     marginBottom: 10,
     color: 'darkblue',
+    right:'-50%',
+    top:'5%',
+  },
+  singerLight: {
+    fontSize: 23,
+    marginBottom: 10,
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     right:'-50%',
     top:'5%',
   },
