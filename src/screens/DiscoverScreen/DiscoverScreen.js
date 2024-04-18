@@ -39,34 +39,32 @@ const DiscoverScreen = ({navigation}) => {
   }, []);
 
   return (
-    <>
-      <View style={styles.container}>
-        <Text style={styles.title}>Discover New Experiences</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('ChatBotScreen')}
-          activeOpacity={0.7}>
-          <Text style={styles.buttonText}>Let's Chat</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('VrConcertScreen')}
-          activeOpacity={0.7}>
-          <Text style={styles.buttonText}>VR Experience</Text>
-        </TouchableOpacity>
-        <Animated.Image
-          source={require('../../assets/images/imagediscoverscreen.png')}
-          style={[
-            styles.gif,
-            {
-              // Apply a continuous shake animation
-              transform: [{translateX: shakeAnimation}],
-            },
-          ]}
-        />
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Discover New Experiences</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('ChatBotScreen')}
+        activeOpacity={0.7}>
+        <Text style={styles.buttonText}>Let's Chat</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('VrConcertScreen')}
+        activeOpacity={0.7}>
+        <Text style={styles.buttonText}>VR Experience</Text>
+      </TouchableOpacity>
+      <Animated.Image
+        source={require('../../assets/images/imagediscoverscreen.png')}
+        style={[
+          styles.gif,
+          {
+            // Apply a continuous shake animation
+            transform: [{translateX: shakeAnimation}],
+          },
+        ]}
+      />
       <MusicPlayerBar />
-    </>
+    </View>
   );
 };
 

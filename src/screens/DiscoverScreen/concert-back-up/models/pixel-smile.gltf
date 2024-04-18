@@ -4,16 +4,8 @@
       "bufferView": 1,
       "componentType": 5126,
       "count": 568,
-      "max": [
-        8.0,
-        -0.0,
-        0.5
-      ],
-      "min": [
-        -8.0,
-        -16.0,
-        -0.5
-      ],
+      "max": [8.0, -0.0, 0.5],
+      "min": [-8.0, -16.0, -0.5],
       "type": "VEC3"
     },
     {
@@ -21,16 +13,8 @@
       "byteOffset": 6816,
       "componentType": 5126,
       "count": 568,
-      "max": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "min": [
-        -1.0,
-        -1.0,
-        -1.0
-      ],
+      "max": [1.0, 1.0, 1.0],
+      "min": [-1.0, -1.0, -1.0],
       "type": "VEC3"
     },
     {
@@ -44,16 +28,8 @@
       "byteOffset": 13632,
       "componentType": 5126,
       "count": 370,
-      "max": [
-        7.0,
-        -1.0,
-        0.5
-      ],
-      "min": [
-        -7.0,
-        -15.0,
-        -0.5
-      ],
+      "max": [7.0, -1.0, 0.5],
+      "min": [-7.0, -15.0, -0.5],
       "type": "VEC3"
     },
     {
@@ -61,16 +37,8 @@
       "byteOffset": 18072,
       "componentType": 5126,
       "count": 370,
-      "max": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "min": [
-        0.0,
-        0.0,
-        -1.0
-      ],
+      "max": [0.0, 0.0, 1.0],
+      "min": [0.0, 0.0, -1.0],
       "type": "VEC3"
     },
     {
@@ -85,16 +53,8 @@
       "byteOffset": 22512,
       "componentType": 5126,
       "count": 24,
-      "max": [
-        3.0,
-        -5.0,
-        0.5
-      ],
-      "min": [
-        0.0,
-        -7.0,
-        -0.5
-      ],
+      "max": [3.0, -5.0, 0.5],
+      "min": [0.0, -7.0, -0.5],
       "type": "VEC3"
     },
     {
@@ -102,16 +62,8 @@
       "byteOffset": 22800,
       "componentType": 5126,
       "count": 24,
-      "max": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "min": [
-        0.0,
-        0.0,
-        -1.0
-      ],
+      "max": [0.0, 0.0, 1.0],
+      "min": [0.0, 0.0, -1.0],
       "type": "VEC3"
     },
     {
@@ -159,12 +111,7 @@
       "doubleSided": true,
       "name": "material",
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
+        "baseColorFactor": [0.0, 0.0, 0.0, 1.0],
         "metallicFactor": 0.0,
         "roughnessFactor": 0.6
       }
@@ -173,12 +120,7 @@
       "doubleSided": true,
       "name": "material_1",
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          1.0,
-          1.0,
-          0.0,
-          1.0
-        ],
+        "baseColorFactor": [1.0, 1.0, 0.0, 1.0],
         "metallicFactor": 0.0,
         "roughnessFactor": 0.6
       }
@@ -187,12 +129,7 @@
       "doubleSided": true,
       "name": "material_2",
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.933333,
-          0.0,
-          0.0,
-          1.0
-        ],
+        "baseColorFactor": [0.933333, 0.0, 0.0, 1.0],
         "metallicFactor": 0.0,
         "roughnessFactor": 0.6
       }
@@ -244,35 +181,16 @@
   ],
   "nodes": [
     {
-      "children": [
-        1
-      ],
+      "children": [1],
       "matrix": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        -0.9996568560600281,
-        -0.026195239275694115,
-        0.0,
-        0.0,
-        0.026195239275694115,
-        -0.9996568560600281,
-        0.0,
-        0.0,
-        -7.998820304870607,
-        7.791954040527342,
-        1.0
+        1.0, 0.0, 0.0, 0.0, 0.0, -0.9996568560600281, -0.026195239275694115,
+        0.0, 0.0, 0.026195239275694115, -0.9996568560600281, 0.0, 0.0,
+        -7.998820304870607, 7.791954040527342, 1.0
       ],
       "name": "Sketchfab_model"
     },
     {
-      "children": [
-        2,
-        3,
-        4
-      ],
+      "children": [2, 3, 4],
       "name": "Smiley Face.obj.cleaner.gles"
     },
     {
@@ -292,9 +210,7 @@
   "scenes": [
     {
       "name": "Sketchfab_Scene",
-      "nodes": [
-        0
-      ]
+      "nodes": [0]
     }
   ]
 }

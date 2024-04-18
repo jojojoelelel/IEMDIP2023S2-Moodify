@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 
-const TrackItem = ({id, title, artist, cover, preview_url, onPress}) => {
+const TrackItem = ({id, title, artist, cover, url, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Image source={{uri: cover}} style={styles.coverImage} />

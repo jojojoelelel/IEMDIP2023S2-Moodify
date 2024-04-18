@@ -26,9 +26,19 @@ const MusicPlayerScreen = () => {
 
   const {currentTrack, isPlaying, playOrPauseTrack} =
     useContext(MusicPlayerContext);
+  const {currentTrack, isPlaying, playOrPauseTrack} =
+    useContext(MusicPlayerContext);
 
   useEffect(() => {
     if (isPlaying) {
+      Animated.loop(
+        Animated.timing(rotationAnimation, {
+          toValue: 1,
+          duration: 30000, // Duration of one full rotation
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ).start();
       Animated.loop(
         Animated.timing(rotationAnimation, {
           toValue: 1,
@@ -41,6 +51,7 @@ const MusicPlayerScreen = () => {
       rotationAnimation.stopAnimation();
     }
   }, [isPlaying]);
+  }, [isPlaying]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,10 +61,12 @@ const MusicPlayerScreen = () => {
           const nextProgress = prevProgress + 1000;
           if (nextProgress >= duration) {
             // Implement the logic for what happens when the song ends
+            // Implement the logic for what happens when the song ends
           }
           return nextProgress;
         });
       }
+    }, 1000);
     }, 1000);
     return () => clearInterval(interval);
   }, [isPlaying, currentTrack]);
@@ -64,6 +77,9 @@ const MusicPlayerScreen = () => {
   });
 
   return (
+    <ImageBackground
+      source={require('../assets/images/background.png')}
+      style={styles.backgroundImage}>
     <ImageBackground
       source={require('../assets/images/background.png')}
       style={styles.backgroundImage}>
@@ -122,7 +138,6 @@ const MusicPlayerScreen = () => {
     </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -143,9 +158,12 @@ const styles = StyleSheet.create({
     fontSize: width * 0.07,
     fontWeight: 'bold',
     color: '#A4EC0A',
+    color: '#A4EC0A',
   },
   songInfo: {
     fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
     color: 'white',
     fontWeight: 'bold',
   },
@@ -175,3 +193,4 @@ const styles = StyleSheet.create({
 });
 
 export default MusicPlayerScreen;
+
