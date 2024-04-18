@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   },
   trackContainer: {
     width: '95%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     padding: 12,
     elevation: 5,
     borderRadius: 10,

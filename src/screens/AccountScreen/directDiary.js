@@ -1,12 +1,15 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import {useNavigation} from '@react-navigation/native';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import Gif from 'react-native-gif';
 
+import {AppContext} from '../../navigation/AppNavigation';
+
 export default function DiaryScreen() {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const navigation = useNavigation();
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [noSongFound, setNoSongFound] = useState(false);
@@ -44,8 +47,9 @@ export default function DiaryScreen() {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/background.png')}
-      style={styles.backgroundImage}>
+      source={colorTheme === 'Dark' ? require("../../assets/images/background.png") : require('../../assets/images/backgroundLight.jpg')}
+      style={styles.backgroundImage}
+    >
       <View style={styles.container}>
         <CalendarPicker
           onDateChange={onDateChange}

@@ -332,7 +332,7 @@ const AccountScreen = () => {
             <View // top card 
               style={{
                 // height: pxToDp(250),
-                marginTop: '10%',
+                marginTop: '8%',
                 width: '95%',
                 height: '38%',
                 backgroundColor: 'rgba(0,0,0,0.7)',
@@ -467,7 +467,7 @@ const AccountScreen = () => {
             <View // top card 
               style={{
                 // height: pxToDp(250),
-                marginTop: '10%',
+                marginTop: '8%',
                 height: '38%',
                 width: '95%',
                 // backgroundColor: 'rgba(0,0,0,0.7)',

@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     padding: 20,
+    objectFit: 'cover',
   },
   containerDark: {
     flex: 1,

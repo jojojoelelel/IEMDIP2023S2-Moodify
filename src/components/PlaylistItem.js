@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
    paddingVertical: 10,
    paddingHorizontal: 15,
    alignItems: 'center',
-   borderBottomWidth: 0.5,  // Subtle separator between items
+   borderBottomWidth: 1,  // Subtle separator between items
    borderBottomColor: '#6D6D6D', // Dark separator for a dark theme
    backgroundColor: '#353535', // Background color for each item
   },
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignItems: 'center',
-    borderBottomWidth: 0.5,  // Subtle separator between items
+    borderBottomWidth: 1,  // Subtle separator between items
     borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`, // Dark separator for a dark theme
     backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`, // Background color for each item
    },

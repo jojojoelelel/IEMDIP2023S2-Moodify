@@ -43,7 +43,7 @@ const SongItem = ({id, title, artist, cover, preview_url}) => {
 
   // NEW RETURN STATEMENT WITH MUSICPLAYERCONTEXT
   return (
-    <TouchableOpacity style={styles.songContainer} onPress={handlePress}>
+    <TouchableOpacity style={colorTheme === 'Dark' ? styles.songContainerDark : styles.songContainerLight} onPress={handlePress}>
       <Image source={{uri: cover}} style={styles.coverImage} />
       <View style={styles.textContainer}>
         <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{title}</Text>
@@ -67,12 +67,23 @@ const SongItem = ({id, title, artist, cover, preview_url}) => {
 };
 
 const styles = StyleSheet.create({
-  songContainer: {
+  songContainerDark: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#303030',
+    borderWidth: 0.5,
+    borderColor: '#303030',
+    // borderWidth: 1,
+    // borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  songContainerLight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#303030',
+    borderWidth: 0.5,
+    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
   },
   coverImage: {
     width: 60,
