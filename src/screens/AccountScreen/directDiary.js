@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import Gif from 'react-native-gif';
@@ -11,7 +11,7 @@ export default function DiaryScreen() {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [noSongFound, setNoSongFound] = useState(false);
 
-  const onDateChange = async (date) => {
+  const onDateChange = async date => {
     setSelectedStartDate(date);
     setNoSongFound(false); // Reset noSongFound state on date change
     if (date) {
@@ -19,16 +19,19 @@ export default function DiaryScreen() {
       const formattedDate = new Date(timestamp).toLocaleDateString('en-US', {
         year: 'numeric',
         month: '2-digit',
-        day: '2-digit'
+        day: '2-digit',
       });
       try {
         const songRef = firebase.database().ref('diary-songs');
-        const snapshot = await songRef.orderByChild('timestamp').equalTo(formattedDate).once('value');
+        const snapshot = await songRef
+          .orderByChild('timestamp')
+          .equalTo(formattedDate)
+          .once('value');
         const songData = snapshot.val();
         if (songData) {
           const songKey = Object.keys(songData)[0];
-          const { title: songName, artist, uri: songUri } = songData[songKey];
-          navigation.navigate('RecomScreen', { songName, artist, songUri });
+          const {title: songName, artist, uri: songUri} = songData[songKey];
+          navigation.navigate('RecomScreen', {songName, artist, songUri});
         } else {
           // Set noSongFound state to true when no song is found
           setNoSongFound(true);
@@ -41,22 +44,29 @@ export default function DiaryScreen() {
 
   return (
     <ImageBackground
-      source={require("../../assets/images/background.png")}
-      style={styles.backgroundImage}
-    >
+      source={require('../../assets/images/background.png')}
+      style={styles.backgroundImage}>
       <View style={styles.container}>
-        <CalendarPicker 
-          onDateChange={onDateChange} 
+        <CalendarPicker
+          onDateChange={onDateChange}
           containerStyle={styles.calendarContainer}
-          textStyle={{fontSize:20,fontWeight:'bold'}}
+          textStyle={{fontSize: 20, fontWeight: 'bold'}}
         />
 
         <View style={styles.textContainer}>
-          <Text style={styles.selectedDate}>SELECTED DATE: {selectedStartDate ? selectedStartDate.toString() : ''}</Text>
+          <Text style={styles.selectedDate}>
+            SELECTED DATE:{' '}
+            {selectedStartDate ? selectedStartDate.toString() : ''}
+          </Text>
           {noSongFound && (
             <View>
-              <Text style={styles.noSongFound}>No song found for selected date</Text>
-              <Gif source={require('../../assets/images/diaryImage.gif')} style={styles.image} />
+              <Text style={styles.noSongFound}>
+                No song found for selected date
+              </Text>
+              <Gif
+                source={require('../../assets/images/diaryImage.gif')}
+                style={styles.image}
+              />
             </View>
           )}
         </View>
@@ -67,7 +77,7 @@ export default function DiaryScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     flex: 1,
     marginTop: 100,
     padding: 20,
@@ -75,11 +85,11 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   calendarContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
@@ -100,6 +110,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginTop: 5,
-    left:'23%',
+    left: '23%',
   },
 });
