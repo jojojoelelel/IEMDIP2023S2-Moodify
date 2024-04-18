@@ -183,7 +183,7 @@ const AccountScreen = () => {
   const tempBoxHandler = item => {
     switch (item.name) {
       case 'Album':
-        navigation.navigate('AB'); //Navigate to Monicka's screen
+        navigation.navigate('AlbumsScreen'); //Navigate to Monicka's screen
         break;
       case 'MyPlaylist':
         navigation.navigate('MyPlaylists'); //Navigate to Monicka's screen
@@ -212,6 +212,10 @@ const AccountScreen = () => {
 
       case 'LikedSongs':
         navigation.navigate('LikedSongsScreen');
+        break;
+
+      case 'Artists':
+        navigation.navigate('ArtistScreen');
         break;
 
       default:

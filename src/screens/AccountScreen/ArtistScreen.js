@@ -15,21 +15,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../../contexts/SongContext';
 import {AppContext} from '../../navigation/AppNavigation';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
-import AlbumItem from '../../components/AlbumItem';
+import ArtistItem from '../../components/ArtistItem';
 
-const AlbumsScreen = ({navigation}) => {
+const ArtistScreen = ({navigation}) => {
   const {access_token, setaccess_token, colorTheme, setColorTheme} = useContext(AppContext);
-  const [albums, setAlbums] = useState([]);
-  const fetchAlbums = async () => {
-    const albumsData = await SpotifyAPI.getCurrentUserSavedAlbums(access_token);
-    setAlbums(
-      albumsData.items.map(item => ({
-        id: item.album.id,
-        title: item.album.name,
-        creator: item.album.artists.map(artist => artist.name).join(', '),
+  const [artists, setArtists] = useState([]);
+  const fetchArtists = async () => {
+    const artistsData = await SpotifyAPI.getFollowedArtists(access_token);
+    setArtists(
+        artistsData.artists.items.map(item => ({
+        id: item.id,
+        title: item.name,
         imageUrl: 
-        item.album.images.length > 0 
-          ? item.album.images[0].url
+        item.images.length > 0 
+          ? item.images[0].url
           : 'default_playlist_image_url',
       })),
     );
@@ -37,31 +36,30 @@ const AlbumsScreen = ({navigation}) => {
 
   useEffect(() => {
     if (access_token) {
-      fetchAlbums();
-      console.log('albumATAS', albums);
+        fetchArtists();
+      console.log('artists data', artists);
     }
   }, [access_token]);
 
   useEffect(() => {
-    console.log('albums=>', albums)
-  }, [albums])
+    console.log('artists=>', artists)
+  }, [artists])
 
   // Function to handle item press if needed
-  const handleItemPress = (albums) => {
-    navigation.navigate('AlbumDetails', {albums});
+  const handleItemPress = (artists) => {
+    navigation.navigate('ArtistDetails', {artists});
   };
 
   return (
     <View style={colorTheme === 'Dark' ? styles.screenContainerDark : styles.screenContainerLight}>
-      {albums.length > 0 ? (
+      {artists.length > 0 ? (
         <>
           <FlatList
-            data={albums}
+            data={artists}
             renderItem={({item}) => (
-              <AlbumItem
+              <ArtistItem
                 id={item.id}
                 title={item.title}
-                creator={item.creator}
                 imageUrl={item.imageUrl}
                 onPress={() => handleItemPress(item)} // Assuming albumItem accepts an onPress prop
               />
@@ -93,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AlbumsScreen;
+export default ArtistScreen;

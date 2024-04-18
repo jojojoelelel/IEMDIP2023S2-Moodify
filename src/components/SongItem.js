@@ -49,7 +49,7 @@ const SongItem = ({id, title, artist, cover, preview_url}) => {
         <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{title}</Text>
         <Text style={colorTheme === 'Dark' ? styles.artistNameDark : styles.artistNameLight}>{artist}</Text>
       </View>
-      <Ionicons name="ellipsis-horizontal" size={20} color="#ffffff" />
+      <Ionicons name="ellipsis-horizontal" size={20} color={colorTheme === 'Dark' ? '#fff' : `${process.env.REACT_APP_DARKTHEME}`} />
     </TouchableOpacity>
   );
 
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    borderWidth: 0.5,
+    borderWidth: 1,
+    borderBottomWidth: 0.5,
     borderColor: '#303030',
     // borderWidth: 1,
     // borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
@@ -82,7 +83,8 @@ const styles = StyleSheet.create({
     padding: 10,
     // borderBottomWidth: 1,
     // borderBottomColor: '#303030',
-    borderWidth: 0.5,
+    borderWidth: 1,
+    borderBottomWidth: 0.5,
     borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
   },
   coverImage: {

@@ -179,7 +179,7 @@ export async function getFollowedArtists(access_token, limit) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    // console.log('Response => ', response);
+    console.log('Response getfollowedartist=> ', response.data.artists);
     return response.data;
   } catch (error) {
     console.error('Error => ', error);
@@ -271,6 +271,26 @@ export async function getCurrentUserPlaylist(access_token) {
       headers: authOptions.headers,
     });
     // console.log('Response => ', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error => ', error);
+    throw error;
+  }
+}
+
+export async function getCurrentUserSavedAlbums(access_token) {
+  // get a playlist owned/followed by a Spotify User
+  const authOptions = {
+    url: `https://api.spotify.com/v1/me/albums`,
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  try {
+    const response = await axios.get(authOptions.url, {
+      headers: authOptions.headers,
+    });
+    console.log('Response currentusersavedalbums => ', response.data);
     return response.data;
   } catch (error) {
     console.error('Error => ', error);
@@ -381,7 +401,7 @@ export async function getArtist(access_token, id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    // console.log('Response => ', response.data);
+    // console.log('Response get artist=> ', response.data);
     return response.data;
   } catch (error) {
     console.error('Error => ', error);
@@ -401,7 +421,7 @@ export async function getArtistTopTracks(access_token, id, market) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    // console.log('Response => ', response.data);
+    console.log('Response get artist top tracks=> ', response.data);
     return response.data;
   } catch (error) {
     console.error('Error => ', error);

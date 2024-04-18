@@ -26,6 +26,8 @@ import LikedSongsScreen from '../screens/AccountScreen/LikedSongsScreen';
 import DiaryScreen from '../screens/AccountScreen/directDiary';
 import AlbumsScreen from '../screens/AccountScreen/AlbumScreen';
 import RecomScreen from '../screens/AccountScreen/RecomScreen';
+import ArtistScreen from '../screens/AccountScreen/ArtistScreen';
+import ArtistDetailsScreen from '../screens/AccountScreen/ArtistDetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -79,6 +81,26 @@ const AppNavigator = () => {
         <Stack.Screen
           name="PlaylistDetails"
           component={PlaylistDetailsScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+            },
+            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+          }}
+        />
+        <Stack.Screen
+          name="AlbumDetails"
+          component={AlbumDetailsScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+            },
+            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+          }}
+        />
+        <Stack.Screen
+          name="ArtistDetails"
+          component={ArtistDetailsScreen}
           options={{
             headerStyle: {
               backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
@@ -186,7 +208,13 @@ const AppNavigator = () => {
           },
           headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
         }}/>
-        <Stack.Screen name="AB" component={AlbumsScreen} options={{
+        <Stack.Screen name="AlbumsScreen" component={AlbumsScreen} options={{
+          headerStyle: {
+            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+          },
+          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+        }}/>
+        <Stack.Screen name="ArtistScreen" component={ArtistScreen} options={{
           headerStyle: {
             backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
           },

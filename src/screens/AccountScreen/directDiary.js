@@ -54,7 +54,8 @@ export default function DiaryScreen() {
         <CalendarPicker
           onDateChange={onDateChange}
           containerStyle={styles.calendarContainer}
-          textStyle={{fontSize: 20, fontWeight: 'bold'}}
+          textStyle={{fontSize:20,fontWeight:'bold'}}
+          selectedDayColor={colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}
         />
 
         <View style={styles.textContainer}>
@@ -64,13 +65,8 @@ export default function DiaryScreen() {
           </Text>
           {noSongFound && (
             <View>
-              <Text style={styles.noSongFound}>
-                No song found for selected date
-              </Text>
-              <Gif
-                source={require('../../assets/images/diaryImage.gif')}
-                style={styles.image}
-              />
+              <Text style={colorTheme === 'Dark' ? styles.noSongFoundDark : styles.noSongFoundLight}>No song found for selected date</Text>
+              <Gif source={require('../../assets/images/diaryImage.gif')} style={styles.image} />
             </View>
           )}
         </View>
@@ -105,9 +101,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  noSongFound: {
+  noSongFoundDark: {
     fontSize: 24, // Adjust the font size as needed
     color: '#A4EC0A',
+    textAlign: 'center',
+  },
+  noSongFoundLight: {
+    fontSize: 24, // Adjust the font size as needed
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     textAlign: 'center',
   },
   image: {

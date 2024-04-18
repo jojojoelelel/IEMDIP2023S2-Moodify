@@ -110,9 +110,9 @@ export default function HomeScreen({navigation}) {
 
 
     // Function to handle item press if needed
-    const handleAlbumPress = album => {
+    const handleAlbumPress = (albums) => {
       // To navigate to a album detail screen:
-      navigation.navigate('AlbumDetails', {album, artist: album.artist});
+      navigation.navigate('AlbumDetails', {albums});
     };
 
   const getArtistTopTracks2 = async () => {
@@ -153,8 +153,8 @@ export default function HomeScreen({navigation}) {
     playTrack(item);
   };
 
-  const handleArtistPress = item => {
-    navigation.navigate('ArtistDetails');
+  const handleArtistPress = (artists) => {
+    navigation.navigate('ArtistDetails', {artists});
   };
 
   return (
