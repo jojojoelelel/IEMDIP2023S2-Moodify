@@ -12,7 +12,10 @@ import {
 import {MusicPlayerContext} from '../contexts/SongContext';
 import {useNavigation} from '@react-navigation/native';
 
+import { AppContext } from '../navigation/AppNavigation';
+
 const MusicPlayerScreen = () => {
+  const { colorTheme, setColorTheme } = useContext(AppContext);
   const navigation = useNavigation();
   const rotationAnimation = useState(new Animated.Value(0))[0];
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -56,7 +59,7 @@ const MusicPlayerScreen = () => {
   // Remember to add album
   return (
     <ImageBackground
-      source={require('../assets/images/background.png')}
+      source={colorTheme === 'Dark' ? require('../assets/images/background.png') : require('../assets/images/backgroundLight.jpg')}
       style={styles.backgroundImage}>
       <View style={styles.container}>
         {currentTrack ? (
@@ -90,7 +93,7 @@ const MusicPlayerScreen = () => {
         )}
         <View style={styles.controlsContainer}>
           <TouchableOpacity
-            style={styles.controlButton}
+            style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={() => {
               /* Implement previous track selection logic */
             }}>
@@ -100,7 +103,7 @@ const MusicPlayerScreen = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.controlButton}
+            style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={playOrPauseTrack}>
             <Image
               source={
@@ -112,7 +115,7 @@ const MusicPlayerScreen = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.controlButton}
+            style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={() => navigation.navigate('Homescreen')}>
             <Image
               source={require('../assets/icon/next.png')}
@@ -167,12 +170,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  controlButton: {
+  controlButtonDark: {
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
     backgroundColor: 'rgba(255,255,255,0.7)',
+    marginLeft: 10,
+  },
+  controlButtonLight: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000',
+    // backgroundColor: 'rgba(255,255,255,0.7)',
     marginLeft: 10,
   },
   controlImage: {

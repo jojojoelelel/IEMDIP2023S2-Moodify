@@ -1,12 +1,15 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import {useNavigation} from '@react-navigation/native';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import Gif from 'react-native-gif';
 
+import {AppContext} from '../../navigation/AppNavigation';
+
 export default function DiaryScreen() {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const navigation = useNavigation();
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [noSongFound, setNoSongFound] = useState(false);
@@ -44,13 +47,15 @@ export default function DiaryScreen() {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/background.png')}
-      style={styles.backgroundImage}>
+      source={colorTheme === 'Dark' ? require("../../assets/images/background.png") : require('../../assets/images/backgroundLight.jpg')}
+      style={styles.backgroundImage}
+    >
       <View style={styles.container}>
         <CalendarPicker
           onDateChange={onDateChange}
           containerStyle={styles.calendarContainer}
-          textStyle={{fontSize: 20, fontWeight: 'bold'}}
+          textStyle={{fontSize:20,fontWeight:'bold'}}
+          selectedDayColor={colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}
         />
 
         <View style={styles.textContainer}>
@@ -60,13 +65,8 @@ export default function DiaryScreen() {
           </Text>
           {noSongFound && (
             <View>
-              <Text style={styles.noSongFound}>
-                No song found for selected date
-              </Text>
-              <Gif
-                source={require('../../assets/images/diaryImage.gif')}
-                style={styles.image}
-              />
+              <Text style={colorTheme === 'Dark' ? styles.noSongFoundDark : styles.noSongFoundLight}>No song found for selected date</Text>
+              <Gif source={require('../../assets/images/diaryImage.gif')} style={styles.image} />
             </View>
           )}
         </View>
@@ -101,9 +101,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  noSongFound: {
+  noSongFoundDark: {
     fontSize: 24, // Adjust the font size as needed
     color: '#A4EC0A',
+    textAlign: 'center',
+  },
+  noSongFoundLight: {
+    fontSize: 24, // Adjust the font size as needed
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     textAlign: 'center',
   },
   image: {

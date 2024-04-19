@@ -21,6 +21,7 @@ import {AppContext} from '../../navigation/AppNavigation.js';
 
 
 export default function SearchScreen({ navigation }) {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [savedTracks, setSavedTracks] = useState([]);
@@ -197,18 +198,18 @@ export default function SearchScreen({ navigation }) {
 
 
   return (
-    <View style={styles.container}>
+    <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
       <ScrollView style={{ flex: 1 }}>
         <Pressable onPress={() => navigation.goBack()} style={{ marginHorizontal: 15, marginTop: 10 }}>
           <Ionicons name="arrow-back" size={24} color="white" />
         </Pressable>
 
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#fff" style={styles.searchIcon} />
+        <View style={colorTheme === 'Dark' ? styles.searchContainerDark : styles.searchContainerLight}>
+          <Ionicons name="search" size={20} color={colorTheme === 'Dark' ? '#71737B' : '#42ffea'} style={styles.searchIcon} />
           <TextInput
-            style={styles.searchInput}
+            style={colorTheme === 'Dark' ? styles.searchInputDark : styles.searchInputLight}
             placeholder="Search"
-            placeholderTextColor="#71737B"
+            placeholderTextColor={colorTheme === 'Dark' ? "#71737B" : '#42ffea'}
             value={searchQuery}
             onChangeText={(text) => handleSearchQueryChange(text)}
             onFocus={handleFocus}
@@ -216,7 +217,7 @@ export default function SearchScreen({ navigation }) {
           />
           {isFocused && (
             <Pressable onPress={() => setSearchQuery('')} style={styles.cancelButton}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={colorTheme === 'Dark' ? styles.cancelButtonTextDark : styles.cancelButtonTextLight}>Cancel</Text>
             </Pressable>
           )}
         </View>
@@ -268,9 +269,14 @@ export default function SearchScreen({ navigation }) {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: `${process.env.REACT_APP_DARKTHEME}`,
+    paddingTop: 10,
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
     paddingTop: 10,
   },
   header: {
@@ -279,7 +285,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 20,
   },
-  searchContainer: {
+  searchContainerDark: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#363942',
@@ -289,14 +295,56 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
-  searchInput: {
+  searchContainerLight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // backgroundColor: '#9135a6',
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    height: 40,
+    marginHorizontal: 10,
+    marginTop: 10, // Adjust this value as needed
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  searchInputDark: {
     flex: 1,
     height: 40,
     color: '#71737B',
     marginHorizontal: 5,
   },
-  cancelButtonText: {
+  searchInputLight: {
+    flex: 1,
+    height: 40,
+    color: '#42ffea', //teal
+    marginHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  cancelButtonTextDark: {
     color: '#CBFB5E',
+  },
+  cancelButtonTextLight: {
+    color: '#42ffea', //teal
+  },
+  trackContainer: {
+    padding: 12,
+    elevation: 5,
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
+  trackWrapper: {
+    marginHorizontal: 10, // Adjust this value for spacing between tracks
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: -20, // Adjust the vertical padding
+    paddingHorizontal: 5, // Adjust the horizontal padding
+    backgroundColor: '#363942',
+  },
+  header: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 20,
   },
   trackContainer: {
     padding: 10,

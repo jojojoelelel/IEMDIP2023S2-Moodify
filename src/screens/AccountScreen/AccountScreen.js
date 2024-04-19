@@ -26,6 +26,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignSelf: 'center',
   },
+  mainContainerLight:{
+    flex: 1,
+    flexDirection: 'column',
+    // height: '100%', 
+    alignItems: 'center', 
+    justifyContent: 'space-evenly',
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    paddingBottom: '4%',
+  },
   circleContainer: {
     flexDirection: 'column',
     width: pxToDp(60),
@@ -78,7 +87,7 @@ const boxNames = [
   'Album',
   'Diary',
   'LikedSongs',
-  'PodCast',
+  'Player',
   'Artists',
 ];
 const boxData = boxNames.map((name, index) => ({
@@ -94,7 +103,7 @@ const initialFollowInfo = [
 
 const AccountScreen = () => {
   const navigation = useNavigation();
-  const {access_token, setaccess_token} = useContext(AppContext);
+  const {access_token, setaccess_token, colorTheme, setColorTheme} = useContext(AppContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState();
@@ -174,7 +183,7 @@ const AccountScreen = () => {
   const tempBoxHandler = item => {
     switch (item.name) {
       case 'Album':
-        navigation.navigate('AB'); //Navigate to Monicka's screen
+        navigation.navigate('AlbumsScreen'); //Navigate to Monicka's screen
         break;
       case 'MyPlaylist':
         navigation.navigate('MyPlaylists'); //Navigate to Monicka's screen
@@ -197,12 +206,16 @@ const AccountScreen = () => {
         navigation.navigate('DiaryScreen');
         break;
 
-      case 'PodCast':
+      case 'Player':
         navigation.navigate('MusicPlayerScreen');
         break;
 
       case 'LikedSongs':
         navigation.navigate('LikedSongsScreen');
+        break;
+
+      case 'Artists':
+        navigation.navigate('ArtistScreen');
         break;
 
       default:
@@ -235,31 +248,31 @@ const AccountScreen = () => {
     // TO-DO#1: logic for each cell to be added here [DONE]
   };
 
-  const getIconSource = name => {
+  const getIconSource = name => { // icons here
     switch (name) {
       case 'MyPlaylist':
-        return require('../../assets/icon/playlist.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/playlist.png') : require('../../assets/icon/playlistLight.png');
       case 'Album':
-        return require('../../assets/icon/album.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/album.png') : require('../../assets/icon/albumLight.png');
       case 'Diary':
-        return require('../../assets/icon/diary.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/diary.png') : require('../../assets/icon/diaryLight.png');
       case 'Profile Info':
-        return require('../../assets/icon/changeprofile.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/changeprofile.png') : require('../../assets/icon/changeprofileLight.png');
       case 'Setting':
-        return require('../../assets/icon/settings.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/settings.png') : require('../../assets/icon/settingsLight.png');
 
       case 'LikedSongs':
-        return require('../../assets/icon/likedSong.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/likedSong.png') : require('../../assets/icon/likedSongLight.png');
 
-      case 'PodCast':
-        return require('../../assets/icon/podcast.png');
+      case 'Player':
+        return colorTheme === 'Dark' ? require('../../assets/icon/play.png') : require('../../assets/icon/playLight.png');
 
       case 'Artists':
-        return require('../../assets/icon/artist.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/artist.png') : require('../../assets/icon/artistLight.png');
 
       default:
         // Default icon if no match found
-        return require('../../assets/icon/settings.png');
+        return colorTheme === 'Dark' ? require('../../assets/icon/settings.png') : require('../../assets/icon/settingsLight.png');
     }
   };
 
@@ -275,7 +288,7 @@ const AccountScreen = () => {
           style={{
             marginTop: -15,
             fontSize: 13,
-            color: 'white',
+            color: colorTheme === 'Dark' ? 'white' : `${process.env.REACT_APP_DARKTHEME}`,
             fontWeight: 'bold',
           }}>
           {item.name}
@@ -305,7 +318,7 @@ const AccountScreen = () => {
       <View>
         <Text
           style={{
-            color: 'white',
+            color: colorTheme === 'Dark' ? 'white' : `${process.env.REACT_APP_DARKTHEME}`,
             top: 12,
             fontSize: 11,
             textAlign: 'center',
@@ -316,139 +329,280 @@ const AccountScreen = () => {
       </View>
     </TouchableOpacity>
   );
-
-  return (
-    <ScrollView>
-      <ImageBackground
-        source={require('../../assets/images/background.png')}
-        style={{flex: 1}}>
-        <View style={{height: '100%', alignItems: 'center'}}>
-          <View
-            style={{
-              height: pxToDp(250),
-              width: '95%',
-              backgroundColor: 'rgba(0,0,0,0.7)',
-              marginTop: '17%',
-              padding: 12,
-              elevation: 5,
-              borderRadius: 10,
-              shadowColor: '#303133',
-              flexDirection: 'column',
-            }}>
-            <TouchableOpacity
-              style={{position: 'absolute', top: 20, left: 20, zIndex: 999}}
-              onPress={goSettings}>
-              <Image
-                source={require('../../assets/icon/settings.png')}
-                style={{width: 25, height: 25}}
-              />
-            </TouchableOpacity>
-
-            <FlatList
-              data={circleData}
-              renderItem={renderCircle}
-              keyExtractor={item => item.key}
-              numColumns={1}
-              contentContainerStyle={styles.circleContainer}
-              style={{height: pxToDp(300), alignSelf: 'flat-end'}}
-            />
-            <View
+  if (colorTheme === 'Dark') {
+    return (
+      <ScrollView>
+        <ImageBackground style={styles.mainContainerLight} source={require('../../assets/images/background.png')}>
+            <View // top card 
               style={{
-                height: '55%',
-                width: '80%',
-                marginLeft: '10%',
+                // height: pxToDp(250),
+                marginTop: '8%',
+                width: '95%',
+                height: '38%',
+                backgroundColor: 'rgba(0,0,0,0.7)',
+                // marginTop: '4%',
+                padding: 12,
+                elevation: 5,
+                borderRadius: 10,
+                shadowColor: '#303133',
                 flexDirection: 'column',
-                marginTop: '-35%',
-              }}>
-              <Image
-                source={{
-                  uri: 'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608',
-                }}
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: 120,
-                  marginTop: '-15%',
-                  marginBottom: '15%',
-                  marginLeft: '19%',
-                }}
-              />
 
+
+              }}>
+              <TouchableOpacity // Settings Button
+                style={{position: 'absolute', top: 20, left: 20, zIndex: 999}}
+                onPress={goSettings}>
+                <Image
+                  source={require('../../assets/icon/settings.png')}
+                  style={{width: 25, height: 25}}
+                />
+              </TouchableOpacity>
+  
+              <FlatList
+                data={circleData}
+                renderItem={renderCircle}
+                keyExtractor={item => item.key}
+                numColumns={1}
+                contentContainerStyle={styles.circleContainer}
+                style={{height: pxToDp(300), alignSelf: 'flat-end'}}
+              />
               <View
                 style={{
-                  marginTop: '-7%',
+                  height: '55%',
+                  width: '80%',
+                  marginLeft: '10%',
+                  flexDirection: 'column',
+                  marginTop: '-35%',
                 }}>
-                <TextInput
-                  placeholder={name}
-                  editable={false}
-                  onChangeText={text => setName(text)}
-                  value={name}
+                <Image // profile pic
+                  source={{
+                    uri: 'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608',
+                  }}
                   style={{
-                    width: '70%',
-                    textAlign: 'center',
-                    alignSelf: 'flex-start',
-                    color: 'white',
-                    backgroundColor: 'rgba(200,200,200,0.4)',
-                    fontWeight: 'bold',
-                    fontSize: 17,
+                    height: 100,
+                    width: 100,
+                    borderRadius: 120,
+                    marginTop: '-15%',
+                    marginBottom: '15%',
+                    marginLeft: '19%',
                   }}
                 />
-                <TouchableOpacity onPress={editProfile}>
-                  <Image
-                    source={require('../../assets/icon/editprofile.png')} // Replace with your image source
-                    style={{width: 25, height: 25, marginLeft: '56%', top: -37}} // Adjust width and height as needed
+  
+                <View
+                  style={{
+                    marginTop: '-7%',
+                  }}>
+                  <TextInput
+                    placeholder={name}
+                    editable={false}
+                    onChangeText={text => setName(text)}
+                    value={name}
+                    style={{
+                      width: '70%',
+                      textAlign: 'center',
+                      alignSelf: 'flex-start',
+                      color: 'white',
+                      backgroundColor: 'rgba(200,200,200,0.4)',
+                      fontWeight: 'bold',
+                      fontSize: 17,
+                    }}
                   />
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={editProfile}>
+                    <Image
+                      source={require('../../assets/icon/editprofile.png')} // pencil icon edit
+                      style={{width: 25, height: 25, marginLeft: '56%', top: -37}} // Adjust width and height as needed
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View
-              style={{
-                width: '80%',
-                marginTop: '5%',
-                alignSelf: 'center',
-                opacity: 0.3,
-                backgroundColor: '#606266',
-              }}
-            />
-          </View>
-          <View
-            style={{
-              height: '43%',
-              width: '95%',
-              padding: 10,
-              marginTop: '5%',
-              elevation: 5,
-              borderRadius: 10,
-              shadowColor: '#303133',
-              backgroundColor: 'rgba(0,0,0,0.7)',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <FlatList
-                data={boxData}
-                renderItem={renderBox}
-                keyExtractor={item => item.key}
-                numColumns={3}
-                contentContainerStyle={styles.container}
+              <View
+                style={{
+                  width: '80%',
+                  marginTop: '5%',
+                  alignSelf: 'center',
+                  opacity: 0.3,
+                  backgroundColor: '#606266',
+                }}
               />
             </View>
             <View
               style={{
-                width: '90%',
-                alignSelf: 'center',
-                opacity: 0.3,
-                backgroundColor: '#606266',
-              }}
-            />
-          </View>
-        </View>
-        <MusicPlayerBar />
-      </ImageBackground>
-    </ScrollView>
-  );
+                // height: '43%',
+                width: '95%',
+                padding: 10,
+                // marginTop: '5%',
+                elevation: 5,
+                borderRadius: 10,
+                shadowColor: '#303133',
+                backgroundColor: 'rgba(0,0,0,0.7)',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <FlatList
+                  data={boxData}
+                  renderItem={renderBox}
+                  keyExtractor={item => item.key}
+                  numColumns={3}
+                  contentContainerStyle={styles.container}
+                />
+              </View>
+              <View
+                style={{
+                  width: '90%',
+                  alignSelf: 'center',
+                  opacity: 0.3,
+                  backgroundColor: '#606266',
+                }}
+              />
+            </View>
+          </ImageBackground>
+          <MusicPlayerBar />
+      </ScrollView>
+    );
+  } else {
+    return ( // light theme
+      <ScrollView>
+          {/* <View style={styles.mainContainerLight}> */}
+          <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
+      style={styles.mainContainerLight}>
+            <View // top card 
+              style={{
+                // height: pxToDp(250),
+                marginTop: '8%',
+                height: '38%',
+                width: '95%',
+                // backgroundColor: 'rgba(0,0,0,0.7)',
+                padding: 12,
+                // elevation: 2,
+                borderRadius: 10,
+                borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+                borderWidth: 1,
+                // shadowColor: '#303133', 
+                flexDirection: 'column',
+              }}>
+              <TouchableOpacity // Settings Button
+                style={{position: 'absolute', top: 20, left: 20, zIndex: 999}}
+                onPress={goSettings}>
+                <Image
+                  source={require('../../assets/icon/settingsLight.png')}
+                  style={{width: 25, height: 25}}
+                />
+              </TouchableOpacity>
+  
+              <FlatList
+                data={circleData}
+                renderItem={renderCircle}
+                keyExtractor={item => item.key}
+                numColumns={1}
+                contentContainerStyle={styles.circleContainer}
+                style={{height: pxToDp(300), alignSelf: 'flat-end'}}
+              />
+              <View
+                style={{
+                  height: '55%',
+                  width: '80%',
+                  marginLeft: '10%',
+                  flexDirection: 'column',
+                  marginTop: '-35%',
+                }}>
+                <Image // profile pic
+                  source={{
+                    uri: 'https://i.scdn.co/image/ab67757000003b820a5d7357397748b0af130608',
+                  }}
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderRadius: 120,
+                    marginTop: '-15%',
+                    marginBottom: '15%',
+                    marginLeft: '19%',
+                    borderWidth: 3,
+                    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`
+                  }}
+                />
+  
+                <View
+                  style={{
+                    marginTop: '-7%',
+                  }}>
+                  <TextInput
+                    placeholder={name}
+                    editable={false}
+                    onChangeText={text => setName(text)}
+                    value={name}
+                    style={{
+                      width: '70%',
+                      textAlign: 'center',
+                      alignSelf: 'flex-start',
+                      color: colorTheme === 'Dark' ? 'white' : `${process.env.REACT_APP_DARKTHEME}`,
+                      backgroundColor: 'white',
+                      fontWeight: 'bold',
+                      fontSize: 17,
+                    }}
+                  />
+                  <TouchableOpacity onPress={editProfile}>
+                    <Image
+                      source={require('../../assets/icon/editprofileLight.png')} // pencil icon edit
+                      style={{width: 25, height: 25, marginLeft: '56%', top: -37}} // Adjust width and height as needed
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: '80%',
+                  marginTop: '5%',
+                  alignSelf: 'center',
+                  opacity: 0.3,
+                  backgroundColor: '#606266',
+                }}
+              />
+            </View>
+            <View // bottom Card
+              style={{ 
+                // height: '43%',
+                width: '95%',
+                padding: 10,
+                // marginTop: '5%',
+                // elevation: 5,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+                // shadowColor: '#303133',
+                // backgroundColor: 'rgba(0,0,0,0.7)',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <FlatList
+                  data={boxData}
+                  renderItem={renderBox}
+                  keyExtractor={item => item.key}
+                  numColumns={3}
+                  contentContainerStyle={styles.container}
+                />
+              </View>
+              <View
+                style={{
+                  width: '90%',
+                  alignSelf: 'center',
+                  opacity: 0.3,
+                  backgroundColor: '#606266',
+                }}
+              />
+            </View>
+          {/* </View> */}
+          </ImageBackground>
+          <MusicPlayerBar />
+      </ScrollView>
+    );
+  }
+  
 };
 
 export default AccountScreen;

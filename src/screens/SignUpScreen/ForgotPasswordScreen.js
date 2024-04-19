@@ -1,15 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomForm from '../../components/CustomForm';
 
+import {AppContext} from '../../navigation/AppNavigation';
+
 const ForgotPasswordScreen = ({navigation}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const [email, setEmail] = useState('');
 
   const fields = [
@@ -32,10 +36,13 @@ const ForgotPasswordScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    // <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+      <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
+      style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}
+      >
       <View style={styles.forgotTitle}>
-        <Text style={styles.title}>Forgot Password?</Text>
-        <Text style={styles.description}>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>Forgot Password?</Text>
+        <Text style={colorTheme === 'Dark' ? styles.descriptionDark : styles.descriptionLight}>
           If you need help resetting your password, we can help by sending you a
           link to reset it.
         </Text>
@@ -46,16 +53,25 @@ const ForgotPasswordScreen = ({navigation}) => {
         onPress={() => {
           handleSendLink;
         }}
-        style={styles.sendButton}
+        buttonStyle={colorTheme === 'Dark' ? styles.sendButtonDark : styles.sendButtonLight}
+        buttonTextStyle={colorTheme === 'Dark' ? styles.sendButtonTextDark : styles.sendButtonTextLight}
       />
-    </View>
+    {/* </View> */}
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flex: 1,
-    backgroundColor: '#000', // The background color of the screen
+    backgroundColor: `${process.env.REACT_APP_DARKTHEME}`, // The background color of the screen
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`, // The background color of the screen
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -66,41 +82,74 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     // paddingBottom: 500,
-    color: '#fff',
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     fontSize: 18,
   },
   forgotTitle: {
     marginBottom: 100,
   },
-  title: {
-    color: '#fff',
+  titleDark: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'left',
   },
-  description: {
-    color: '#fff',
+  titleLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
+  descriptionDark: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     fontSize: 16,
     marginBottom: 40,
     textAlign: 'left',
   },
-  input: {
+  descriptionLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontSize: 16,
+    marginBottom: 40,
+    textAlign: 'left',
+  },
+  inputDark: {
     width: '100%',
-    color: '#fff',
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     borderBottomColor: '#9f9f9f',
     borderBottomWidth: 1,
     padding: 10,
     marginBottom: 40,
   },
-  sendButton: {
+  inputLight: {
+    width: '100%',
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    borderBottomColor: '#9f9f9f',
+    borderBottomWidth: 1,
+    padding: 10,
+    marginBottom: 40,
+  },
+  sendButtonDark: {
     marginTop: 30,
     marginBottom: 30,
     width: '100%',
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`,
   },
-  sendButtonText: {
-    color: '#fff',
-    fontSize: 18,
+  sendButtonLight: {
+    marginTop: 30,
+    marginBottom: 30,
+    width: '100%',
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  sendButtonTextDark: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    // fontSize: 18,
+    fontWeight: 'bold',
+  },
+  sendButtonTextLight: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
+    // fontSize: 18,
     fontWeight: 'bold',
   },
 });

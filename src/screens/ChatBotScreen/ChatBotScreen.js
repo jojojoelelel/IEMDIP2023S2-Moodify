@@ -1,12 +1,15 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat';
-import {View, StyleSheet, Text, Button, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, Button, TouchableOpacity, ImageBackground} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {WebView} from 'react-native-webview';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 
+import {AppContext} from '../../navigation/AppNavigation';
+
 const ChatBotScreen = ({navigation}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const [spotifyUri, setSpotifyUri] = useState(null);
   const [chatbotReplied, setChatbotReplied] = useState(false);
@@ -140,18 +143,18 @@ const ChatBotScreen = ({navigation}) => {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: '#CBFB5E',
+            backgroundColor: colorTheme === 'Dark' ? '#91ad50' : process.env.REACT_APP_LIGHTACCENT,
           },
           left: {
-            backgroundColor: '#333',
+            backgroundColor: colorTheme === 'Dark' ? '#333' : '#fff',
           },
         }}
         textStyle={{
           right: {
-            color: 'black',
+            color: colorTheme === 'Dark' ? '#fff' : '#fff',
           },
           left: {
-            color: '#fff',
+            color: colorTheme === 'Dark' ? '#fff' : '#000',
           },
         }}
       />
@@ -182,8 +185,8 @@ const ChatBotScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.viewchat}>
-      <Text style={styles.title}>AI Music ChatBot</Text>
+    <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-up-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} style={styles.viewchat}>
+      <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>AI Music ChatBot</Text>
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
@@ -196,15 +199,22 @@ const ChatBotScreen = ({navigation}) => {
       />
       {renderSaveButton()}
       {renderSpotifyPlayer()}
-    </View>
+    </ImageBackground>
   );
 };
 
 export default ChatBotScreen;
 
 const styles = StyleSheet.create({
-  title: {
+  titleDark: {
     color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    marginTop: 30,
+  },
+  titleLight: {
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 25,

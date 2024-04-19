@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,10 @@ import {
 import CustomButton from '../../components/CustomButton';
 import CustomForm from '../../components/CustomForm';
 
+import {AppContext} from '../../navigation/AppNavigation';
+
 const SignUpScreen = ({navigation}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   // State for form fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -37,15 +40,16 @@ const SignUpScreen = ({navigation}) => {
   ];
   return (
     <ImageBackground
-      source={require('../../assets/images/sign-up-bg.jpg')} // Replace with your actual background image path
+      source={colorTheme === 'Dark' ? require('../../assets/images/sign-up-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
       style={styles.background}>
       <View style={styles.container}>
-        <Text style={styles.title}>SIGN UP</Text>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>SIGN UP</Text>
         <CustomForm fields={formFields} />
         <CustomButton
           title="SIGN UP"
           onPress={() => navigation.navigate('SignInScreen')}
-          style={styles.button}
+          buttonStyle={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}
+          buttonTextStyle={colorTheme === 'Dark' ? styles.signUpTextDark : styles.signUpTextLight}
         />
       </View>
     </ImageBackground>
@@ -61,10 +65,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     padding: 20,
   },
-  title: {
+  titleDark: {
     fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
+  titleLight: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     marginBottom: 20,
     textAlign: 'left',
   },
@@ -81,17 +92,30 @@ const styles = StyleSheet.create({
     color: '#fff',
     // Add other styles for forgot password text
   },
-  button: {
+  buttonDark: {
     marginTop: 30,
     marginBottom: 30,
     width: '100%',
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`,
+    // Add other styles for button
+  },
+  buttonLight: {
+    marginTop: 30,
+    marginBottom: 30,
+    width: '100%',
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
     // Add other styles for button
   },
   connectText: {
     // Styles for the connect text
   },
-  signUpText: {
-    color: '#fff',
+  signUpTextDark: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    textAlign: 'center',
+    // Add other styles for sign up txt
+  },
+  signUpTextLight: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
     textAlign: 'center',
     // Add other styles for sign up txt
   },
