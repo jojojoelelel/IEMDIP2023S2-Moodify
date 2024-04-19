@@ -5,6 +5,7 @@ import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import BottomNavigation from './src/navigation/BottomNavigation';
 import { AuthProvider } from './src/screens/AccountScreen/AuthContext'
 import { MusicPlayerContext, MusicPlayerProvider } from './src/contexts/SongContext';
+import "./src/services/ignoreWarning"
 
 
 function App() {
