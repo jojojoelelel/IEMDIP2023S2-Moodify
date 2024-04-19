@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {AppContext} from '../navigation/AppNavigation';
 
-const AlbumCard = ({item, key, imageUrl, onPress}) => {
+const AlbumCard = ({item, imageUrl, onPress}) => {
   const {colorTheme, setColorTheme} = useContext(AppContext);
   // Split the name into words
   const words = item?.name.split(' ');
@@ -24,7 +24,11 @@ const AlbumCard = ({item, key, imageUrl, onPress}) => {
           style={{
             fontSize: 13,
             fontWeight: '500',
-            color: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_LIGHTTHEME}` : `${process.env.REACT_APP_DARKTHEME}`}`,
+            color: `${
+              colorTheme === 'Dark'
+                ? `${process.env.REACT_APP_LIGHTTHEME}`
+                : `${process.env.REACT_APP_DARKTHEME}`
+            }`,
             marginTop: 10,
           }}>
           {/* Display the truncated name */}

@@ -42,7 +42,8 @@ import {MusicPlayerContext} from '../../contexts/SongContext.js';
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
 
-  const {colorTheme, setColorTheme, access_token, setaccess_token} = useContext(AppContext);
+  const {colorTheme, setColorTheme, access_token, setaccess_token} =
+    useContext(AppContext);
 
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
@@ -87,34 +88,35 @@ export default function HomeScreen({navigation}) {
   //
   const getArtistAlbums2 = async () => {
     try {
-      const response = await SpotifyAPI.getArtistAlbums( access_token, '1hGdQOfaZ5saQ6JWVuxVDZ',);
-    // console.log(response.data.items);
-            setTopAlbums((prevData) => [
-                ...prevData,
-                ...response.data.items.map(album => ({
-                    id: album.id,
-                    name: album.name,
-                    artist: album.artists.map(artist => artist.name).join(', '),
-                    imageUrl: album.images && album.images.length > 0
-                    ? album.images[0].url
-                    : '' // Provide a default image URL as fallback
-                }))
-            ]);
-  } catch (error) {
-    console.error('Error in getArtistAlbums => ', error);
-  }
-};
+      const response = await SpotifyAPI.getArtistAlbums(
+        access_token,
+        '1hGdQOfaZ5saQ6JWVuxVDZ',
+      );
+      // console.log(response.data.items);
+      setTopAlbums(prevData => [
+        ...prevData,
+        ...response.data.items.map(album => ({
+          id: album.id,
+          name: album.name,
+          artist: album.artists.map(artist => artist.name).join(', '),
+          imageUrl:
+            album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
+        })),
+      ]);
+    } catch (error) {
+      console.error('Error in getArtistAlbums => ', error);
+    }
+  };
 
   // useEffect(() => {
   // getArtistAlbums2();
   // }, []);
 
-
-    // Function to handle item press if needed
-    const handleAlbumPress = (albums) => {
-      // To navigate to a album detail screen:
-      navigation.navigate('AlbumDetails', {albums});
-    };
+  // Function to handle item press if needed
+  const handleAlbumPress = albums => {
+    // To navigate to a album detail screen:
+    navigation.navigate('AlbumDetails', {albums});
+  };
 
   const getArtistTopTracks2 = async () => {
     try {
@@ -125,7 +127,7 @@ export default function HomeScreen({navigation}) {
       );
       //console.log(response);
       // console.log(response.tracks);
-      console.log('api call getartisttoptrack')
+      console.log('api call getartisttoptrack');
       setTopTracks(
         response.tracks.map(track => ({
           title: track.name,
@@ -154,75 +156,107 @@ export default function HomeScreen({navigation}) {
     playTrack(item);
   };
 
-  const handleArtistPress = (artists) => {
+  const handleArtistPress = artists => {
     navigation.navigate('ArtistDetails', {artists});
   };
 
   return (
     <ImageBackground
-      source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
+      source={
+        colorTheme === 'Dark'
+          ? require('../../assets/images/sign-in-bgDark.jpg')
+          : require('../../assets/images/backgroundLight.jpg')
+      } // Replace with your actual background image path
       style={styles.background}>
       {/* <> */}
       {/* <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}> */}
-        
-        <View style={colorTheme === 'Dark' ? styles.headerContainerDark : styles.headerContainerLight}>
-          <Text
-            onPress={() => alert('This is the "Home" screen.')}
-            style={colorTheme === 'Dark' ? styles.textDark : styles.textLight}>
-            Moodify
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('SearchScreen')}
-            style={styles.searchIconContainer}>
-            <Ionicons
-              name="search"
-              size={24}
-              color={colorTheme === 'Dark' ? process.env.REACT_APP_LIGHTTHEME : process.env.REACT_APP_DARKTHEME}
-              style={styles.searchIcon}
+
+      <View
+        style={
+          colorTheme === 'Dark'
+            ? styles.headerContainerDark
+            : styles.headerContainerLight
+        }>
+        <Text
+          onPress={() => alert('This is the "Home" screen.')}
+          style={colorTheme === 'Dark' ? styles.textDark : styles.textLight}>
+          Moodify
+        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SearchScreen')}
+          style={styles.searchIconContainer}>
+          <Ionicons
+            name="search"
+            size={24}
+            color={
+              colorTheme === 'Dark'
+                ? process.env.REACT_APP_LIGHTTHEME
+                : process.env.REACT_APP_DARKTHEME
+            }
+            style={styles.searchIcon}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Text
+          style={
+            colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
+          }>
+          Recent Albums
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {topAlbums.map((item, index) => (
+            <AlbumCard
+              item={item}
+              key={item.id}
+              id={item.id}
+              imageUrl={item.imageUrl}
+              onPress={() => handleAlbumPress(item)}
             />
-          </TouchableOpacity>
-        </View>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Recent Albums</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {topAlbums.map((item, index) => (
-            <AlbumCard item={item}
-                        key={item.id}
-                        imageUrl={item.imageUrl}
-                        onPress={() => handleAlbumPress(item)}/>
           ))}
-          </ScrollView>
-
-          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Top Artists</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {topArtists.map((item, index) => (
-              <ArtistCard
-                item={item}
-                key={index}
-                imageUrl={item.imageUrl}
-                onPress={() => handleArtistPress(item)}
-              />
-            ))}
-          </ScrollView>
-
-          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Recently Played</Text>
-          <View style={styles.trackContainer}>
-            <FlatList
-              data={topTracks} // Use topTracks instead of track
-              renderItem={({item}) => (
-                <TrackList
-                  id={item.id}
-                  title={item.title}
-                  artist={item.artist}
-                  cover={item.cover}
-                  url={item.preview_url}
-                  onPress={() => handleItemPress(item)}
-                />
-              )}
-            />
-          </View>
         </ScrollView>
-        <MusicPlayerBar />
+
+        <Text
+          style={
+            colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
+          }>
+          Top Artists
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {topArtists.map((item, index) => (
+            <ArtistCard
+              item={item}
+              key={index}
+              imageUrl={item.imageUrl}
+              onPress={() => handleArtistPress(item)}
+            />
+          ))}
+        </ScrollView>
+
+        <Text
+          style={
+            colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
+          }>
+          Recently Played
+        </Text>
+        <View style={styles.trackContainer}>
+          <FlatList
+            data={topTracks} // Use topTracks instead of track
+            renderItem={({item}) => (
+              <TrackList
+                id={item.id}
+                title={item.title}
+                artist={item.artist}
+                cover={item.cover}
+                url={item.preview_url}
+                onPress={() => handleItemPress(item)}
+              />
+            )}
+          />
+        </View>
+      </ScrollView>
+
+      <MusicPlayerBar />
       {/* </View> */}
     </ImageBackground>
     // </>
