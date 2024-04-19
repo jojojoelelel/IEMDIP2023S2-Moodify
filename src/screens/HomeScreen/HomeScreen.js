@@ -63,11 +63,12 @@ export default function HomeScreen({navigation}) {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
       // console.log(response.artists.items); // Log the response object
-      console.log('api call getfollowedartist')
+      // console.log('api call getfollowedartist')
       setTopArtists(prevData => [
         ...prevData,
         ...response.artists.items.map(artist => ({
           ...artist,
+          id: artist.id,
           imageUrl:
             artist.images && artist.images.length > 0
               ? artist.images[0].url
@@ -87,7 +88,7 @@ export default function HomeScreen({navigation}) {
   const getArtistAlbums2 = async () => {
     try {
       const response = await SpotifyAPI.getArtistAlbums( access_token, '1hGdQOfaZ5saQ6JWVuxVDZ',);
-    console.log(response.data.items);
+    // console.log(response.data.items);
             setTopAlbums((prevData) => [
                 ...prevData,
                 ...response.data.items.map(album => ({
@@ -104,9 +105,9 @@ export default function HomeScreen({navigation}) {
   }
 };
 
-  useEffect(() => {
-  getArtistAlbums2();
-  }, []);
+  // useEffect(() => {
+  // getArtistAlbums2();
+  // }, []);
 
 
     // Function to handle item press if needed
@@ -186,7 +187,7 @@ export default function HomeScreen({navigation}) {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {topAlbums.map((item, index) => (
             <AlbumCard item={item}
-                        key={index}
+                        key={item.id}
                         imageUrl={item.imageUrl}
                         onPress={() => handleAlbumPress(item)}/>
           ))}

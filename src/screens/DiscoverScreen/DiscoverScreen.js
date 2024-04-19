@@ -42,6 +42,7 @@ const DiscoverScreen = ({navigation}) => {
   }, []);
 
   return (
+    <>
     <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
     style={styles.background}>
     {/* <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}> */}
@@ -68,9 +69,11 @@ const DiscoverScreen = ({navigation}) => {
           },
         ]}
       />
-      <MusicPlayerBar />
+      
     {/* </View> */}
     </ImageBackground>
+    <MusicPlayerBar />
+    </>
   );
 };
 
