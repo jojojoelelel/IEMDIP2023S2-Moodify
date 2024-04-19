@@ -16,11 +16,12 @@ import Sound from 'react-native-sound';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../../contexts/SongContext';
 
-import { AppContext } from '../../navigation/AppNavigation';
+import {AppContext} from '../../navigation/AppNavigation';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
 //
 const ArtistDetailsScreen = ({route}) => {
-  const { access_token, setaccess_token, colorTheme, setColorTheme } = useContext(AppContext);
+  const {access_token, setaccess_token, colorTheme, setColorTheme} =
+    useContext(AppContext);
   const {artists} = route.params;
   const [followers, setFollowers] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
@@ -58,11 +59,8 @@ const ArtistDetailsScreen = ({route}) => {
 
   const fetchArtistDetails = async () => {
     try {
-      console.log('route params =>', route.params)
-      const artistData = await SpotifyAPI.getArtist(
-        access_token,
-        artists.id,
-      );
+      console.log('route params =>', route.params);
+      const artistData = await SpotifyAPI.getArtist(access_token, artists.id);
       setFollowers(artistData.followers.total.toLocaleString()); // Assuming the returned value is directly the list of tracks
     } catch (error) {
       console.error('Failed to fetch playlist details:', error);
@@ -73,43 +71,46 @@ const ArtistDetailsScreen = ({route}) => {
     fetchArtistDetails();
     fetchArtistTopTracks();
   }, [artists.id]);
-
-  return (
-    <>
-      <ScrollView style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+  const renderHeader = () => {
+    return (
+      <View>
         <Image source={{uri: artists.imageUrl}} style={styles.coverImage} />
         <View style={styles.detailsContainer}>
-          <Text style={colorTheme === 'Dark' ? styles.artistTitleDark : styles.artistTitleLight}>
+          <Text style={styles.artistTitle}>
             {artists.title ? artists.title : artists.name}
-            </Text>
+          </Text>
           <Text
-            style={colorTheme === 'Dark' ? styles.descriptionDark : styles.descriptionLight}>
-                {`${followers} monthly listeners`}
-                </Text>
+            style={styles.description}>{`${followers} monthly listeners`}</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Play</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Shuffle</Text>
             </TouchableOpacity>
           </View>
-          <Text style={colorTheme === 'Dark' ? styles.popularTitleDark : styles.popularTitleLight}> Popular </Text>
-          <FlatList
-            data={topTracks}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <SongItem
-                id={item.id}
-                title={item.title}
-                artist={item.artist}
-                cover={item.cover}
-                preview_url={item.url}
-              />
-            )}
-          />
+          <Text style={styles.popularTitle}>Popular</Text>
         </View>
-      </ScrollView>
+      </View>
+    );
+  };
+
+  return (
+    <>
+      <FlatList
+        data={topTracks}
+        ListHeaderComponent={renderHeader}
+        keyExtractor={(item, index) => `track-${index}`}
+        renderItem={({item, index}) => (
+          <SongItem
+            id={`track-${index}`}
+            title={item.title}
+            artist={item.artist}
+            cover={item.cover}
+            preview_url={item.url}
+          />
+        )}
+      />
       <MusicPlayerBar />
     </>
   );

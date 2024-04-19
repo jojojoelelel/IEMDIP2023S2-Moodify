@@ -35,68 +35,82 @@ const AlbumsDetailsScreen = ({route}) => {
     skipToNext,
     skipToPrevious,
   } = useContext(MusicPlayerContext);
-    const {access_token, setaccess_token, colorTheme, setColorTheme} = useContext(AppContext);
-    console.log('received albums in details =>',albums)
-    useEffect(() => {
-      
-      const fetchAlbumDetails = async () => {
-        try {
-          const tracks = await SpotifyAPI.getAlbumDetails(access_token, albums.id,);
-          console.log('Fetched album details:', tracks); // Log fetched tracks for debugging
-          console.log('route params => ',route.params); // Lop fetched album for debugging
-          setSongs(tracks); // Assuming the returned value is directly the list of tracks
-          setArtistName(albums.artist); // Set the artist's name once it's fetched
-        } catch (error) {
-          console.error('Failed to fetch album details:', error);
-          //console.log('Request details:', error.request); // Log request details for debugging
-          //console.log('Response data:', error.response && error.response.data); // Log response data for debugging
-        }
-      };
+  const {access_token, setaccess_token, colorTheme, setColorTheme} =
+    useContext(AppContext);
+  console.log('received albums in details =>', albums);
+  useEffect(() => {
+    const fetchAlbumDetails = async () => {
+      try {
+        const tracks = await SpotifyAPI.getAlbumDetails(
+          access_token,
+          albums.id,
+        );
+        console.log('Fetched album details:', tracks); // Log fetched tracks for debugging
+        console.log('route params => ', route.params); // Lop fetched album for debugging
+        setSongs(tracks); // Assuming the returned value is directly the list of tracks
+        setArtistName(albums.artist); // Set the artist's name once it's fetched
+      } catch (error) {
+        console.error('Failed to fetch album details:', error);
+        //console.log('Request details:', error.request); // Log request details for debugging
+        //console.log('Response data:', error.response && error.response.data); // Log response data for debugging
+      }
+    };
 
-      fetchAlbumDetails();
-    }, [albums.id]);
+    fetchAlbumDetails();
+  }, [albums.id]);
 
   return (
     <>
-    <ScrollView style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
-              {/* <Pressable
-                onPress={() => navigation.goBack()}
-                style={{
-                  marginHorizontal: 15,
-                  marginTop: 10,
-                }}>
-                <Ionicons name="arrow-back" size={24} color="white" />
-              </Pressable> */}
-      <Image source={{uri: albums.imageUrl}} style={styles.coverImage} />
-      <View style={styles.detailsContainer}>
-        <Text style={colorTheme === 'Dark' ? styles.playlistTitleDark : styles.playlistTitleLight}>
-          {albums.title ? albums.title : albums.name}
-        </Text>
-        <Text style={styles.description}>{`By ${albums.creator ? albums.creator : albums.artist}`}</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}>
-            <Text style={styles.buttonText}>Play</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={colorTheme === 'Dark' ? styles.buttonDark : styles.buttonLight}>
-            <Text style={styles.buttonText}>Shuffle</Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={songs}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <SongItem
-              id={item.id}
-              title={item.name}
-              artist={item.artist}
-              cover={albums.imageUrl}
-              preview_url={item.preview_url}
-            />
-          )}
-        />
-      </View>
-    </ScrollView>
-    <MusicPlayerBar />
+      <FlatList
+        data={songs}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => (
+          <SongItem
+            id={item.id}
+            title={item.name}
+            artist={item.artist}
+            cover={albums.imageUrl}
+            preview_url={item.preview_url}
+          />
+        )}
+        ListHeaderComponent={() => (
+          <>
+            <Image source={{uri: albums.imageUrl}} style={styles.coverImage} />
+            <View style={styles.detailsContainer}>
+              <Text
+                style={
+                  colorTheme === 'Dark'
+                    ? styles.playlistTitleDark
+                    : styles.playlistTitleLight
+                }>
+                {albums.title ? albums.title : albums.name}
+              </Text>
+              <Text style={styles.description}>{`By ${
+                albums.creator ? albums.creator : albums.artist
+              }`}</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={
+                    colorTheme === 'Dark'
+                      ? styles.buttonDark
+                      : styles.buttonLight
+                  }>
+                  <Text style={styles.buttonText}>Play</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={
+                    colorTheme === 'Dark'
+                      ? styles.buttonDark
+                      : styles.buttonLight
+                  }>
+                  <Text style={styles.buttonText}>Shuffle</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        )}
+      />
+      <MusicPlayerBar />
     </>
   );
 };
@@ -157,6 +171,5 @@ const styles = StyleSheet.create({
   },
   // Add styles for FlatList and SongItem here
 });
-
 
 export default AlbumsDetailsScreen;
