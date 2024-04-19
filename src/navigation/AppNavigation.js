@@ -1,4 +1,10 @@
 import React, {useState, createContext, useContext} from 'react';
+import {
+  REACT_APP_DARKACCENT,
+  REACT_APP_LIGHTACCENT,
+  REACT_APP_DARKTHEME,
+  REACT_APP_LIGHTTHEME,
+} from '@env';
 import {createStackNavigator} from '@react-navigation/stack';
 
 //Import the screens here
@@ -39,53 +45,106 @@ const AppNavigator = () => {
   // const [colorTheme, setColorTheme] = useState('Dark');
 
   return (
-    <AppContext.Provider value={{access_token, setaccess_token, colorTheme, setColorTheme}}>
+    <AppContext.Provider
+      value={{access_token, setaccess_token, colorTheme, setColorTheme}}>
       <Stack.Navigator>
-        <Stack.Screen name="GettingStarted" component={GettingStarted} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
-        <Stack.Screen name="SignInScreen" component={SignInScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
+        <Stack.Screen
+          name="GettingStarted"
+          component={GettingStarted}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
+        <Stack.Screen
+          name="SignInScreen"
+          component={SignInScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
 
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
         <Stack.Screen
           name="ForgotPasswordScreen"
           component={ForgotPasswordScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
 
         {/* Add more screens as needed */}
-        <Stack.Screen name="MyPlaylists" component={PlaylistsScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
+        <Stack.Screen
+          name="MyPlaylists"
+          component={PlaylistsScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
         <Stack.Screen
           name="PlaylistDetails"
           component={PlaylistDetailsScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen
@@ -93,9 +152,15 @@ const AppNavigator = () => {
           component={AlbumDetailsScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen
@@ -103,9 +168,15 @@ const AppNavigator = () => {
           component={ArtistDetailsScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         {/* <Stack.Screen
@@ -117,9 +188,15 @@ const AppNavigator = () => {
           component={FollowingScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen
@@ -127,9 +204,15 @@ const AppNavigator = () => {
           component={FollowerScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen
@@ -137,9 +220,15 @@ const AppNavigator = () => {
           component={AccountScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen
@@ -147,25 +236,47 @@ const AppNavigator = () => {
           component={DiaryScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
-        <Stack.Screen name="RecomScreen" component={RecomScreen} options={{
+        <Stack.Screen
+          name="RecomScreen"
+          component={RecomScreen}
+          options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-          }}/>
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
         <Stack.Screen
           name="PIScreen"
           component={PIscreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen
@@ -173,9 +284,15 @@ const AppNavigator = () => {
           component={SScreen}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
         <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
@@ -185,49 +302,111 @@ const AppNavigator = () => {
           options={{
             title: 'VR Concert',
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
-        <Stack.Screen name="MusicPlayerScreen" component={MusicPlayerScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
-        <Stack.Screen name="SearchScreen" component={SearchScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
-        <Stack.Screen name="LikedSongsScreen" component={LikedSongsScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
-        <Stack.Screen name="AlbumsScreen" component={AlbumsScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
-        <Stack.Screen name="ArtistScreen" component={ArtistScreen} options={{
-          headerStyle: {
-            backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
-          },
-          headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
-        }}/>
+        <Stack.Screen
+          name="MusicPlayerScreen"
+          component={MusicPlayerScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
+        <Stack.Screen
+          name="SearchScreen"
+          component={SearchScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
+        <Stack.Screen
+          name="LikedSongsScreen"
+          component={LikedSongsScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
+        <Stack.Screen
+          name="AlbumsScreen"
+          component={AlbumsScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
+        <Stack.Screen
+          name="ArtistScreen"
+          component={ArtistScreen}
+          options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }}
+        />
         <Stack.Screen
           name="Main"
           component={BottomNavigation}
           options={{
             headerStyle: {
-              backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : `${process.env.REACT_APP_LIGHTACCENT}`}`,
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
             },
-            headerTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
           }}
         />
       </Stack.Navigator>

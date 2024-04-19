@@ -7,7 +7,12 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import DiscoverScreen from '../screens/DiscoverScreen/DiscoverScreen';
 import AccountScreen from '../screens/AccountScreen/AccountScreen';
 import MusicPlayerBar from '../components/MusicPlayerBar';
-
+import {
+  REACT_APP_DARKACCENT,
+  REACT_APP_LIGHTACCENT,
+  REACT_APP_DARKTHEME,
+  REACT_APP_LIGHTTHEME,
+} from '@env';
 import {AppContext} from '../navigation/AppNavigation';
 
 // Screen names
@@ -36,10 +41,26 @@ const BottomNavigation = () => {
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKACCENT}` : '#42ffea'}`,
-          tabBarInactiveTintColor: `${colorTheme === 'Dark' ? 'grey' : `${process.env.REACT_APP_LIGHTTHEME}`}`,
+          tabBarActiveTintColor: `${
+            colorTheme === 'Dark'
+              ? `${process.env.REACT_APP_DARKACCENT}`
+              : '#42ffea'
+          }`,
+          tabBarInactiveTintColor: `${
+            colorTheme === 'Dark'
+              ? 'grey'
+              : `${process.env.REACT_APP_LIGHTTHEME}`
+          }`,
           tabBarLabelStyle: {paddingBottom: 10, fontSize: 10},
-          tabBarStyle: {padding: 10, height: 70, backgroundColor: `${colorTheme === 'Dark' ? `${process.env.REACT_APP_DARKTHEME}` : `${process.env.REACT_APP_LIGHTACCENT}`}`},
+          tabBarStyle: {
+            padding: 10,
+            height: 70,
+            backgroundColor: `${
+              colorTheme === 'Dark'
+                ? `${process.env.REACT_APP_DARKTHEME}`
+                : `${process.env.REACT_APP_LIGHTACCENT}`
+            }`,
+          },
         })}>
         <Tab.Screen
           name={homeRoute}
