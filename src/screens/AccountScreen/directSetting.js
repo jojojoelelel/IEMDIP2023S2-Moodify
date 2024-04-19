@@ -8,7 +8,7 @@ const SScreen = () => {
   const initialUserData = [
     { label: 'Profile Info Visibility', value: true },
     { label: 'Color Theme', value: false },
-    { label: 'Setting 3', value: false },
+    // { label: 'Setting 3', value: false },
   ];
 
   const navigation = useNavigation();
