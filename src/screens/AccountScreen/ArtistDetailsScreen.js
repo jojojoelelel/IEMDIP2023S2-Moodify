@@ -94,7 +94,7 @@ const ArtistDetailsScreen = ({route}) => {
       </View>
     );
   };
-
+  //refactor code
   return (
     <>
       <FlatList
