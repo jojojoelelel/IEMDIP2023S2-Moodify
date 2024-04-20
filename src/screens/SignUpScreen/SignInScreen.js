@@ -40,7 +40,7 @@ const SignInScreen = ({navigation}) => {
       const params = url.split('?code=')[1];
       // Do something with the query parameters (e.g., parse them and handle the response)
       // console.log('Response query parameters:', params);
-      console.log('api call getreturnparams')
+      // console.log('api call getreturnparams')
       setreturn_Params(params);
     }
   };
@@ -53,20 +53,20 @@ const SignInScreen = ({navigation}) => {
     // // const state = generateRandomString(16);
     try {
       const url = await SpotifyAPI.requestUserAuthorization();
-      console.log('api call requestuserauthorization')
+      // console.log('api call requestuserauthorization')
       Linking.openURL(url);
     } catch (error) {
-      console.error('Error in requestAccessToken => ', error);
+      // console.error('Error in requestAccessToken => ', error);
     }
   };
   const requestAccessToken2 = async () => {
     try {
       const response = await SpotifyAPI.requestAccessToken(return_Params);
-      console.log('api call requestaccesstoken')
+      // console.log('api call requestaccesstoken')
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
     } catch (error) {
-      console.error('Error in requestAccessToken => ', error);
+      // console.error('Error in requestAccessToken => ', error);
     }
   };
 
@@ -78,7 +78,7 @@ const SignInScreen = ({navigation}) => {
       setaccess_token(response.access_token);
       setrefresh_Token(response.refresh_token);
     } catch (error) {
-      console.error('Error in requestRefreshAccessToken => ', error);
+      // console.error('Error in requestRefreshAccessToken => ', error);
     }
   };
 

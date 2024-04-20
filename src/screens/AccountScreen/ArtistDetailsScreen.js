@@ -82,10 +82,14 @@ const ArtistDetailsScreen = ({route}) => {
           <Text
             style={styles.description}>{`${followers} monthly listeners`}</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={colorTheme === 'Dark'
+                      ? styles.buttonDark
+                      : styles.buttonLight}>
               <Text style={styles.buttonText}>Play</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={colorTheme === 'Dark'
+                      ? styles.buttonDark
+                      : styles.buttonLight}>
               <Text style={styles.buttonText}>Shuffle</Text>
             </TouchableOpacity>
           </View>

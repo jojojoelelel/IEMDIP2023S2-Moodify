@@ -22,8 +22,8 @@ import {AppContext} from '../../navigation/AppNavigation';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
+    // flexWrap: 'wrap',
     alignSelf: 'center',
   },
   mainContainerLight:{
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'space-evenly',
     backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
-    paddingBottom: '4%',
+    paddingBottom: '6%',
   },
   circleContainer: {
     flexDirection: 'column',
@@ -114,7 +114,7 @@ const AccountScreen = () => {
     name: name,
   }));
 
-  const spotifyApi = new SpotifyWebApi();
+  // const spotifyApi = new SpotifyWebApi();
 
   const setFollower = num => {
     circleVar[1] = num;
@@ -136,12 +136,12 @@ const AccountScreen = () => {
       setName(response.display_name);
       updateFollowInfo(1, response.followers.total);
       setProfilePhoto(response.images[0].url);
-      console.log(profilePhoto);
-      console.log(response.images[0].url);
+      // console.log(profilePhoto);
+      // console.log(response.images[0].url);
       imgurl = response.images[0].url;
-      console.log(imgurl);
+      // console.log(imgurl);
     } catch (error) {
-      console.error('Error in getCurrentUserProfile => ', error);
+      // console.error('Error in getCurrentUserProfile => ', error);
     }
   };
 
@@ -154,7 +154,7 @@ const AccountScreen = () => {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
       //updateFollowInfo(0,response.artists.total);
     } catch (error) {
-      console.error('Error in getFollowedArtists => ', error);
+      // console.error('Error in getFollowedArtists => ', error);
     }
   };
 
@@ -171,9 +171,9 @@ const AccountScreen = () => {
     
       ImagePicker.launchImageLibrary(options,(response) => {
         if (response.didCancel) {
-          console.log('User cancelled image picker');
+          // console.log('User cancelled image picker');
         } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
+          // console.log('ImagePicker Error: ', response.error);
         } else {
           setProfilePhoto({ uri: response.uri });
         }
@@ -331,12 +331,12 @@ const AccountScreen = () => {
   );
   if (colorTheme === 'Dark') {
     return (
-      <ScrollView>
+      <View style={{height: '100%', width: '100%'}}>
         <ImageBackground style={styles.mainContainerLight} source={require('../../assets/images/background.png')}>
             <View // top card 
               style={{
                 // height: pxToDp(250),
-                marginTop: '8%',
+                marginTop: '-8%',
                 width: '95%',
                 height: '38%',
                 backgroundColor: 'rgba(0,0,0,0.7)',
@@ -460,18 +460,18 @@ const AccountScreen = () => {
             </View>
           </ImageBackground>
           <MusicPlayerBar />
-      </ScrollView>
+      </View>
     );
   } else {
     return ( // light theme
-      <ScrollView>
+      <View style={{height: '100%', width: '100%'}}>
           {/* <View style={styles.mainContainerLight}> */}
           <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
       style={styles.mainContainerLight}>
             <View // top card 
               style={{
                 // height: pxToDp(250),
-                marginTop: '8%',
+                marginTop: '-8%',
                 height: '38%',
                 width: '95%',
                 // backgroundColor: 'rgba(0,0,0,0.7)',
@@ -599,7 +599,7 @@ const AccountScreen = () => {
           {/* </View> */}
           </ImageBackground>
           <MusicPlayerBar />
-      </ScrollView>
+      </View>
     );
   }
   

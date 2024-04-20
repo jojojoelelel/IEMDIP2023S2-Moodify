@@ -44,6 +44,8 @@ const AppNavigator = () => {
   const [colorTheme, setColorTheme] = useState('Light');
   // const [colorTheme, setColorTheme] = useState('Dark');
 
+  console.disableYellowBox = true
+
   return (
     <AppContext.Provider
       value={{access_token, setaccess_token, colorTheme, setColorTheme}}>

@@ -57,7 +57,7 @@ export async function requestAccessToken(return_Params) {
     return response.data;
     // return response.data.access_token
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -76,7 +76,7 @@ export async function getCurrentUserProfile(access_token) {
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -97,7 +97,7 @@ export async function getDeviceID(access_token) {
     // // console.log('Response => ', response);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -117,7 +117,7 @@ export async function getUserProfile(access_token, user_id) {
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -161,7 +161,7 @@ export async function getUserSavedTracks(access_token, limit, offset) {
     //return previewUrl;
     return tracksInfo;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -182,7 +182,7 @@ export async function getFollowedArtists(access_token, limit) {
     // console.log('Response getfollowedartist=> ', response.data.artists);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -207,7 +207,7 @@ export async function checkIfUserFollowsArtistsOrUsers(
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -231,7 +231,7 @@ export async function checkIfUserFollowsPlaylist(
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -253,7 +253,7 @@ export async function checkUserSavedTracks(access_token, ids) {
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -273,7 +273,7 @@ export async function getCurrentUserPlaylist(access_token) {
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -293,7 +293,7 @@ export async function getCurrentUserSavedAlbums(access_token) {
     // console.log('Response currentusersavedalbums => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -313,7 +313,7 @@ export async function getUserPlaylist(access_token, user_id) {
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -333,7 +333,7 @@ export async function getUserAlbums(access_token, user_id) {
     // console.log('Response => ', response);
     return response;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -353,7 +353,7 @@ export async function getArtistAlbums (access_token, id) {
         // console.log('Response => ', response)
         return response
     } catch (error) {
-        console.error('Error => ', error)
+        // console.error('Error => ', error)
         throw error;
     }
 }
@@ -384,7 +384,7 @@ export async function getAlbumDetails(access_token, album_id) {
     // console.log('Album Details Response => ', tracksInfo);
     return tracksInfo; // Return the simplified album information
   } catch (error) {
-    console.error('Error fetching album details => ', error);
+    // console.error('Error fetching album details => ', error);
     throw error;
   }
 }
@@ -404,7 +404,7 @@ export async function getArtist(access_token, id) {
     // // console.log('Response get artist=> ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -424,7 +424,7 @@ export async function getArtistTopTracks(access_token, id, market) {
     // console.log('Response get artist top tracks=> ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -445,7 +445,7 @@ export async function getTrack(access_token, id) {
     return response.data.preview_url;
     // // // console.log(response.data.preview_url)
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -469,7 +469,7 @@ export async function searchTrack(access_token, queryString, type) {
     //return response.data.tracks.items[0].preview_url;
     return response
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -497,7 +497,7 @@ export async function requestRefreshAccessToken(refresh_token) {
     // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -530,7 +530,7 @@ export async function getPlaylistDetails(access_token, playlist_id) {
     //// // console.log('Playlist Details Response => ', tracksInfo);
     return tracksInfo; // Return the simplified playlist information
   } catch (error) {
-    console.error('Error fetching playlist details => ', error);
+    // console.error('Error fetching playlist details => ', error);
     throw error;
   }
 }

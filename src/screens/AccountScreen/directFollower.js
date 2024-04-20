@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import PropTypes from 'deprecated-react-native-prop-types';
+// import PropTypes from 'deprecated-react-native-prop-types';
 import {AppContext} from '../../navigation/AppNavigation';
 
 // Sample data of people you are follower

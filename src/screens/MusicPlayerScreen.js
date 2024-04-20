@@ -65,8 +65,8 @@ const MusicPlayerScreen = () => {
         {currentTrack ? (
           <>
             <View style={styles.songInfoContainer}>
-              <Text style={styles.songTitle}>{currentTrack.title}</Text>
-              <Text style={styles.songInfo}>{currentTrack.artist}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack.title}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack.artist}</Text>
             </View>
             <View style={styles.albumCoverContainer}>
               <Animated.Image
@@ -142,12 +142,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  songTitle: {
+  songTitleDark: {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#A4EC0A',
   },
-  songInfo: {
+  songTitleLight: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  songInfoDark: {
+    fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  songInfoLight: {
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold',

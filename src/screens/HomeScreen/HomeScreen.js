@@ -15,7 +15,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import BottomNavigation from '../../navigation/BottomNavigation.js';
+// import BottomNavigation from '../../navigation/BottomNavigation.js';
 
 // For API calls
 import axios from 'axios';
@@ -65,19 +65,21 @@ export default function HomeScreen({navigation}) {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
       // console.log(response.artists.items); // Log the response object
       // console.log('api call getfollowedartist')
-      setTopArtists(prevData => [
-        ...prevData,
-        ...response.artists.items.map(artist => ({
-          ...artist,
-          id: artist.id,
-          imageUrl:
-            artist.images && artist.images.length > 0
-              ? artist.images[0].url
-              : '', // Provide a default image URL as fallback
-        })),
-      ]);
+      if (topArtists.length === 0) {
+        setTopArtists(prevData => [
+          ...prevData,
+          ...response.artists.items.map(artist => ({
+            ...artist,
+            id: artist.id,
+            imageUrl:
+              artist.images && artist.images.length > 0
+                ? artist.images[0].url
+                : '', // Provide a default image URL as fallback
+          })),
+        ]);
+      }
     } catch (error) {
-      console.error('Error in getFollowedArtists => ', error);
+      // console.error('Error in getFollowedArtists => ', error);
     }
   };
 
@@ -93,18 +95,20 @@ export default function HomeScreen({navigation}) {
         '1hGdQOfaZ5saQ6JWVuxVDZ',
       );
       // console.log(response.data.items);
-      setTopAlbums(prevData => [
-        ...prevData,
-        ...response.data.items.map(album => ({
-          id: album.id,
-          name: album.name,
-          artist: album.artists.map(artist => artist.name).join(', '),
-          imageUrl:
-            album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
-        })),
-      ]);
+      if (topAlbums.length === 0) {
+        setTopAlbums(prevData => [
+          ...prevData,
+          ...response.data.items.map(album => ({
+            id: album.id,
+            name: album.name,
+            artist: album.artists.map(artist => artist.name).join(', '),
+            imageUrl:
+              album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
+          })),
+        ]);
+      }
     } catch (error) {
-      console.error('Error in getArtistAlbums => ', error);
+      // console.error('Error in getArtistAlbums => ', error);
     }
   };
 
@@ -127,17 +131,19 @@ export default function HomeScreen({navigation}) {
       );
       //console.log(response);
       // console.log(response.tracks);
-      console.log('api call getartisttoptrack');
-      setTopTracks(
-        response.tracks.map(track => ({
-          title: track.name,
-          artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
-          cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
-          url: track.preview_url,
-        })),
-      );
+      // console.log('api call getartisttoptrack');
+      if (topTracks.length === 0) {
+        setTopTracks(
+          response.tracks.map(track => ({
+            title: track.name,
+            artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
+            cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+            url: track.preview_url,
+          })),
+        );
+      }
     } catch (error) {
-      console.error('Error in getArtistTopTracks => ', error);
+      // console.error('Error in getArtistTopTracks => ', error);
     }
   };
 
@@ -209,7 +215,7 @@ export default function HomeScreen({navigation}) {
             <AlbumCard
               item={item}
               key={item.id}
-              id={item.id}
+              id={index}
               imageUrl={item.imageUrl}
               onPress={() => handleAlbumPress(item)}
             />
@@ -232,18 +238,29 @@ export default function HomeScreen({navigation}) {
             />
           ))}
         </ScrollView>
-
         <Text
           style={
             colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
           }>
           Recently Played
         </Text>
-        <View style={styles.trackContainer}>
-          <FlatList
-            data={topTracks} // Use topTracks instead of track
-            renderItem={({item}) => (
+          <View style={styles.trackContainer}>
+            {/* <FlatList
+              data={topTracks} // Use topTracks instead of track
+              renderItem={({item}) => (
+                <TrackList
+                  id={item.id}
+                  title={item.title}
+                  artist={item.artist}
+                  cover={item.cover}
+                  url={item.preview_url}
+                  onPress={() => handleItemPress(item)}
+                />
+              )}
+            /> */}
+            {topTracks.map((item, index) => (
               <TrackList
+                key={index}
                 id={item.id}
                 title={item.title}
                 artist={item.artist}
@@ -251,11 +268,9 @@ export default function HomeScreen({navigation}) {
                 url={item.preview_url}
                 onPress={() => handleItemPress(item)}
               />
-            )}
-          />
+            ))}
         </View>
       </ScrollView>
-
       <MusicPlayerBar />
       {/* </View> */}
     </ImageBackground>
@@ -267,6 +282,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: 10,
+    flexDirection: 'column',
   },
   containerDark: {
     flex: 1,
