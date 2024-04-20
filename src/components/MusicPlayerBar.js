@@ -2,8 +2,12 @@ import React, {useState, useContext} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../contexts/SongContext';
+import {AppContext} from '../navigation/AppNavigation';
+import {DarkTheme, useNavigation} from '@react-navigation/native';
 
 const MusicPlayerBar = () => {
+  const navigation = useNavigation();
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const {
     currentTrack,
     isPlaying,
@@ -40,11 +44,20 @@ const MusicPlayerBar = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={{uri: currentTrack.cover}} style={styles.coverImage} />
-      <View style={styles.songInfo}>
-        <Text style={styles.songTitle}>{currentTrack.title}</Text>
-        <Text style={styles.artistName}>{currentTrack.artist}</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('MusicPlayerScreen')}>
+      <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+        <Image source={{uri: currentTrack.cover}} style={styles.coverImage} />
+        <View style={styles.songInfo}>
+          <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack.title}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.artistNameDark : styles.artistNameLight}>{currentTrack.artist}</Text>
+        </View>
+        <TouchableOpacity onPress={playOrPauseTrack}>
+          <Ionicons
+            name={isPlaying ? 'pause' : 'play'}
+            size={30}
+            color={colorTheme === 'Dark' ? "#FFFFFF" : `${process.env.REACT_APP_LIGHTACCENT}`}
+          />
+        </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={playOrPauseTrack} style={styles.playButton}>
         <Ionicons
@@ -58,16 +71,31 @@ const MusicPlayerBar = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
     backgroundColor: '#282828',
-    borderTopWidth: 1,
+    borderTopWidth: 2,
     borderTopColor: '#000000',
     position: 'absolute',
-    bottom: '0%',
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
+  containerLight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    borderTopWidth: 2,
+    borderTopColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
   },
   coverImage: {
     width: 50,
@@ -79,12 +107,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
-  songTitle: {
+  songTitleDark: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  artistName: {
+  songTitleLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  artistNameDark: {
     color: '#FFFFFF',
     fontSize: 14,
   },
@@ -92,6 +125,10 @@ const styles = StyleSheet.create({
     marginRight: 20, // Increase padding to enhance the touch area
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  artistNameLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontSize: 14,
   },
 });
 

@@ -19,7 +19,10 @@ import AlbumCover from '../components/AlbumCover';
 
 const {width} = Dimensions.get('window');
 
+import { AppContext } from '../navigation/AppNavigation';
+
 const MusicPlayerScreen = () => {
+  const { colorTheme, setColorTheme } = useContext(AppContext);
   const navigation = useNavigation();
   const rotationAnimation = useState(new Animated.Value(0))[0];
   const [songProgress, setSongProgress] = useState(0);
@@ -78,7 +81,7 @@ const MusicPlayerScreen = () => {
 
   return (
     <ImageBackground
-      source={require('../assets/images/background.png')}
+      source={colorTheme === 'Dark' ? require('../assets/images/background.png') : require('../assets/images/backgroundLight.jpg')}
       style={styles.backgroundImage}>
     <ImageBackground
       source={require('../assets/images/background.png')}
@@ -107,20 +110,20 @@ const MusicPlayerScreen = () => {
           <Text>Loading...</Text>
         )}
         <View style={styles.songInfoContainer}>
-          <Text style={styles.songTitle}>{currentTrack.title}</Text>
-          <Text style={styles.songInfo}>{currentTrack.artist}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack.title}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack.artist}</Text>
         </View>
         <MusicSlider />
         <View style={styles.controlsContainer}>
           <TouchableOpacity
-            style={styles.controlButton}
+            style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={() => {
               /* Implement previous track logic */
             }}>
             <Ionicons name="play-skip-back-circle" size={50} color="#FFF" />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.controlButton}
+            style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={playOrPauseTrack}>
             <Ionicons
               name={isPlaying ? 'pause-circle' : 'play-circle'}
@@ -129,7 +132,7 @@ const MusicPlayerScreen = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.controlButton}
+            style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={() => navigation.navigate('Homescreen')}>
             <Ionicons name="play-skip-forward-circle" size={50} color="#FFF" />
           </TouchableOpacity>
@@ -154,13 +157,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  songTitle: {
+  songTitleDark: {
     fontSize: width * 0.07,
     fontWeight: 'bold',
     color: '#A4EC0A',
     color: '#A4EC0A',
   },
-  songInfo: {
+  songTitleLight: {
+    fontSize: width * 0.07,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  songInfoDark: {
+    fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  songInfoLight: {
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold',
@@ -185,10 +198,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '80%',
   },
-  controlButton: {
+  controlButtonDark: {
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    marginLeft: 10,
+  },
+  controlButtonLight: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000',
+    // backgroundColor: 'rgba(255,255,255,0.7)',
+    marginLeft: 10,
+  },
+  controlImage: {
+    width: 40,
+    height: 40,
   },
 });
 

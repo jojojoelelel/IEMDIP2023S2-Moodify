@@ -20,7 +20,7 @@ import { AppContext } from '../../navigation/AppNavigation';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
 //
 const PlaylistDetailsScreen = ({route}) => {
-  const { access_token, setaccess_token } = useContext(AppContext);
+  const { access_token, setaccess_token, colorTheme, setColorTheme } = useContext(AppContext);
   const {playlist} = route.params;
   const [songs, setSongs] = useState([]);
   //const [playing, setPlaying] = useState(false);
@@ -53,7 +53,7 @@ const PlaylistDetailsScreen = ({route}) => {
 
   return (
     <>
-      <ScrollView style={styles.container}>
+      <ScrollView style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
         <Image source={{uri: playlist.imageUrl}} style={styles.coverImage} />
         <View style={styles.detailsContainer}>
           <Text style={styles.playlistTitle}>{playlist.title}</Text>
@@ -88,9 +88,13 @@ const PlaylistDetailsScreen = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flex: 1,
     backgroundColor: '#121212',
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
   },
   coverImage: {
     width: '100%',

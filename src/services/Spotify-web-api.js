@@ -52,12 +52,12 @@ export async function requestAccessToken(return_Params) {
     const response = await axios.post(authOptions.url, authOptions.form, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
-    // console.log('Refresh token => ', response.data.refresh_token)
+    // // // console.log('Response => ', response.data);
+    // // // console.log('Refresh token => ', response.data.refresh_token)
     return response.data;
     // return response.data.access_token
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -73,16 +73,16 @@ export async function getCurrentUserProfile(access_token) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
 
 export async function getDeviceID(access_token) {
-  console.log(access_token);
+  // // console.log(access_token);
   const authOptions = {
     url: 'https://api.spotify.com/v1/me/player/devices',
     headers: {
@@ -94,10 +94,10 @@ export async function getDeviceID(access_token) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response);
+    // // console.log('Response => ', response);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -114,10 +114,10 @@ export async function getUserProfile(access_token, user_id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -125,7 +125,7 @@ export async function getUserProfile(access_token, user_id) {
 export async function getPreviewURL(data) {
   if (data && data.items && data.items.length > 0) {
     const previewUrl = data.items[0].track.preview_url;
-    // console.log('Preview URL:', previewUrl);
+    // // // console.log('Preview URL:', previewUrl);
     return previewUrl;
   }
 }
@@ -157,11 +157,11 @@ export async function getUserSavedTracks(access_token, limit, offset) {
       preview_url: item.track.preview_url,
     }));
     //const previewUrl = getPreviewURL(data)
-    //console.log('Preview URL: ', previewUrl)
+    //// // console.log('Preview URL: ', previewUrl)
     //return previewUrl;
     return tracksInfo;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -179,10 +179,10 @@ export async function getFollowedArtists(access_token, limit) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response);
+    // console.log('Response getfollowedartist=> ', response.data.artists);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -204,10 +204,10 @@ export async function checkIfUserFollowsArtistsOrUsers(
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -228,10 +228,10 @@ export async function checkIfUserFollowsPlaylist(
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -250,10 +250,10 @@ export async function checkUserSavedTracks(access_token, ids) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -270,10 +270,30 @@ export async function getCurrentUserPlaylist(access_token) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
+    throw error;
+  }
+}
+
+export async function getCurrentUserSavedAlbums(access_token) {
+  // get a playlist owned/followed by a Spotify User
+  const authOptions = {
+    url: `https://api.spotify.com/v1/me/albums`,
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  try {
+    const response = await axios.get(authOptions.url, {
+      headers: authOptions.headers,
+    });
+    // console.log('Response currentusersavedalbums => ', response.data);
+    return response.data;
+  } catch (error) {
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -290,10 +310,10 @@ export async function getUserPlaylist(access_token, user_id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -310,30 +330,10 @@ export async function getUserAlbums(access_token, user_id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
-    return response.data;
+    // console.log('Response => ', response);
+    return response;
   } catch (error) {
-    console.error('Error => ', error);
-    throw error;
-  }
-}
-
-export async function getUserAlbums(access_token, user_id) {
-  // get a playlist owned/followed by a Spotify User
-  const authOptions = {
-    url: `https://api.spotify.com/v1/users/${user_id}/albums`,
-    headers: {
-      Authorization: 'Bearer ' + access_token,
-    },
-  };
-  try {
-    const response = await axios.get(authOptions.url, {
-      headers: authOptions.headers,
-    });
-    console.log('Response => ', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -350,10 +350,10 @@ export async function getArtistAlbums (access_token, id) {
         const response = await axios.get(authOptions.url, {
             headers: authOptions.headers
         })
-        console.log('Response => ', response)
+        // console.log('Response => ', response)
         return response
     } catch (error) {
-        console.error('Error => ', error)
+        // console.error('Error => ', error)
         throw error;
     }
 }
@@ -381,10 +381,10 @@ export async function getAlbumDetails(access_token, album_id) {
       preview_url: item.preview_url,
     }));
 //
-    console.log('Album Details Response => ', tracksInfo);
+    // console.log('Album Details Response => ', tracksInfo);
     return tracksInfo; // Return the simplified album information
   } catch (error) {
-    console.error('Error fetching album details => ', error);
+    // console.error('Error fetching album details => ', error);
     throw error;
   }
 }
@@ -401,10 +401,10 @@ export async function getArtist(access_token, id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response get artist=> ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -421,10 +421,10 @@ export async function getArtistTopTracks(access_token, id, market) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // console.log('Response get artist top tracks=> ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -441,11 +441,11 @@ export async function getTrack(access_token, id) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data.preview_url);
+    // // console.log('Response => ', response.data.preview_url);
     return response.data.preview_url;
-    // console.log(response.data.preview_url)
+    // // // console.log(response.data.preview_url)
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -463,13 +463,13 @@ export async function searchTrack(access_token, queryString, type) {
     const response = await axios.get(authOptions.url, {
       headers: authOptions.headers,
     });
-    // console.log('Response => ', response.data.tracks.items[0].preview_url)
-    // console.log('Response => ', response;
-    console.log('Response => ', response.data.tracks.items[0]);
+    // // console.log('Response => ', response.data.tracks.items[0].preview_url)
+    // // console.log('Response => ', response;
+    // console.log('Response => ', response.data.tracks.items[0]);
     //return response.data.tracks.items[0].preview_url;
     return response
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -494,10 +494,10 @@ export async function requestRefreshAccessToken(refresh_token) {
     const response = await axios.post(authOptions.url, authOptions.form, {
       headers: authOptions.headers,
     });
-    console.log('Response => ', response.data);
+    // // console.log('Response => ', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error => ', error);
+    // console.error('Error => ', error);
     throw error;
   }
 }
@@ -527,10 +527,10 @@ export async function getPlaylistDetails(access_token, playlist_id) {
       preview_url: item.track.preview_url,
     }));
 
-    //console.log('Playlist Details Response => ', tracksInfo);
+    //// // console.log('Playlist Details Response => ', tracksInfo);
     return tracksInfo; // Return the simplified playlist information
   } catch (error) {
-    console.error('Error fetching playlist details => ', error);
+    // console.error('Error fetching playlist details => ', error);
     throw error;
   }
 }

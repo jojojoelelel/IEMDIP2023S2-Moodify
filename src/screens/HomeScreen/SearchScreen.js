@@ -21,6 +21,7 @@ import {AppContext} from '../../navigation/AppNavigation.js';
 
 
 export default function SearchScreen({ navigation }) {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [savedTracks, setSavedTracks] = useState([]);
@@ -109,7 +110,7 @@ export default function SearchScreen({ navigation }) {
             setSearchHistory(JSON.parse(savedHistory));
           }
         } catch (error) {
-          console.error("Failed to load history", error);
+          // console.error("Failed to load history", error);
         }
       };
 
@@ -160,7 +161,7 @@ export default function SearchScreen({ navigation }) {
         try {
             // Search for tracks
             const trackResponse = await SpotifyAPI.searchTrack(access_token, searchQuery, 'track');
-            console.log('trackResponse', trackResponse);
+            // console.log('trackResponse', trackResponse);
 
             // Process track data
             const tracksData = trackResponse.data.tracks.items.map(track => ({
@@ -175,7 +176,7 @@ export default function SearchScreen({ navigation }) {
             // Update state
           setSearchedTracks({ tracks/* artists, albums, playlists*/ });
         } catch (error) {
-            console.error('Error in searchTrack2:', error);
+            // console.error('Error in searchTrack2:', error);
         }
     };
 
@@ -197,18 +198,18 @@ export default function SearchScreen({ navigation }) {
 
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={{ flex: 1 }}>
+    <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+      <ScrollView style={{ flex: 1}}>
         <Pressable onPress={() => navigation.goBack()} style={{ marginHorizontal: 15, marginTop: 10 }}>
-          <Ionicons name="arrow-back" size={24} color="white" />
+          {/* <Ionicons name="arrow-back" size={24} color="white" /> */}
         </Pressable>
 
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#fff" style={styles.searchIcon} />
+        <View style={colorTheme === 'Dark' ? styles.searchContainerDark : styles.searchContainerLight}>
+          <Ionicons name="search" size={20} color={colorTheme === 'Dark' ? '#71737B' : `${process.env.REACT_APP_LIGHTACCENT}`} style={styles.searchIcon} />
           <TextInput
-            style={styles.searchInput}
+            style={colorTheme === 'Dark' ? styles.searchInputDark : styles.searchInputLight}
             placeholder="Search"
-            placeholderTextColor="#71737B"
+            placeholderTextColor={colorTheme === 'Dark' ? "#71737B" : `${process.env.REACT_APP_LIGHTACCENT}`}
             value={searchQuery}
             onChangeText={(text) => handleSearchQueryChange(text)}
             onFocus={handleFocus}
@@ -216,40 +217,55 @@ export default function SearchScreen({ navigation }) {
           />
           {isFocused && (
             <Pressable onPress={() => setSearchQuery('')} style={styles.cancelButton}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={colorTheme === 'Dark' ? styles.cancelButtonTextDark : styles.cancelButtonTextLight}>Cancel</Text>
             </Pressable>
           )}
         </View>
-        <Text style={styles.header}>Search Result</Text>
+        <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>Search Result</Text>
         {searchedTracks.length === 0 && searchQuery !== '' ? (
            <ActivityIndicator size="large" color="gray" />
            ) : (
-            <FlatList
-              data={searchedTracks}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.savedTrackWrapper}>
-                  <TrackList
-                    id={item.id}
-                    title={item.title}
-                    artist={item.artist}
-                    url={item.preview_url}
-                    cover={item.cover}
-                    onPress={() => handleItemPress(item)}
-                  />
-                </View>
-              )}
-            />
+            // <FlatList
+            //   data={searchedTracks}
+            //   keyExtractor={(item, index) => index.toString()}
+            //   renderItem={({ item }) => (
+            //     <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}>
+            //       <TrackList
+            //         id={item.id}
+            //         title={item.title}
+            //         artist={item.artist}
+            //         url={item.preview_url}
+            //         cover={item.cover}
+            //         onPress={() => handleItemPress(item)}
+            //       />
+            //     </View>
+            //   )}
+            // />
+            <View >
+            {searchedTracks.map((item) => (
+              <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}>
+                <TrackList
+                  style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}
+                  id={item.id}
+                  title={item.title}
+                  artist={item.artist}
+                  url={item.preview_url}
+                  cover={item.cover}
+                  onPress={() => handleItemPress(item)}
+                />
+              </View>
+            ))}
+            </View>
         )}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={styles.header}>History</Text>
-           <Ionicons name="timer-outline" size={20} color="#fff" />
+          <Text style={colorTheme === 'Dark' ? styles.headerDark : styles.headerLight}>History</Text>
+           <Ionicons name="timer-outline" size={20} color={colorTheme === 'Dark' ? '#fff' : '#000'} />
         </View>
-        <FlatList
+        {/* <FlatList
           data={searchHistory}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={styles.savedTrackWrapper}>
+            <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}>
               <TrackListWithTimeStamp
                 title={item.title}
                 artist={item.artist}
@@ -260,7 +276,21 @@ export default function SearchScreen({ navigation }) {
               />
             </View>
           )}
-        />
+        /> */}
+        <View>
+          {searchHistory.map((item) => (
+            <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}>
+             <TrackListWithTimeStamp
+             title={item.title}
+             artist={item.artist}
+             dateAdded={item.dateAdded}
+             url={item.url}
+             cover={item.cover}
+             onPress={() => handleItemPress(item)}
+           />
+           </View>
+          ))}
+        </View>
       </ScrollView>
       <MusicPlayerBar />
     </View>
@@ -268,35 +298,91 @@ export default function SearchScreen({ navigation }) {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: `${process.env.REACT_APP_DARKTHEME}`,
     paddingTop: 10,
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    paddingTop: 10,
+  },
+  headerDark: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 20,
+  },
+  headerLight: {
+    color: '#000',
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 20,
+  },
+  searchContainerDark: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#363942',
+    height: 40,
+    marginHorizontal: 10,
+    // marginTop: 10, // Adjust this value as needed
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  searchContainerLight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // backgroundColor: '#9135a6',
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    height: 40,
+    marginHorizontal: 10,
+    // marginTop: 10, // Adjust this value as needed
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  searchInputDark: {
+    flex: 1,
+    height: 40,
+    color: '#71737B',
+    marginHorizontal: 5,
+  },
+  searchInputLight: {
+    flex: 1,
+    height: 40,
+    // color: `${process.env.REACT_APP_LIGHTACCENT}`, 
+    color: '#000',
+    marginHorizontal: 5,
+    // borderBottomWidth: 1,
+    // borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  cancelButtonTextDark: {
+    color: '#CBFB5E',
+  },
+  cancelButtonTextLight: {
+    color: `${process.env.REACT_APP_LIGHTACCENT}`, 
+  },
+  trackContainer: {
+    padding: 12,
+    elevation: 5,
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
+  trackWrapper: {
+    marginHorizontal: 10, // Adjust this value for spacing between tracks
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: -20, // Adjust the vertical padding
+    paddingHorizontal: 5, // Adjust the horizontal padding
+    backgroundColor: '#363942',
   },
   header: {
     color: '#fff',
     fontSize: 24,
     fontWeight: 'bold',
     padding: 20,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#363942',
-    height: 40,
-    marginHorizontal: 10,
-    marginTop: 10, // Adjust this value as needed
-    paddingHorizontal: 10,
-    borderRadius: 5,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    color: '#71737B',
-    marginHorizontal: 5,
-  },
-  cancelButtonText: {
-    color: '#CBFB5E',
   },
   trackContainer: {
     padding: 10,
@@ -312,7 +398,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5, // Adjust the horizontal padding
     backgroundColor: '#363942',
   },
-  savedTrackWrapper: {
+  savedTrackWrapperDark: {
     marginVertical: 5,
     paddingVertical: 10,
     paddingHorizontal: 10,
@@ -320,6 +406,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#00FFFF',
+  },
+  savedTrackWrapperLight: {
+    marginVertical: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    // backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
   },
   emptySearch: {
     flex: 1,

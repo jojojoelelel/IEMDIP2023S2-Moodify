@@ -15,7 +15,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import BottomNavigation from '../../navigation/BottomNavigation.js';
+// import BottomNavigation from '../../navigation/BottomNavigation.js';
 
 // For API calls
 import axios from 'axios';
@@ -42,7 +42,8 @@ import {MusicPlayerContext} from '../../contexts/SongContext.js';
 export default function HomeScreen({navigation}) {
   // Example data - replace with real data to be added by backend
 
-  const {access_token, setaccess_token} = useContext(AppContext);
+  const {colorTheme, setColorTheme, access_token, setaccess_token} =
+    useContext(AppContext);
 
   const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
@@ -63,18 +64,22 @@ export default function HomeScreen({navigation}) {
     try {
       const response = await SpotifyAPI.getFollowedArtists(access_token, 5);
       // console.log(response.artists.items); // Log the response object
-      setTopArtists(prevData => [
-        ...prevData,
-        ...response.artists.items.map(artist => ({
-          ...artist,
-          imageUrl:
-            artist.images && artist.images.length > 0
-              ? artist.images[0].url
-              : '', // Provide a default image URL as fallback
-        })),
-      ]);
+      // console.log('api call getfollowedartist')
+      if (topArtists.length === 0) {
+        setTopArtists(prevData => [
+          ...prevData,
+          ...response.artists.items.map(artist => ({
+            ...artist,
+            id: artist.id,
+            imageUrl:
+              artist.images && artist.images.length > 0
+                ? artist.images[0].url
+                : '', // Provide a default image URL as fallback
+          })),
+        ]);
+      }
     } catch (error) {
-      console.error('Error in getFollowedArtists => ', error);
+      // console.error('Error in getFollowedArtists => ', error);
     }
   };
 
@@ -85,34 +90,37 @@ export default function HomeScreen({navigation}) {
   //
   const getArtistAlbums2 = async () => {
     try {
-      const response = await SpotifyAPI.getArtistAlbums( access_token, '1hGdQOfaZ5saQ6JWVuxVDZ',);
-    console.log(response.data.items);
-            setTopAlbums((prevData) => [
-                ...prevData,
-                ...response.data.items.map(album => ({
-                    id: album.id,
-                    name: album.name,
-                    artist: album.artists.map(artist => artist.name).join(', '),
-                    imageUrl: album.images && album.images.length > 0
-                    ? album.images[0].url
-                    : '' // Provide a default image URL as fallback
-                }))
-            ]);
-  } catch (error) {
-    console.error('Error in getArtistAlbums => ', error);
-  }
-};
+      const response = await SpotifyAPI.getArtistAlbums(
+        access_token,
+        '1hGdQOfaZ5saQ6JWVuxVDZ',
+      );
+      // console.log(response.data.items);
+      if (topAlbums.length === 0) {
+        setTopAlbums(prevData => [
+          ...prevData,
+          ...response.data.items.map(album => ({
+            id: album.id,
+            name: album.name,
+            artist: album.artists.map(artist => artist.name).join(', '),
+            imageUrl:
+              album.images && album.images.length > 0 ? album.images[0].url : '', // Provide a default image URL as fallback
+          })),
+        ]);
+      }
+    } catch (error) {
+      // console.error('Error in getArtistAlbums => ', error);
+    }
+  };
 
-  useEffect(() => {
-  getArtistAlbums2();
-  }, []);
+  // useEffect(() => {
+  // getArtistAlbums2();
+  // }, []);
 
-
-    // Function to handle item press if needed
-    const handleAlbumPress = album => {
-      // To navigate to a album detail screen:
-      navigation.navigate('AlbumDetails', {album, artist: album.artist});
-    };
+  // Function to handle item press if needed
+  const handleAlbumPress = albums => {
+    // To navigate to a album detail screen:
+    navigation.navigate('AlbumDetails', {albums});
+  };
 
   const getArtistTopTracks2 = async () => {
     try {
@@ -122,17 +130,20 @@ export default function HomeScreen({navigation}) {
         'SG',
       );
       //console.log(response);
-      console.log(response.tracks);
-      setTopTracks(
-        response.tracks.map(track => ({
-          title: track.name,
-          artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
-          cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
-          url: track.preview_url,
-        })),
-      );
+      // console.log(response.tracks);
+      // console.log('api call getartisttoptrack');
+      if (topTracks.length === 0) {
+        setTopTracks(
+          response.tracks.map(track => ({
+            title: track.name,
+            artist: track.artists.map(artist => artist.name).join(', '), // Join multiple artists with a comma
+            cover: track.album.images.length > 0 ? track.album.images[0].url : '', // Provide a default image URL as fallback
+            url: track.preview_url,
+          })),
+        );
+      }
     } catch (error) {
-      console.error('Error in getArtistTopTracks => ', error);
+      // console.error('Error in getArtistTopTracks => ', error);
     }
   };
 
@@ -151,56 +162,90 @@ export default function HomeScreen({navigation}) {
     playTrack(item);
   };
 
-  const handleArtistPress = item => {
-    navigation.navigate('ArtistDetails');
+  const handleArtistPress = artists => {
+    navigation.navigate('ArtistDetails', {artists});
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Text
-            onPress={() => alert('This is the "Home" screen.')}
-            style={styles.text}>
-            Moodify
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('SearchScreen')}
-            style={styles.searchIconContainer}>
-            <Ionicons
-              name="search"
-              size={24}
-              color="#fff"
-              style={styles.searchIcon}
+    <ImageBackground
+      source={
+        colorTheme === 'Dark'
+          ? require('../../assets/images/sign-in-bgDark.jpg')
+          : require('../../assets/images/backgroundLight.jpg')
+      } // Replace with your actual background image path
+      style={styles.background}>
+      {/* <> */}
+      {/* <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}> */}
+
+      <View
+        style={
+          colorTheme === 'Dark'
+            ? styles.headerContainerDark
+            : styles.headerContainerLight
+        }>
+        <Text
+          onPress={() => alert('This is the "Home" screen.')}
+          style={colorTheme === 'Dark' ? styles.textDark : styles.textLight}>
+          Moodify
+        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SearchScreen')}
+          style={styles.searchIconContainer}>
+          <Ionicons
+            name="search"
+            size={24}
+            color={
+              colorTheme === 'Dark'
+                ? process.env.REACT_APP_LIGHTTHEME
+                : process.env.REACT_APP_DARKTHEME
+            }
+            style={styles.searchIcon}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Text
+          style={
+            colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
+          }>
+          Recent Albums
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {topAlbums.map((item, index) => (
+            <AlbumCard
+              item={item}
+              key={item.id}
+              id={index}
+              imageUrl={item.imageUrl}
+              onPress={() => handleAlbumPress(item)}
             />
-          </TouchableOpacity>
-        </View>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <Text style={styles.header}>Recent Albums</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {topAlbums.map((item, index) => (
-            <AlbumCard item={item}
-                        key={index}
-                        imageUrl={item.imageUrl}
-                        onPress={() => handleAlbumPress(item)}/>
           ))}
-          </ScrollView>
+        </ScrollView>
 
-          <Text style={styles.header}>Top Artists</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {topArtists.map((item, index) => (
-              <ArtistCard
-                item={item}
-                key={index}
-                imageUrl={item.imageUrl}
-                onPress={() => handleArtistPress(item)}
-              />
-            ))}
-          </ScrollView>
-
-          <Text style={styles.header}>Recently Played</Text>
+        <Text
+          style={
+            colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
+          }>
+          Top Artists
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {topArtists.map((item, index) => (
+            <ArtistCard
+              item={item}
+              key={index}
+              imageUrl={item.imageUrl}
+              onPress={() => handleArtistPress(item)}
+            />
+          ))}
+        </ScrollView>
+        <Text
+          style={
+            colorTheme === 'Dark' ? styles.headerDark : styles.headerLight
+          }>
+          Recently Played
+        </Text>
           <View style={styles.trackContainer}>
-            <FlatList
+            {/* <FlatList
               data={topTracks} // Use topTracks instead of track
               renderItem={({item}) => (
                 <TrackList
@@ -212,31 +257,72 @@ export default function HomeScreen({navigation}) {
                   onPress={() => handleItemPress(item)}
                 />
               )}
-            />
-          </View>
-        </ScrollView>
-        <MusicPlayerBar />
-      </View>
-    </>
+            /> */}
+            {topTracks.map((item, index) => (
+              <TrackList
+                key={index}
+                id={item.id}
+                title={item.title}
+                artist={item.artist}
+                cover={item.cover}
+                url={item.preview_url}
+                onPress={() => handleItemPress(item)}
+              />
+            ))}
+        </View>
+      </ScrollView>
+      <MusicPlayerBar />
+      {/* </View> */}
+    </ImageBackground>
+    // </>
   );
 }
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: '#000',
-    justifyContent: 'flex-start',
-    paddingTop: 20,
+    justifyContent: 'center',
+    paddingTop: 10,
+    flexDirection: 'column',
   },
-  headerContainer: {
+  containerDark: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_DARKTHEME}`,
+    justifyContent: 'flex-start',
+    paddingTop: 10,
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
+    justifyContent: 'flex-start',
+    paddingTop: 10,
+  },
+  headerContainerDark: {
     flexDirection: 'row',
     alignItems: 'center', // Align items vertically
     paddingRight: 20,
     paddingLeft: 20,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: `${process.env.REACT_APP_DARKACCENT}`,
   },
-  text: {
+  headerContainerLight: {
+    flexDirection: 'row',
+    alignItems: 'center', // Align items vertically
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+  },
+  textDark: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#fff',
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
+  },
+  textLight: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: `${process.env.REACT_APP_DARKTHEME}`,
   },
   searchIconContainer: {
     marginLeft: 'auto', // Push the icon to the right
@@ -248,8 +334,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'flex-start',
   },
-  header: {
-    color: '#fff',
+  headerDark: {
+    color: `${process.env.REACT_APP_LIGHTTHEME}`,
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 20,
+  },
+  headerLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
     fontSize: 24,
     fontWeight: 'bold',
     padding: 20,
@@ -266,12 +358,13 @@ const styles = StyleSheet.create({
   },
   trackContainer: {
     width: '95%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     padding: 12,
     elevation: 5,
     borderRadius: 10,
     shadowColor: '#303133',
     flexDirection: 'column',
-    paddingLeft: 20,
+    // paddingLeft: 20,
+    alignSelf: 'center',
   },
 });

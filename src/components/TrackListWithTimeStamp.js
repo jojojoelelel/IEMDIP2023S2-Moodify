@@ -1,8 +1,11 @@
 //Component for list of track
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Image, StyleSheet, FlatList, TouchableOpacity, Text} from 'react-native';
 
+import {AppContext} from '../navigation/AppNavigation.js';
+
 const TrackItem = ({title, artist, cover, onPress, url, dateAdded}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   // Convert dateAdded to Date object
   const addedDate = new Date(dateAdded);
 
@@ -19,9 +22,9 @@ const TrackItem = ({title, artist, cover, onPress, url, dateAdded}) => {
     <TouchableOpacity onPress={onPress} style={styles.container}>
     <Image source={{ uri: cover }} style={styles.coverImage} />
     <View style={styles.textContainer}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.artist}>{artist}</Text>
-      <Text style={styles.date}>{formattedDate}</Text>
+      <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>{title}</Text>
+      <Text style={colorTheme === 'Dark' ? styles.artistDark : styles.artistLight}>{artist}</Text>
+      <Text style={colorTheme === 'Dark' ? styles.dateDark : styles.dateLight}>{formattedDate}</Text>
        </View>
       {/* Include an icon or button for more options (e.g., the three dots) */}
     </TouchableOpacity>
@@ -39,21 +42,38 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1, // Take up remaining space to allow text to align to the left
   },
-  title: {
+  titleDark: {
     color: '#FFF',
     textAlign: 'left',
+    fontWeight: 'bold',
     // Add additional styling
   },
-  artist: {
+  titleLight: {
+    color: '#000',
+    textAlign: 'left',
+    fontWeight: 'bold',
+    // Add additional styling
+  },
+  artistDark: {
     color: '#aaa',
     textAlign: 'left',
     // Add additional styling
   },
-  date: {
+  artistLight: {
+    color: '#000',
+    textAlign: 'left',
+    // Add additional styling
+  },
+  dateDark: {
      color: '#aaa',
      fontSize: 12,
      // Add additional styling
-    },
+  },
+  dateLight: {
+    color: '#878787',
+    fontSize: 12,
+    // Add additional styling
+  },
   coverImage: {
     width: 60,
     height: 60,

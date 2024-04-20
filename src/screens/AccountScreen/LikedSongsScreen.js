@@ -58,7 +58,7 @@ const likedSongsData = [
 ];
 
 const LikedSongsScreen = () => {
-  const {access_token, setaccess_token} = useContext(AppContext);
+  const {access_token, setaccess_token, colorTheme, setColorTheme} = useContext(AppContext);
   const [songs, setSongs] = useState([]);
   const {
     isPlaying,
@@ -87,8 +87,8 @@ const LikedSongsScreen = () => {
       <TouchableOpacity style={styles.songContainer}>
         <Image source={{uri: item.cover}} style={styles.albumCover} />
         <View style={styles.songDetails}>
-          <Text style={styles.songTitle}>{item.title}</Text>
-          <Text style={styles.songArtist}>{item.artist}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{item.title}</Text>
+          <Text style={colorTheme === 'Dark' ? styles.songArtistDark : styles.songArtistLight}>{item.artist}</Text>
         </View>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton}>
@@ -106,7 +106,7 @@ const LikedSongsScreen = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
         {/* <FlatList
         data={songs}
         renderItem={renderSong}
@@ -132,9 +132,13 @@ const LikedSongsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
     flex: 1,
     backgroundColor: '#0A0A0A', // Or any other background color you prefer
+  },
+  containerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
   },
   songContainer: {
     flexDirection: 'row',
@@ -151,12 +155,20 @@ const styles = StyleSheet.create({
     flex: 1, // This ensures that the song details section takes up the remaining space
     marginLeft: 10, // Add some space between the image and the text
   },
-  songTitle: {
+  songTitleDark: {
     color: '#FFF',
     fontSize: 16,
   },
-  songArtist: {
+  songTitleLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    fontSize: 16,
+  },
+  songArtistDark: {
     color: '#BBB',
+    fontSize: 14,
+  },
+  songArtistLight: {
+    color: `${process.env.REAT_APP_DARKTHEME}`,
     fontSize: 14,
   },
   iconButton: {

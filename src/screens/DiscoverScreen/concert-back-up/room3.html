@@ -5,6 +5,9 @@
     <title>A-Frame Scene with Audio Visualizer and Animated Model</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-storage.js"></script>
   </head>
   <body>
     <a-scene>
@@ -88,6 +91,42 @@
       Pause Music
     </button>
     <script>
+      // //Fetch songs from firebase
+      // var firebaseConfig = {
+      //   apiKey: 'your_api_key_here', // Set your API key here
+      //   databaseURL: 'your_database_url_here', // Set your database URL here
+      //   projectId: 'your_project_id_here', // Set your project ID here
+      //   storageBucket: 'your_storage_bucket_here', // Set your storage bucket here
+      //   appId: 'your_app_id_here', // Set your app ID here
+      // };
+      // firebase.initializeApp(firebaseConfig);
+
+      // var database = firebase.database();
+      // var storage = firebase.storage();
+
+      // function getRandomImage() {
+      //   const imagesRef = storage.ref().child('models');
+      //   imagesRef.listAll().then(result => {
+      //     const randomIndex = Math.floor(Math.random() * result.items.length);
+      //     result.items[randomIndex].getDownloadURL().then(url => {
+      //       document.querySelector('#happy-bg').setAttribute('src', url);
+      //     });
+      //   });
+      // }
+
+      // function getMusic() {
+      //   database
+      //     .ref('/music')
+      //     .once('value')
+      //     .then(function (snapshot) {
+      //       var musicUrl = snapshot.val(); // assuming the URL is stored directly
+      //       var audio = document.querySelector('#bg-music');
+      //       audio.setAttribute('src', musicUrl);
+      //       audio.load(); // reload the audio element with new source
+      //     });
+      // }
+
+      //audio visulizer
       var audioContext = new (window.AudioContext ||
         window.webkitAudioContext)();
       var audio = document.querySelector('#bg-music');
@@ -157,6 +196,10 @@
           z: 0,
         });
       }, 10);
+      window.onload = function () {
+        getRandomImage();
+        getMusic();
+      };
     </script>
   </body>
 </html>

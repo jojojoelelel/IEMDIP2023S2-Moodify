@@ -1,5 +1,5 @@
 //Component for list of track
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Image,
@@ -9,13 +9,16 @@ import {
   Text,
 } from 'react-native';
 
+import {AppContext} from '../navigation/AppNavigation.js';
+
 const TrackItem = ({id, title, artist, cover, url, onPress}) => {
+  const {colorTheme, setColorTheme} = useContext(AppContext);
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
       <Image source={{uri: cover}} style={styles.coverImage} />
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.artist}>{artist}</Text>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>{title}</Text>
+        <Text style={colorTheme === 'Dark' ? styles.artistDark : styles.artistLight}>{artist}</Text>
       </View>
       {/* Include an icon or button for more options (e.g., the three dots) */}
     </TouchableOpacity>
@@ -23,7 +26,14 @@ const TrackItem = ({id, title, artist, cover, url, onPress}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDark: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    // Add additional styling
+  },
+  containerLight: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -33,13 +43,24 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1, // Take up remaining space to allow text to align to the left
   },
-  title: {
+  titleDark: {
     color: '#FFF',
     textAlign: 'left',
+    fontWeight: 'bold',
     // Add additional styling
   },
-  artist: {
+  titleLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    // Add additional styling
+  },
+  artistDark: {
     color: '#aaa',
+    // Add additional styling
+  },
+  artistLight: {
+    color: `${process.env.REACT_APP_DARKTHEME}`,
     // Add additional styling
   },
   coverImage: {

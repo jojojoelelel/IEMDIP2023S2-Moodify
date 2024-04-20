@@ -10,7 +10,7 @@ import * as SpotifyAPI from '../../services/Spotify-web-api';
 import { AppContext } from '../../navigation/AppNavigation';
 
 const PlaylistsScreen = ({navigation}) => {
-  const { access_token, setaccess_token } = useContext(AppContext);
+  const { access_token, setaccess_token, colorTheme, setColorTheme } = useContext(AppContext);
   const [playlist, setPlaylists] = useState([]);
   const fetchPlaylists = async () => {
     // const accessToken = access_token2; // Replace with your actual access token
@@ -58,7 +58,7 @@ const PlaylistsScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.screenContainer}>
+    <View style={colorTheme === 'Dark' ? styles.screenContainerDark : styles.screenContainerLight}>
       {playlist.length > 0 ? (
         <>
           <FlatList
@@ -85,9 +85,13 @@ const PlaylistsScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   // ... your existing styles ...
-  screenContainer: {
+  screenContainerDark: {
     flex: 1,
     backgroundColor: '#121212',
+  },
+  screenContainerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
   },
   listContainer: {
     // styles for your FlatList if needed

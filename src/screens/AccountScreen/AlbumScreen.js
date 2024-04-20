@@ -15,19 +15,22 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../../contexts/SongContext';
 import {AppContext} from '../../navigation/AppNavigation';
 import MusicPlayerBar from '../../components/MusicPlayerBar';
-import albumItem from '../../components/AlbumItem';
+import AlbumItem from '../../components/AlbumItem';
 
 const AlbumsScreen = ({navigation}) => {
-  const {access_token, setaccess_token} = useContext(AppContext);
+  const {access_token, setaccess_token, colorTheme, setColorTheme} = useContext(AppContext);
   const [albums, setAlbums] = useState([]);
   const fetchAlbums = async () => {
-    const albums = await SpotifyAPI.getUserAlbums(access_token);
+    const albumsData = await SpotifyAPI.getCurrentUserSavedAlbums(access_token);
     setAlbums(
-      albums.items.map(album => ({
-        id: album.id,
-        title: album.name,
-        creator: album.artists,
-        imageUrl: album.images[0].url,
+      albumsData.items.map(item => ({
+        id: item.album.id,
+        title: item.album.name,
+        creator: item.album.artists.map(artist => artist.name).join(', '),
+        imageUrl: 
+        item.album.images.length > 0 
+          ? item.album.images[0].url
+          : 'default_playlist_image_url',
       })),
     );
   };
@@ -39,19 +42,23 @@ const AlbumsScreen = ({navigation}) => {
     }
   }, [access_token]);
 
+  useEffect(() => {
+    console.log('albums=>', albums)
+  }, [albums])
+
   // Function to handle item press if needed
-  const handleItemPress = item => {
-    navigation.navigate('albumDetails', {album});
+  const handleItemPress = (albums) => {
+    navigation.navigate('AlbumDetails', {albums});
   };
 
   return (
-    <View style={styles.screenContainer}>
+    <View style={colorTheme === 'Dark' ? styles.screenContainerDark : styles.screenContainerLight}>
       {albums.length > 0 ? (
         <>
           <FlatList
             data={albums}
             renderItem={({item}) => (
-              <albumItem
+              <AlbumItem
                 id={item.id}
                 title={item.title}
                 creator={item.creator}
@@ -73,9 +80,13 @@ const AlbumsScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   // ... your existing styles ...
-  screenContainer: {
+  screenContainerDark: {
     flex: 1,
     backgroundColor: '#121212',
+  },
+  screenContainerLight: {
+    flex: 1,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
   },
   listContainer: {
     // styles for your FlatList if needed
