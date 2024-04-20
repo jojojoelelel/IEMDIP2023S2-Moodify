@@ -7,12 +7,15 @@ import TrackPlayer, {
   useTrackPlayerEvents,
   usePlaybackState,
 } from 'react-native-track-player';
+import Slider from '@react-native-community/slider';
 
 const MusicPlayerContext = createContext();
 
 const MusicPlayerProvider = ({children}) => {
   const [isPlaying, setIsPlaying] = useState();
   const [currentTrack, setCurrentTrack] = useState();
+  const [trackProgress, setTrackProgress] = useState(0);
+  const [trackDuration, setTrackDuration] = useState(30); // Since all tracks are 30 seconds
   //const [playerState, setPlayerState] = useState(TrackPlayer.STATE_NONE); //Initial state
 
   useEffect(() => {
@@ -31,19 +34,20 @@ const MusicPlayerProvider = ({children}) => {
     });
   }, []);
 
-  /*   const togglePlayback = async playBackState => {
-    const currentTrack = await TrackPlayer.getActiveTrack();
-    console.log(currentTrack, playBackState, State.Playing);
-    if (currentTrack != null) {
-      if (playBackState == State.Paused) {
-        await TrackPlayer.play();
-        setIsPlaying(true);
-      } else {
-        await TrackPlayer.pause();
-        setIsPlaying(false);
+  // Update progress state based on the player state
+  useEffect(() => {
+    const progressUpdater = setInterval(() => {
+      if (isPlaying) {
+        TrackPlayer.getProgress().then(progress => {
+          setTrackProgress(progress.position);
+          setTrackDuration(progress.duration);
+        });
       }
-    }
-  }; */
+    }, 1000); // Poll every second
+
+    // Clean up the interval on unmount
+    return () => clearInterval(progressUpdater);
+  }, [isPlaying]);
 
   const playOrPauseTrack = async () => {
     const currentPlaybackState = await TrackPlayer.getPlaybackState();
@@ -55,6 +59,11 @@ const MusicPlayerProvider = ({children}) => {
       await TrackPlayer.pause();
       setIsPlaying(false);
     }
+  };
+
+  const seekTo = async position => {
+    await TrackPlayer.seekTo(position);
+    setTrackProgress(position); // Update the progress to the new position
   };
 
   const updateCurrentTrack = async () => {
@@ -106,6 +115,11 @@ const MusicPlayerProvider = ({children}) => {
     skipToNext,
     skipToPrevious,
     playOrPauseTrack,
+    trackProgress,
+    setTrackDuration,
+    setTrackProgress,
+    trackDuration,
+    seekTo,
     // ...other control functions
   };
 

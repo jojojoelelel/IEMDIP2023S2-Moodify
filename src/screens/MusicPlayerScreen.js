@@ -8,9 +8,16 @@ import {
   Animated,
   Easing,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MusicPlayerContext} from '../contexts/SongContext';
 import {useNavigation} from '@react-navigation/native';
+import MusicSlider from '../components/MusicSlider';
+import LinearGradient from 'react-native-linear-gradient';
+import AlbumCover from '../components/AlbumCover';
+
+const {width} = Dimensions.get('window');
 
 import { AppContext } from '../navigation/AppNavigation';
 
@@ -18,10 +25,10 @@ const MusicPlayerScreen = () => {
   const { colorTheme, setColorTheme } = useContext(AppContext);
   const navigation = useNavigation();
   const rotationAnimation = useState(new Animated.Value(0))[0];
-  const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [currentRotationValue, setCurrentRotationValue] = useState(0);
   const [songProgress, setSongProgress] = useState(0);
 
+  const {currentTrack, isPlaying, playOrPauseTrack} =
+    useContext(MusicPlayerContext);
   const {currentTrack, isPlaying, playOrPauseTrack} =
     useContext(MusicPlayerContext);
 
@@ -35,92 +42,99 @@ const MusicPlayerScreen = () => {
           useNativeDriver: true,
         }),
       ).start();
+      Animated.loop(
+        Animated.timing(rotationAnimation, {
+          toValue: 1,
+          duration: 30000, // Duration of one full rotation
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ).start();
     } else {
       rotationAnimation.stopAnimation();
     }
   }, [isPlaying]);
+  }, [isPlaying]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isPlaying) {
+      if (isPlaying && currentTrack) {
         setSongProgress(prevProgress => {
-          const duration = 30000; // Assuming all songs are 30 seconds for simplicity
+          const duration = currentTrack.duration; // Use actual song duration
           const nextProgress = prevProgress + 1000;
           if (nextProgress >= duration) {
+            // Implement the logic for what happens when the song ends
             // Implement the logic for what happens when the song ends
           }
           return nextProgress;
         });
       }
     }, 1000);
+    }, 1000);
     return () => clearInterval(interval);
   }, [isPlaying, currentTrack]);
 
-  // Remember to add album
+  const rotationValue = rotationAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
     <ImageBackground
       source={colorTheme === 'Dark' ? require('../assets/images/background.png') : require('../assets/images/backgroundLight.jpg')}
       style={styles.backgroundImage}>
+    <ImageBackground
+      source={require('../assets/images/background.png')}
+      style={styles.backgroundImage}>
       <View style={styles.container}>
         {currentTrack ? (
-          <>
-            <View style={styles.songInfoContainer}>
-              <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack.title}</Text>
-              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack.artist}</Text>
-            </View>
-            <View style={styles.albumCoverContainer}>
-              <Animated.Image
-                source={{uri: currentTrack.cover}}
-                style={[
-                  styles.albumCover,
-                  {
-                    transform: [
-                      {
-                        rotate: rotationAnimation.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [`0deg`, '360deg'],
-                        }),
-                      },
-                    ],
-                  },
-                ]}
-              />
-            </View>
-          </>
+          <View style={styles.albumCoverContainer}>
+            <Animated.Image
+              source={{uri: currentTrack.cover}}
+              style={[
+                styles.albumCover,
+                {
+                  transform: [
+                    {
+                      rotate: rotationAnimation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ['0deg', '360deg'],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+            />
+          </View>
         ) : (
-          // You could show a placeholder or some alternative UI here
           <Text>Loading...</Text>
         )}
+        <View style={styles.songInfoContainer}>
+              <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack.title}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack.artist}</Text>
+        </View>
+        <MusicSlider />
         <View style={styles.controlsContainer}>
           <TouchableOpacity
             style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={() => {
-              /* Implement previous track selection logic */
+              /* Implement previous track logic */
             }}>
-            <Image
-              source={require('../assets/icon/previous.png')}
-              style={styles.controlImage}
-            />
+            <Ionicons name="play-skip-back-circle" size={50} color="#FFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={playOrPauseTrack}>
-            <Image
-              source={
-                isPlaying
-                  ? require('../assets/icon/pause.png')
-                  : require('../assets/icon/play.png')
-              }
-              style={styles.controlImage}
+            <Ionicons
+              name={isPlaying ? 'pause-circle' : 'play-circle'}
+              size={60}
+              color="#FFF"
             />
           </TouchableOpacity>
           <TouchableOpacity
             style={colorTheme === 'Dark' ? styles.controlButtonDark : styles.controlButtonLight}
             onPress={() => navigation.navigate('Homescreen')}>
-            <Image
-              source={require('../assets/icon/next.png')}
-              style={styles.controlImage}
-            />
+            <Ionicons name="play-skip-forward-circle" size={50} color="#FFF" />
           </TouchableOpacity>
         </View>
       </View>
@@ -128,27 +142,29 @@ const MusicPlayerScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
   },
   songInfoContainer: {
     alignItems: 'center',
     marginBottom: 20,
   },
   songTitleDark: {
-    fontSize: 30,
+    fontSize: width * 0.07,
     fontWeight: 'bold',
+    color: '#A4EC0A',
     color: '#A4EC0A',
   },
   songTitleLight: {
-    fontSize: 30,
+    fontSize: width * 0.07,
     fontWeight: 'bold',
     color: `${process.env.REACT_APP_LIGHTACCENT}`,
   },
@@ -161,27 +177,31 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold',
+    color: 'white',
+    fontWeight: 'bold',
   },
   albumCoverContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
+    marginBottom: 40,
   },
   albumCover: {
-    width: 250,
-    height: 250,
-    borderRadius: 125,
+    width: width * 0.7,
+    height: width * 0.7,
+    borderRadius: 150,
     borderWidth: 2,
     borderColor: '#000',
   },
   controlsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 20,
+    width: '80%',
   },
   controlButtonDark: {
-    padding: 10,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
@@ -203,3 +223,4 @@ const styles = StyleSheet.create({
 });
 
 export default MusicPlayerScreen;
+

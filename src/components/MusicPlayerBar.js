@@ -15,6 +15,19 @@ const MusicPlayerBar = () => {
     skipToNext,
     skipToPrevious,
   } = useContext(MusicPlayerContext);
+import React, {useState, useContext} from 'react';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {MusicPlayerContext} from '../contexts/SongContext';
+
+const MusicPlayerBar = () => {
+  const {
+    currentTrack,
+    isPlaying,
+    playOrPauseTrack,
+    skipToNext,
+    skipToPrevious,
+  } = useContext(MusicPlayerContext);
 
   /*   const togglePlayPause = () => {
     const newIsPlaying = !isPlaying;
@@ -46,7 +59,14 @@ const MusicPlayerBar = () => {
           />
         </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+      <TouchableOpacity onPress={playOrPauseTrack} style={styles.playButton}>
+        <Ionicons
+          name={isPlaying ? 'pause' : 'play'}
+          size={30}
+          color="#FFFFFF"
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -100,6 +120,11 @@ const styles = StyleSheet.create({
   artistNameDark: {
     color: '#FFFFFF',
     fontSize: 14,
+  },
+  playButton: {
+    marginRight: 20, // Increase padding to enhance the touch area
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   artistNameLight: {
     color: `${process.env.REACT_APP_DARKTHEME}`,

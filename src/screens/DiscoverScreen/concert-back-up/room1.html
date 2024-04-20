@@ -9,7 +9,6 @@
     <script src="js/aframe-spe-particles-component.js"></script>
     <script src="js/aframe-sprite-particles-component.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
-    <script src="./js/animation-mixer.js"></script>
     <!-- Import Map for Three.js and its modules -->
     <script type="importmap">
       {
@@ -30,9 +29,9 @@
         <img id="coldplay-bg" src="./img/room1sky.jpg" />
         <img id="bubblestar" src="./img/bubblestar.png" />
         <a-asset-item
-          id="cloudstation"
+          id="skeleton"
           response-type="arraybuffer"
-          src="./models/cloud_station.glb"></a-asset-item>
+          src="./models/skeleton_grup.glb"></a-asset-item>
       </a-assets>
 
       <a-sky src="#coldplay-bg"></a-sky>
@@ -54,14 +53,12 @@
 
       <!-- Models -->
       <a-entity
-        gltf-model="#cloudstation"
+        gltf-model="#skeleton"
         position="-0.28 1 -1.8"
-        scale="15 15 15"
+        scale="10 10 10"
         rotate="0 -30 0"
         animation-mixer="clip: Take 001; loop: infinite"
         rotation="0 28 0"></a-entity>
-
-      <a-entity custom-logic position="0 2 -5"></a-entity>
 
       <!-- Visualizer Plane -->
       <a-plane
@@ -74,7 +71,7 @@
         color="#FFC0CB"></a-plane>
 
       <!-- Camera -->
-      <a-camera position="27.258 1.600 57.961"></a-camera>
+      <a-camera></a-camera>
     </a-scene>
 
     <script>
@@ -176,3 +173,5 @@
     </script>
   </body>
 </html>
+
+<!--This work is based on "Solar Eclipse 2024" (https://sketchfab.com/3d-models/solar-eclipse-2024-357e6b38d74b414aae11cf9d948251fd) by tamminen (https://sketchfab.com/tamminen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)-->
