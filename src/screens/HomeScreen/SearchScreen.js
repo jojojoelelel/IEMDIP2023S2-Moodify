@@ -247,6 +247,7 @@ export default function SearchScreen({ navigation }) {
                 <TrackList
                   style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}
                   id={item.id}
+                  key={item.id}
                   title={item.title}
                   artist={item.artist}
                   url={item.preview_url}
@@ -346,7 +347,8 @@ const styles = StyleSheet.create({
   searchInputDark: {
     flex: 1,
     height: 40,
-    color: '#71737B',
+    // color: '#71737B',
+    color: 'white',
     marginHorizontal: 5,
   },
   searchInputLight: {

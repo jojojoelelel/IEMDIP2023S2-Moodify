@@ -53,7 +53,7 @@ const PlaylistDetailsScreen = ({route}) => {
 
   return (
     <>
-      <ScrollView style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
+      <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}>
         <Image source={{uri: playlist.imageUrl}} style={styles.coverImage} />
         <View style={styles.detailsContainer}>
           <Text style={styles.playlistTitle}>{playlist.title}</Text>
@@ -81,7 +81,7 @@ const PlaylistDetailsScreen = ({route}) => {
             )}
           />
         </View>
-      </ScrollView>
+      </View>
       <MusicPlayerBar />
     </>
   );

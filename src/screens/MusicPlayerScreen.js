@@ -85,7 +85,7 @@ const MusicPlayerScreen = () => {
             <Animated.Image
               source={{uri: currentTrack.cover}}
               style={[
-                styles.albumCover,
+                (colorTheme === 'Dark' ? styles.albumCoverDark : styles.albumCoverLight),
                 {
                   transform: [
                     {
@@ -104,7 +104,7 @@ const MusicPlayerScreen = () => {
         )}
         <View style={styles.songInfoContainer}>
               <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack ? currentTrack.title : 'No songs'}</Text>
-              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack ? currentTrack.artist : 'No songs'}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack ? currentTrack.artist : ''}</Text>
         </View>
         <MusicSlider />
         <View style={styles.controlsContainer}>
@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
   songTitleLight: {
     fontSize: width * 0.07,
     fontWeight: 'bold',
-    color: `${process.env.REACT_APP_LIGHTACCENT}`,
+    // color: `${process.env.REACT_APP_LIGHTACCENT}`,
+    color: 'black',
   },
   songInfoDark: {
     fontSize: 24,
@@ -169,9 +170,8 @@ const styles = StyleSheet.create({
   },
   songInfoLight: {
     fontSize: 24,
-    color: 'white',
-    fontWeight: 'bold',
-    color: 'white',
+    // color: `${process.env.REACT_APP_LIGHTACCENT}`,
+    color: 'black',
     fontWeight: 'bold',
   },
   albumCoverContainer: {
@@ -179,12 +179,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 40,
   },
-  albumCover: {
+  albumCoverDark: {
     width: width * 0.7,
     height: width * 0.7,
     borderRadius: 150,
     borderWidth: 2,
     borderColor: '#000',
+  },
+  albumCoverLight: {
+    width: width * 0.7,
+    height: width * 0.7,
+    borderRadius: 150,
+    borderWidth: 2,
+    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
   },
   controlsContainer: {
     flexDirection: 'row',
@@ -199,15 +206,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
-    backgroundColor: 'rgba(255,255,255,0.7)',
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`,
     marginLeft: 10,
   },
   controlButtonLight: {
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#000',
-    // backgroundColor: 'rgba(255,255,255,0.7)',
+    borderColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    backgroundColor: `${process.env.REACT_APP_LIGHTACCENT}`,
     marginLeft: 10,
   },
   controlImage: {

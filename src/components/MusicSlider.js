@@ -4,8 +4,10 @@ import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {MusicPlayerContext} from '../contexts/SongContext';
 
 const {width} = Dimensions.get('window'); // Get the width of the device
+import { AppContext } from '../navigation/AppNavigation';
 
 const MusicSlider = () => {
+  const { colorTheme, setColorTheme } = useContext(AppContext);
   const {trackProgress, setTrackProgress, trackDuration, seekTo} =
     useContext(MusicPlayerContext);
 
@@ -36,11 +38,11 @@ const MusicSlider = () => {
         onSlidingComplete={() => {
           /* Optionally resume the music after scrubbing */
         }}
-        minimumTrackTintColor="#1DB954" // Spotify green color for the completed part
+        minimumTrackTintColor={colorTheme === 'Dark' ? "#1DB954" : '#42ffea'} // Spotify green color for the completed part
         maximumTrackTintColor="#404040" // A darker color for the remaining part
-        thumbTintColor="#1DB954" // Color for the draggable thumb
+        thumbTintColor={colorTheme === 'Dark' ? "#1DB954" : '#42ffea'} // Color for the draggable thumb
       />
-      <Text style={styles.progressText}>
+      <Text style={colorTheme === 'Dark' ? styles.progressTextDark : styles.progressTextLight}>
         {formatTime(trackProgress)} / {formatTime(trackDuration)}
       </Text>
     </View>
@@ -57,8 +59,13 @@ const styles = StyleSheet.create({
   slider: {
     flex: 1, // Allow the slider to fill the space
   },
-  progressText: {
+  progressTextDark: {
     color: 'white',
+    paddingLeft: 10, // Add some space between the slider and the text
+    minWidth: 60, // Ensure the text doesn't jump around when changing
+  },
+  progressTextLight: {
+    color: 'black',
     paddingLeft: 10, // Add some space between the slider and the text
     minWidth: 60, // Ensure the text doesn't jump around when changing
   },

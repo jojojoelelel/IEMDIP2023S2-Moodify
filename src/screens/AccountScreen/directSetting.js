@@ -6,7 +6,7 @@ import {AppContext} from '../../navigation/AppNavigation';
 const SScreen = () => {
   const {colorTheme, setColorTheme} = useContext(AppContext);
   const initialUserData = [
-    { label: 'Profile Info Visibility', value: true },
+    // { label: 'Profile Info Visibility', value: true },
     { label: 'Color Theme', value: false },
     // { label: 'Setting 3', value: false },
   ];
@@ -24,7 +24,7 @@ const SScreen = () => {
   const [userData, setUserData] = useState(initialUserData);
 
   const toggleSwitch = (index) => {
-    if (index === 1) {
+    if (index === 0) {
       if (colorTheme === 'Dark') {
         setColorTheme('Light')
       } else {
@@ -51,8 +51,8 @@ const SScreen = () => {
   );
   if (colorTheme === 'Dark') {
     return (
-      <ImageBackground source={require('../../assets/images/background.png')} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.container}>
+      <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
+        {/* <ScrollView contentContainerStyle={styles.container}> */}
           {/* <TouchableOpacity onPress={backNav}>
             <Image
               source={require('../../assets/icon/backbtn.png')}
@@ -67,14 +67,14 @@ const SScreen = () => {
           <TouchableOpacity onPress={SignOut} style={styles.signOutBtnDark}>
             <Text style={styles.signOutBtnTxtDark}>Sign Out</Text>
           </TouchableOpacity>
-        </ScrollView>
+        {/* </ScrollView> */}
       </ImageBackground>
     );
   } else {
     return (
       // <View style={styles.mainContainerLight}>
-        <ImageBackground source={require('../../assets/images/backgroundLight.jpg')} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.container}>
+        <ImageBackground source={require('../../assets/images/backgroundLight.jpg')} style={styles.container}>
+        {/* <ScrollView contentContainerStyle={styles.container}> */}
           {/* <TouchableOpacity onPress={backNav}>
             <Image
               source={require('../../assets/icon/backbtn.png')}
@@ -89,7 +89,7 @@ const SScreen = () => {
           <TouchableOpacity onPress={SignOut} style={styles.signOutBtnLight}>
             <Text style={styles.signOutBtnTxtLight}>Sign Out</Text>
           </TouchableOpacity>
-        </ScrollView>
+        {/* </ScrollView> */}
       {/* </View> */}
       </ImageBackground>
     );
@@ -98,9 +98,9 @@ const SScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexGrow: 1,
     padding: 20,
-    marginTop: 40,
   },
   mainContainerLight: {
     flex: 1,

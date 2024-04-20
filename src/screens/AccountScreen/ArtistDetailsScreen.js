@@ -75,12 +75,12 @@ const ArtistDetailsScreen = ({route}) => {
     return (
       <View>
         <Image source={{uri: artists.imageUrl}} style={styles.coverImage} />
-        <View style={styles.detailsContainer}>
-          <Text style={styles.artistTitle}>
+        <View style={colorTheme === 'Dark' ? styles.detailsContainerDark : styles.detailsContainerLight}>
+          <Text style={colorTheme === 'Dark' ? styles.artistTitleDark : styles.artistTitleLight}>
             {artists.title ? artists.title : artists.name}
           </Text>
           <Text
-            style={styles.description}>{`${followers} monthly listeners`}</Text>
+            style={colorTheme === 'Dark' ? styles.descriptionDark : styles.descriptionLight}>{`${followers} monthly listeners`}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={colorTheme === 'Dark'
                       ? styles.buttonDark
@@ -93,14 +93,14 @@ const ArtistDetailsScreen = ({route}) => {
               <Text style={styles.buttonText}>Shuffle</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.popularTitle}>Popular</Text>
+          <Text style={colorTheme === 'Dark' ? styles.popularTitleDark : styles.popularTitleLight}>Popular</Text>
         </View>
       </View>
     );
   };
   //refactor code
   return (
-    <>
+    <View style={{backgroundColor: colorTheme === 'Dark' ? '#000' : `${process.env.REACT_APP_LIGHTTHEME}`}}>
       <FlatList
         data={topTracks}
         ListHeaderComponent={renderHeader}
@@ -116,7 +116,7 @@ const ArtistDetailsScreen = ({route}) => {
         )}
       />
       <MusicPlayerBar />
-    </>
+    </View>
   );
 };
 
@@ -133,7 +133,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 300,
   },
-  detailsContainer: {
+  detailsContainerDark: {
+    padding: 20,
+    backgroundColor: '#000',
+  },
+  detailsContainerLight: {
     padding: 20,
   },
   artistTitleDark: {
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
     color: 'black',
     marginBottom: 8,
   },
-  descriptionDark: {
+  descriptionLight: {
     fontSize: 18,
     color: 'grey',
     marginBottom: 20,

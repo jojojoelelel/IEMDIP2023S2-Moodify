@@ -60,7 +60,7 @@ const AlbumsDetailsScreen = ({route}) => {
   }, [albums.id]);
 
   return (
-    <>
+    <View style={{backgroundColor: colorTheme === 'Dark' ? '#000' : `${process.env.REACT_APP_LIGHTTHEME}`}}>
       <FlatList
         data={songs}
         keyExtractor={item => item.id}
@@ -111,7 +111,7 @@ const AlbumsDetailsScreen = ({route}) => {
         )}
       />
       <MusicPlayerBar />
-    </>
+    </View>
   );
 };
 

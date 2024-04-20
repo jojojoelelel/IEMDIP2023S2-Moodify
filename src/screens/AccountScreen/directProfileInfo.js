@@ -48,8 +48,6 @@ const PIscreen = () => {
     setIsEditing(!isEditing);
   };
 
-  // const access_token =
-  //   'BQAWh17cj2uYCkuuKv7k_n3vs3mPdcoXt6Sh9NEcH7annd5f89YLCI3_Kfjd76OP7_fSL_a1XfKNVGlCnluKwFX22le99d9RAP4E20BOmQoPLq6heTS-Fhk0ZgsDfpGki91--VYa81--VzkWpcTE_BXBiDL-4u46WMK6l4ZScA9W9Xsrz6yPca28wmeC36xl8WwP3cvh5fOmUU1SXg_06h6rgZhpd1KZuIPO6VK3N18Dm1JlUFMIEuauvZUX';
   const getCurrentUserProfile2 = async () => {
     try {
       const response = await SpotifyAPI.getCurrentUserProfile(access_token);
@@ -57,7 +55,7 @@ const PIscreen = () => {
       handleInputChange(response.country, 1);
       handleInputChange(response.email, 2);
     } catch (error) {
-      console.error('Error in getCurrentUserProfile => ', error);
+      // console.error('Error in getCurrentUserProfile => ', error);
     }
   };
 
@@ -71,7 +69,7 @@ const PIscreen = () => {
         <Text style={colorTheme === 'Dark' ? styles.labelDark : styles.labelLight}>{item.label}:</Text>
         {isEditing ? (
           <TextInput
-            style={styles.input}
+            style={colorTheme === 'Dark' ? styles.inputDark : styles.inputLight}
             value={userData[index].value}
             onChangeText={text => handleInputChange(text, index)}
           />
@@ -85,8 +83,8 @@ const PIscreen = () => {
     return (
       <ImageBackground
         source={require('../../assets/images/background.png')}
-        style={{flex: 1}}>
-        <ScrollView contentContainerStyle={styles.container}>
+        style={styles.mainContainer}>
+        {/* <ScrollView contentContainerStyle={styles.container}> */}
           {/* <TouchableOpacity onPress={backNav}>
             <Image
               source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
@@ -103,18 +101,18 @@ const PIscreen = () => {
             keyExtractor={item => item.label}
           />
           <TouchableOpacity onPress={handleEditProfile} style={styles.editButton}>
-            <Text style={styles.editButtonText}>
+            <Text style={styles.editButtonTextDark}>
               {isEditing ? 'Save Changes' : 'Update Profile Info'}
             </Text>
           </TouchableOpacity>
-        </ScrollView>
+        {/* </ScrollView> */}
       </ImageBackground>
     );
   } else { // light mode
     return (
       // <View style={styles.mainContainerLight}>
-        <ImageBackground source={require('../../assets/images/backgroundLight.jpg')} style={styles.mainContainerLight}>
-        <ScrollView contentContainerStyle={styles.container}>
+        <ImageBackground source={require('../../assets/images/backgroundLight.jpg')} style={styles.mainContainer}>
+        {/* <ScrollView contentContainerStyle={styles.container}> */}
           {/* <TouchableOpacity onPress={backNav}>
             <Image
               source={require('../../assets/icon/backbtn.png')} // Replace 'path_to_your_image.png' with the actual path to your image
@@ -135,7 +133,7 @@ const PIscreen = () => {
               {isEditing ? 'Save Changes' : 'Update Profile Info'}
             </Text>
           </TouchableOpacity>
-        </ScrollView>
+        {/* </ScrollView> */}
       {/* </View> */}
       </ImageBackground>
     );
@@ -149,8 +147,10 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 40,
   },
-  mainContainerLight: {
+  mainContainer: {
     flex: 1,
+    flexGrow: 1,
+    padding: 20,
     backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`,
   },
   profileImage: {
@@ -226,12 +226,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  input: {
+  inputDark: {
     flex: 1,
     fontSize: 15,
     padding: 0,
     borderRadius: 5,
     color: '#A4EC0A',
+    elevation: 3,
+  },
+  inputLight: {
+    flex: 1,
+    fontSize: 15,
+    padding: 0,
+    borderRadius: 5,
+    color: `${process.env.REACT_APP_LIGHTACCENT}`,
     elevation: 3,
   },
 });
