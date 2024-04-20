@@ -29,8 +29,6 @@ const MusicPlayerScreen = () => {
 
   const {currentTrack, isPlaying, playOrPauseTrack} =
     useContext(MusicPlayerContext);
-  const {currentTrack, isPlaying, playOrPauseTrack} =
-    useContext(MusicPlayerContext);
 
   useEffect(() => {
     if (isPlaying) {
@@ -54,7 +52,6 @@ const MusicPlayerScreen = () => {
       rotationAnimation.stopAnimation();
     }
   }, [isPlaying]);
-  }, [isPlaying]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -70,7 +67,6 @@ const MusicPlayerScreen = () => {
         });
       }
     }, 1000);
-    }, 1000);
     return () => clearInterval(interval);
   }, [isPlaying, currentTrack]);
 
@@ -82,9 +78,6 @@ const MusicPlayerScreen = () => {
   return (
     <ImageBackground
       source={colorTheme === 'Dark' ? require('../assets/images/background.png') : require('../assets/images/backgroundLight.jpg')}
-      style={styles.backgroundImage}>
-    <ImageBackground
-      source={require('../assets/images/background.png')}
       style={styles.backgroundImage}>
       <View style={styles.container}>
         {currentTrack ? (
@@ -110,8 +103,8 @@ const MusicPlayerScreen = () => {
           <Text>Loading...</Text>
         )}
         <View style={styles.songInfoContainer}>
-              <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack.title}</Text>
-              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack.artist}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songTitleDark : styles.songTitleLight}>{currentTrack ? currentTrack.title : 'No songs'}</Text>
+              <Text style={colorTheme === 'Dark' ? styles.songInfoDark : styles.songInfoLight}>{currentTrack ? currentTrack.artist : 'No songs'}</Text>
         </View>
         <MusicSlider />
         <View style={styles.controlsContainer}>
@@ -141,6 +134,7 @@ const MusicPlayerScreen = () => {
     </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,

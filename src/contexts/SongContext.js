@@ -12,6 +12,9 @@ import Slider from '@react-native-community/slider';
 const MusicPlayerContext = createContext();
 
 const MusicPlayerProvider = ({children}) => {
+
+  console.disableYellowBox = true
+  
   const [isPlaying, setIsPlaying] = useState();
   const [currentTrack, setCurrentTrack] = useState();
   const [trackProgress, setTrackProgress] = useState(0);
