@@ -40,6 +40,6 @@ Steps:
 - **Project Poster**: [Coming Soon]
 - **Demo Video**: [Coming Soon]
 - **Detailed Project Report**: [Coming Soon]
-- **Source Code**: [GitHub](link)
+- **Source Code**: [GitHub](https://github.com/jojojoelelel/IEMDIP2023S2-Moodify)
 - **Design Mockups**: [Figma](https://www.figma.com/file/PIrCqD1mhsYIUOuYPMtuh0/Moodify-Wireframe?type=design&node-id=0%3A1&mode=design&t=OEb2wFAiG3Ny2Y8G-1)
 - **Project Management**: [Jira](link)
