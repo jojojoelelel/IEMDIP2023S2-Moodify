@@ -6,7 +6,7 @@
 
 - **Personalized Chatbot**: Dive into a smarter way to discover music with our AI-driven chatbot. Get song recommendations that truly match your mood and preferences.
 - **Music Diary**: Keep a log of your musical journey. Save and revisit your favorite song recommendations anytime.
-- **Virtual Reality Experience**: Join VR concerts for a shared, immersive music experience.
+- **Virtual Reality Experience**: Join VR concerts with aesthetic atmospheres and vibrant avatars.
 
 ## 🚀 Tech Stack
 
