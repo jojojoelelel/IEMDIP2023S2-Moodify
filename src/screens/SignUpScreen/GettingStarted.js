@@ -74,19 +74,18 @@ const GettingStarted = ({navigation}) => {
         showsHorizontalScrollIndicator={false}
         style={{overflow: 'visible'}}>
         <Image
-          source={colorTheme === 'Dark' ? require('../../assets/images/getting_startedDark.jpg') : require('../../assets/images/getting_startedLight.jpg')}
+          // source={colorTheme === 'Dark' ? require('../../assets/images/getting_startedDark.jpg') : require('../../assets/images/getting_startedLight.jpg')}
+          source={colorTheme === 'Dark' ? require('../../assets/images/background-DARKMODE.png') : require('../../assets/images/background-DARKMODE.png')}
           style={styles.image}
         />
         <Image
-          source={colorTheme === 'Dark' ? require('../../assets/images/getting_startedDark.jpg') : require('../../assets/images/getting_startedLight.jpg')}
-          style={styles.image}
+          // source={colorTheme === 'Dark' ? require('../../assets/images/getting_startedDark.jpg') : require('../../assets/images/getting_startedLight.jpg')}
+          source={colorTheme === 'Dark' ? require('../../assets/icon/sonoverse-icons.png') : require('../../assets/icon/sonoverse-icons.png')}
+          style={styles.imageLogo}
         />
-      </ScrollView>
-      <View style={styles.textContainer}>
-        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>WELCOME TO MOODIFY APP</Text>
-        <Text style={colorTheme === 'Dark' ? styles.subtitleDark : styles.subtitleLight}>All-in-one music sharing platform</Text>
         <Animated.Image
-          source={colorTheme === 'Dark' ? require('../../assets/images/musicNoteDark.png') : require('../../assets/images/musicNoteLight.png')}
+          // source={colorTheme === 'Dark' ? require('../../assets/images/musicNoteDark.png') : require('../../assets/images/musicNoteLight.png')}
+          source={colorTheme === 'Dark' ? require('../../assets/icon/moodify-bubble-logo.png') : require('../../assets/icon/moodify-bubble-logo.png')}
           style={[
             styles.gif,
             {
@@ -95,6 +94,21 @@ const GettingStarted = ({navigation}) => {
             },
           ]}
         />
+      </ScrollView>
+      <View style={styles.textContainer}>
+        <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>WELCOME TO MOODIFY APP</Text>
+        <Text style={colorTheme === 'Dark' ? styles.subtitleDark : styles.subtitleLight}>All-in-one music sharing platform</Text>
+        {/* <Animated.Image
+          // source={colorTheme === 'Dark' ? require('../../assets/images/musicNoteDark.png') : require('../../assets/images/musicNoteLight.png')}
+          source={colorTheme === 'Dark' ? require('../../assets/icon/moodify-bubble-logo.png') : require('../../assets/icon/moodify-bubble-logo.png')}
+          style={[
+            styles.gif,
+            {
+              // Apply a continuous shake animation
+              transform: [{translateX: shakeAnimation}],
+            },
+          ]}
+        /> */}
       </View>
 
       <CustomButton
@@ -123,14 +137,17 @@ const styles = StyleSheet.create({
     height: '50%', // Adjust as needed
   },
   image: {
+    marginTop: '-5%',
     width: '100%',
-    height: '100%',
-    resizeMode: 'cover', // Or 'contain' based on your design
+    // height: '100%',
+    resizeMode: 'contain', // Or 'contain' based on your design
+    
   },
   textContainer: {
-    marginVertical: 30,
+    // marginVertical: 30,
     // justifyContent: 'flex-end',
-    flex: 1,
+    paddingTop: '10%',
+    // flex: 1,
   },
   titleDark: {
     fontSize: 24,
@@ -163,6 +180,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: {width: 0, height: 2},
+    marginTop: '10%',
   },
   buttonLight: {
     paddingHorizontal: 40,
@@ -173,6 +191,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: {width: 0, height: 2},
+    marginTop: '10%',
   },
   buttonTextDark: {
     fontSize: 16,
@@ -187,10 +206,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   gif: {
-    width: 100,
-    height: 100,
-    paddingLeft: 300,
+    // width: '100%',
+    // height: '100%',
+    // paddingLeft: 300,
+    resizeMode: 'contain',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: '9%',
+    top: '15%',
   },
+  imageLogo: {
+    // height: '100%',
+    // width: '100%',
+    position: 'absolute',
+    top: '40%',
+    left: '18%',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  }
 });
 
 export default GettingStarted;

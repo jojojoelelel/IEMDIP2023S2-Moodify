@@ -167,10 +167,11 @@ export default function HomeScreen({navigation}) {
   };
 
   return (
+    <>
     <ImageBackground
       source={
         colorTheme === 'Dark'
-          ? require('../../assets/images/sign-in-bgDark.jpg')
+          ? require('../../assets/images/background-DARKMODE-2.png')
           : require('../../assets/images/backgroundLight.jpg')
       } // Replace with your actual background image path
       style={styles.background}>
@@ -271,10 +272,11 @@ export default function HomeScreen({navigation}) {
             ))}
         </View>
       </ScrollView>
-      <MusicPlayerBar />
+      
       {/* </View> */}
     </ImageBackground>
-    // </>
+    <MusicPlayerBar />
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -283,6 +285,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 10,
     flexDirection: 'column',
+    marginBottom: '-20%',
   },
   containerDark: {
     flex: 1,

@@ -297,7 +297,18 @@ const AppNavigator = () => {
                 : REACT_APP_LIGHTTHEME,
           }}
         />
-        <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} />
+        <Stack.Screen name="ChatBotScreen" component={ChatBotScreen} options={{
+            headerStyle: {
+              backgroundColor:
+                colorTheme === 'Dark'
+                  ? REACT_APP_DARKACCENT
+                  : REACT_APP_LIGHTACCENT,
+            },
+            headerTintColor:
+              colorTheme === 'Dark'
+                ? REACT_APP_DARKTHEME
+                : REACT_APP_LIGHTTHEME,
+          }} />
         <Stack.Screen
           name="VrConcertScreen"
           component={VrConcertScreen}

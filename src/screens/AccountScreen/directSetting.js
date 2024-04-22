@@ -51,7 +51,7 @@ const SScreen = () => {
   );
   if (colorTheme === 'Dark') {
     return (
-      <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
+      <ImageBackground source={require('../../assets/images/background-DARKMODE-2.png')} style={styles.container}>
         {/* <ScrollView contentContainerStyle={styles.container}> */}
           {/* <TouchableOpacity onPress={backNav}>
             <Image
@@ -139,7 +139,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   signOutBtnDark: {
-    backgroundColor: '#A4EC0A',
+    // backgroundColor: '#A4EC0A',
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`,
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 10,

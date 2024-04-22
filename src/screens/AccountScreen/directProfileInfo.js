@@ -82,7 +82,7 @@ const PIscreen = () => {
   if (colorTheme === 'Dark') {
     return (
       <ImageBackground
-        source={require('../../assets/images/background.png')}
+        source={require('../../assets/images/background-DARKMODE-2.png')}
         style={styles.mainContainer}>
         {/* <ScrollView contentContainerStyle={styles.container}> */}
           {/* <TouchableOpacity onPress={backNav}>
@@ -100,7 +100,7 @@ const PIscreen = () => {
             renderItem={renderItem}
             keyExtractor={item => item.label}
           />
-          <TouchableOpacity onPress={handleEditProfile} style={styles.editButton}>
+          <TouchableOpacity onPress={handleEditProfile} style={styles.editButtonDark}>
             <Text style={styles.editButtonTextDark}>
               {isEditing ? 'Save Changes' : 'Update Profile Info'}
             </Text>
@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   editButtonDark: {
-    backgroundColor: '#A4EC0A',
+    // backgroundColor: '#A4EC0A',
+    backgroundColor: `${process.env.REACT_APP_DARKACCENT}`,
     borderRadius: 5,
     padding: 10,
     alignItems: 'center',

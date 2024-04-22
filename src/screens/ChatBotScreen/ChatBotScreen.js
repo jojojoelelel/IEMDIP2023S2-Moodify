@@ -185,7 +185,7 @@ const ChatBotScreen = ({navigation}) => {
   };
 
   return (
-    <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-up-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} style={styles.viewchat}>
+    <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/background-DARKMODE-2.png') : require('../../assets/images/backgroundLight.jpg')} style={styles.viewchat}>
       <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>AI Music ChatBot</Text>
       <GiftedChat
         messages={messages}

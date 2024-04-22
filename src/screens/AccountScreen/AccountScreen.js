@@ -332,7 +332,7 @@ const AccountScreen = () => {
   if (colorTheme === 'Dark') {
     return (
       <View style={{height: '100%', width: '100%'}}>
-        <ImageBackground style={styles.mainContainerLight} source={require('../../assets/images/background.png')}>
+        <ImageBackground style={styles.mainContainerLight} source={require('../../assets/images/background-DARKMODE-2.png')}>
             <View // top card 
               style={{
                 // height: pxToDp(250),

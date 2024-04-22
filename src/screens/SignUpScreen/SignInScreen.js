@@ -114,7 +114,8 @@ const SignInScreen = ({navigation}) => {
   ];
   return (
     <ImageBackground
-      source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
+      // source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')} // Replace with your actual background image path
+      source={colorTheme === 'Dark' ? require('../../assets/images/background-DARKMODE-2.png') : require('../../assets/images/backgroundLight.jpg')} 
       style={styles.background}>
       <View style={styles.container}>
         <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>SIGN IN</Text>
@@ -147,6 +148,8 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     justifyContent: 'center',
+    resizeMode: 'cover',
+    marginBottom: -10,
   },
   container: {
     // alignItems: 'center',

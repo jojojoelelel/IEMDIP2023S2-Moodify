@@ -243,7 +243,7 @@ export default function SearchScreen({ navigation }) {
             // />
             <View >
             {searchedTracks.map((item) => (
-              <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}>
+              <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight} key={item.id}>
                 <TrackList
                   style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}
                   id={item.id}
@@ -280,7 +280,7 @@ export default function SearchScreen({ navigation }) {
         /> */}
         <View>
           {searchHistory.map((item) => (
-            <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight}>
+            <View style={colorTheme === 'Dark' ? styles.savedTrackWrapperDark : styles.savedTrackWrapperLight} key={item.id}>
              <TrackListWithTimeStamp
              title={item.title}
              artist={item.artist}

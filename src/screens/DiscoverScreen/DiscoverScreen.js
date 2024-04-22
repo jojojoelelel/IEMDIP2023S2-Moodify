@@ -43,7 +43,7 @@ const DiscoverScreen = ({navigation}) => {
 
   return (
     <>
-    <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/sign-in-bgDark.jpg') : require('../../assets/images/backgroundLight.jpg')}
+    <ImageBackground source={colorTheme === 'Dark' ? require('../../assets/images/background-DARKMODE-2.png') : require('../../assets/images/backgroundLight.jpg')}
     style={styles.background}>
     {/* <View style={colorTheme === 'Dark' ? styles.containerDark : styles.containerLight}> */}
       <Text style={colorTheme === 'Dark' ? styles.titleDark : styles.titleLight}>Discover New Experiences</Text>
