@@ -33,7 +33,7 @@ Steps:
 1. **Set up a virtual environment** if you have not done so in the chatbot folder. Remember to add the virtual env folder to .gitignore.
 2. **Activate the virtual environment**.
 3. **Install the packages** listed in requirements.txt: Execute `pip install -r requirements.txt` in your terminal.
-4. **Run the Flask app**
+4. **Run the Flask app** : `flask run`.
 
 ## 🔗 Resources
 
