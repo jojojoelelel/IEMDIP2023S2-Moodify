@@ -32,6 +32,11 @@
           id="skeleton"
           response-type="arraybuffer"
           src="./models/skeleton_grup.glb"></a-asset-item>
+        <a-asset-item
+          id="concertstage"
+          response-type="arraybuffer"
+          src="./models/concert_stage2.glb">
+        </a-asset-item>
       </a-assets>
 
       <a-sky src="#coldplay-bg"></a-sky>
@@ -52,23 +57,40 @@
         angle-spread: 10 2 10;"></a-entity>
 
       <!-- Models -->
+
       <a-entity
-        gltf-model="#skeleton"
-        position="-0.28 1 -1.8"
+        gltf-model="./models/skeleton_grup.glb"
+        position="-0.28 0.828 -4.8966"
         scale="10 10 10"
         rotate="0 -30 0"
         animation-mixer="clip: Take 001; loop: infinite"
-        rotation="0 28 0"></a-entity>
+        rotation="0 28 0"
+        visible=""></a-entity>
+
+      <a-entity
+        spe-particles="texture: img/bubblestar.png; color: #ccc; radius: 0; velocity: 1 0.5 1; maxAge: 100; positionSpread: 50 10 50; randomizePosition: true; particleCount: 8000; velocitySpread: 0.7 0.9 0.5; wiggleSpread: 1; emitterScale: 200"></a-entity>
+
+      <a-entity
+        gltf-model="./models/concert_stage2.glb"
+        position="-0.28 0.4124 -5.26666"
+        scale="0.08 0.08 0.08"
+        rotate="0 -30 0"
+        light="angle: -52.17; color: #c8b1b1; decay: -28.68; distance: 59.72; intensity: 2.94; type: point; shadowBias: 0.99; shadowCameraFar: 496.43; shadowCameraFov: 90.75; shadowCameraNear: 1.59; shadowCameraTop: 4.45; shadowCameraRight: 6.41; shadowCameraBottom: -2.6; shadowCameraLeft: -4.21; shadowMapHeight: 510.6; shadowMapWidth: 510.5; shadowRadius: -0.01"
+        s=""
+        visible=""></a-entity>
 
       <!-- Visualizer Plane -->
+
       <a-plane
         id="visualizer"
-        position="0 1 -200"
-        rotation="0 0 0"
-        scale="4 4 2"
+        position="0.11282 10.49032 -14.49377"
+        rotation="0 5 0"
+        scale="2 2 2"
         width="30"
         height="18"
-        color="#FFC0CB"></a-plane>
+        color="#FFC0CB"
+        material="emissive: #000000"
+        geometry="primitive: sphere"></a-plane>
 
       <!-- Camera -->
       <a-camera></a-camera>
