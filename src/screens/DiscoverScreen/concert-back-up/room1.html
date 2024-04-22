@@ -37,6 +37,10 @@
           response-type="arraybuffer"
           src="./models/concert_stage2.glb">
         </a-asset-item>
+        <a-asset-item
+          id="floor"
+          response-type="arraybuffer"
+          src="./models/snowy-terrain.glb"></a-asset-item>
       </a-assets>
 
       <a-sky src="#coldplay-bg"></a-sky>
@@ -56,6 +60,14 @@
         emitter-scale: 200
         angle-spread: 10 2 10;"></a-entity>
 
+      <a-entity light="type: ambient; color: #444; intensity: 0.4"></a-entity>
+
+      <a-entity
+        light="type: directional; color: #FFDB99; intensity: 1; position: -2 3 -1; castShadow: false"></a-entity>
+
+      <a-entity
+        light="type: point; color: #CCDAFF; distance: 7; decay: 0.2"
+        position="-0.19933 4.21126 -0.79736"></a-entity>
       <!-- Models -->
 
       <a-entity
@@ -71,20 +83,19 @@
         spe-particles="texture: img/bubblestar.png; color: #ccc; radius: 0; velocity: 1 0.5 1; maxAge: 100; positionSpread: 50 10 50; randomizePosition: true; particleCount: 8000; velocitySpread: 0.7 0.9 0.5; wiggleSpread: 1; emitterScale: 200"></a-entity>
 
       <a-entity
-        gltf-model="./models/concert_stage2.glb"
-        position="-0.28 0.4124 -5.26666"
-        scale="0.08 0.08 0.08"
-        rotate="0 -30 0"
-        light="angle: -52.17; color: #c8b1b1; decay: -28.68; distance: 59.72; intensity: 2.94; type: point; shadowBias: 0.99; shadowCameraFar: 496.43; shadowCameraFov: 90.75; shadowCameraNear: 1.59; shadowCameraTop: 4.45; shadowCameraRight: 6.41; shadowCameraBottom: -2.6; shadowCameraLeft: -4.21; shadowMapHeight: 510.6; shadowMapWidth: 510.5; shadowRadius: -0.01"
-        s=""
-        visible=""></a-entity>
-
+        gltf-model="./models/rockyterrain.glb"
+        position="-1.87982 -6.1732 -3.36586"
+        scale="20 20 20"
+        rotate="0 -95 0"
+        visible=""
+        light="shadowCameraFar: 0; shadowCameraFov: 0; shadowCameraNear: 0; shadowCameraTop: 0; shadowCameraRight: 0; shadowCameraBottom: 0; shadowCameraLeft: 0; shadowMapHeight: 0; shadowMapWidth: 0; shadowRadius: 0"
+        rotation="0 140.42 0"></a-entity>
       <!-- Visualizer Plane -->
 
       <a-plane
         id="visualizer"
-        position="0.11282 10.49032 -14.49377"
-        rotation="0 5 0"
+        position="14.31152 7.70564 11.73713"
+        rotation="0 -117.25000000000001 0"
         scale="2 2 2"
         width="30"
         height="18"
@@ -93,8 +104,19 @@
         geometry="primitive: sphere"></a-plane>
 
       <!-- Camera -->
-      <a-camera></a-camera>
-    </a-scene>
+      <a-entity rotation="0 -120 0">
+        <a-camera
+          camera=""
+          position="-1.82827 2.49456 2.26946"
+          rotation=""
+          look-controls=""
+          wasd-controls=""
+          data-aframe-inspector-original-camera=""></a-camera>
+      </a-entity>
+
+      <a-entity
+        light="intensity: 0.36; type: ambient; shadowCameraFar: 0; shadowCameraFov: 0; shadowCameraNear: 0; shadowCameraTop: 0; shadowCameraRight: 0; shadowCameraLeft: 0; shadowMapHeight: 0; shadowMapWidth: 0; shadowRadius: 0"></a-entity>
+        <a-entity light="color: #f254e5; groundColor: #ffffff; intensity: 1.24; type: spot" position="-15 7 5" rotation="-42.290000000000006 -92.12 0" scale="1 0.66 1"></a-entity>    </a-scene>
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {
