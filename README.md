@@ -38,7 +38,7 @@ Steps:
 ## 🔗 Resources
 
 - **Project Poster**: Refer to Group Poster Folder
-- **Demo Video**: [Click Here](https://drive.google.com/file/d/1EyJzJaA2wUJfkW_ZPLL88f21k0oyNcT_/view?usp=sharing)
+- **Demo Video**: [Click Here](https://drive.google.com/file/d/18hr62xX63f6vlBnaFDKTM8zdQxLyJQN1/view?usp=sharing)
 - **Detailed Project Report**: Refer to Group Report Folder
 - **Source Code**: [GitHub](https://github.com/jojojoelelel/IEMDIP2023S2-Moodify)
 - **Design Mockups**: [Figma](https://www.figma.com/file/PIrCqD1mhsYIUOuYPMtuh0/Moodify-Wireframe?type=design&node-id=0%3A1&mode=design&t=OEb2wFAiG3Ny2Y8G-1)
