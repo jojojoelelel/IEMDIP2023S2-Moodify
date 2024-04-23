@@ -29,11 +29,24 @@ To get started with Moodify on your local machine, follow these steps:
 
 *Running the AI Chatbot*: The chatbot will be hosted on a Flask backend server running on port 5000.
 
-Steps:
+**Steps to setup chatbot**:
 1. **Set up a virtual environment** if you have not done so in the chatbot folder. Remember to add the virtual env folder to .gitignore.
 2. **Activate the virtual environment**.
 3. **Install the packages** listed in requirements.txt: Execute `pip install -r requirements.txt` in your terminal.
 4. **Run the Flask app** : `flask run`.
+
+
+*Running the VR concert*: VR concert rooms can be previewed using a live server on web or through the emulator. 
+
+**Previewing with Live Server**:
+1. **Navigate to Directory**: Go to 'src/DiscoverScreen/concert-back-up'.
+2. **Open with Live Server**: Right-click on the HTML pages and select 'Open with Live Server' to preview the VR concert rooms.
+
+**Previewing through the Emulator**
+1. Check URI Settings: Open the file located at src/DiscoverScreen/VrConcertScreen.js.
+2. Verify Compatibility: Ensure that the URI is compatible with your device.
+3. Match the Port Number: Confirm that the port number matches the one your concert server is using.
+4. Run the Emulator: Start the emulator and navigate to the VR concert rooms to preview.
 
 ## 🔗 Resources
 
