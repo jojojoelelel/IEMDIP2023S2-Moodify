@@ -54,24 +54,52 @@
       <!-- Models -->
       <a-entity
         gltf-model="#skeleton"
-        position="-0.28 1 -1.8"
-        scale="10 10 10"
-        rotate="0 -30 0"
+        position="5 1 -1.8"
+        scale="20 20 2ss0"
+        rotate="0 0 0"
         animation-mixer="clip: Take 001; loop: infinite"
         rotation="0 28 0"></a-entity>
+
+      <a-entity
+        gltf-model="./models/rockyterrain.glb"
+        position="-1.87982 -6.1732 -3.36586"
+        scale="20 20 20"
+        rotate="0 -95 0"
+        visible=""
+        light="shadowCameraFar: 0; shadowCameraFov: 0; shadowCameraNear: 0; shadowCameraTop: 0; shadowCameraRight: 0; shadowCameraBottom: 0; shadowCameraLeft: 0; shadowMapHeight: 0; shadowMapWidth: 0; shadowRadius: 0"
+        rotation="0 140.42 0"></a-entity>
 
       <!-- Visualizer Plane -->
       <a-plane
         id="visualizer"
-        position="0 1 -200"
-        rotation="0 0 0"
-        scale="4 4 2"
+        position="14.31152 7.70564 11.73713"
+        rotation="0 -117.25000000000001 0"
+        scale="2 2 2"
         width="30"
         height="18"
-        color="#FFC0CB"></a-plane>
+        color="#FFC0CB"
+        material="emissive: #000000"
+        geometry="primitive: sphere"></a-plane>
 
+      <a-entity
+        light="intensity: 0.36; type: ambient; shadowCameraFar: 0; shadowCameraFov: 0; shadowCameraNear: 0; shadowCameraTop: 0; shadowCameraRight: 0; shadowCameraLeft: 0; shadowMapHeight: 0; shadowMapWidth: 0; shadowRadius: 0"></a-entity>
+
+      <a-entity
+        light="color: #f254e5; groundColor: #ffffff; intensity: 1.24; type: spot"
+        position="-15 7 5"
+        rotation="-42.290000000000006 -92.12 0"
+        scale="1 0.66 1"></a-entity>
+        
       <!-- Camera -->
-      <a-camera></a-camera>
+      <a-entity rotation="0 -120 0">
+        <a-camera
+          camera=""
+          position="-1.82827 2.49456 2.26946"
+          rotation=""
+          look-controls=""
+          wasd-controls=""
+          data-aframe-inspector-original-camera=""></a-camera>
+      </a-entity>
     </a-scene>
 
     <script>
