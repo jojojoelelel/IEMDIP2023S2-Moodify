@@ -4,13 +4,11 @@ import {AppContext} from '../navigation/AppNavigation';
 
 const AlbumCard = ({item, imageUrl, onPress}) => {
   const {colorTheme, setColorTheme} = useContext(AppContext);
-  // Split the name into words
+
   const words = item?.name.split(' ');
 
-  // Join the first three words together
   const truncatedName = words.slice(0, 6).join(' ');
 
-  // Check if there are more than three words
   const isTruncated = words.length > 6;
 
   return (
@@ -31,10 +29,8 @@ const AlbumCard = ({item, imageUrl, onPress}) => {
             }`,
             marginTop: 10,
           }}>
-          {/* Display the truncated name */}
           {truncatedName}
 
-          {/* Display ellipsis (...) if the name is truncated */}
           {isTruncated && ' ...'}
         </Text>
       </View>

@@ -26,7 +26,6 @@ const TrackItem = ({title, artist, cover, onPress, url, dateAdded}) => {
       <Text style={colorTheme === 'Dark' ? styles.artistDark : styles.artistLight}>{artist}</Text>
       <Text style={colorTheme === 'Dark' ? styles.dateDark : styles.dateLight}>{formattedDate}</Text>
        </View>
-      {/* Include an icon or button for more options (e.g., the three dots) */}
     </TouchableOpacity>
   );
 };
@@ -37,52 +36,44 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    // Add additional styling
   },
   textContainer: {
-    flex: 1, // Take up remaining space to allow text to align to the left
+    flex: 1, 
   },
   titleDark: {
     color: '#FFF',
     textAlign: 'left',
     fontWeight: 'bold',
-    // Add additional styling
   },
   titleLight: {
     color: '#000',
     textAlign: 'left',
     fontWeight: 'bold',
-    // Add additional styling
   },
   artistDark: {
     color: '#aaa',
     textAlign: 'left',
-    // Add additional styling
   },
   artistLight: {
     color: '#000',
     textAlign: 'left',
-    // Add additional styling
   },
   dateDark: {
      color: '#aaa',
      fontSize: 12,
-     // Add additional styling
   },
   dateLight: {
     color: '#878787',
     fontSize: 12,
-    // Add additional styling
   },
   coverImage: {
     width: 60,
     height: 60,
     borderRadius: 4,
-    marginRight: 15,  // Increase space between the cover and text
-    borderWidth: 1,   // Add border around the album cover
-    borderColor: '#cccccc', // Set border color for the album cover
+    marginRight: 15,  
+    borderWidth: 1,   
+    borderColor: '#cccccc', 
   },
-  // Add styles for the options button/icon
 });
 
 export default TrackItem;

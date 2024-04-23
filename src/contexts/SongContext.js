@@ -18,9 +18,8 @@ const MusicPlayerProvider = ({children}) => {
   const [isPlaying, setIsPlaying] = useState();
   const [currentTrack, setCurrentTrack] = useState();
   const [trackProgress, setTrackProgress] = useState(0);
-  const [trackDuration, setTrackDuration] = useState(30); // Since all tracks are 30 seconds
-  //const [playerState, setPlayerState] = useState(TrackPlayer.STATE_NONE); //Initial state
-
+  const [trackDuration, setTrackDuration] = useState(30); 
+  
   useEffect(() => {
     // Track Player setup
     TrackPlayer.setupPlayer().then(async () => {

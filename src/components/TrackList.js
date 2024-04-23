@@ -31,47 +31,40 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    // Add additional styling
   },
   containerLight: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    // Add additional styling
   },
   textContainer: {
-    flex: 1, // Take up remaining space to allow text to align to the left
+    flex: 1, 
   },
   titleDark: {
     color: '#FFF',
     textAlign: 'left',
     fontWeight: 'bold',
-    // Add additional styling
   },
   titleLight: {
     color: `${process.env.REACT_APP_DARKTHEME}`,
     textAlign: 'left',
     fontWeight: 'bold',
-    // Add additional styling
   },
   artistDark: {
     color: '#aaa',
-    // Add additional styling
   },
   artistLight: {
     color: `${process.env.REACT_APP_DARKTHEME}`,
-    // Add additional styling
   },
   coverImage: {
     width: 60,
     height: 60,
     borderRadius: 4,
-    marginRight: 15, // Increase space between the cover and text
-    borderWidth: 1, // Add border around the album cover
-    borderColor: '#cccccc', // Set border color for the album cover
+    marginRight: 15, 
+    borderWidth: 1, 
+    borderColor: '#cccccc', 
   },
-  // Add styles for the options button/icon
 });
 
 export default TrackItem;

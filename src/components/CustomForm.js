@@ -26,7 +26,6 @@ const CustomForm = ({fields}) => {
 const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
-    // You might want to add more styling here depending on your design
   },
   inputDark: {
     width: '100%',
@@ -35,7 +34,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#9f9f9f',
     padding: 10,
     color: `${process.env.REACT_APP_LIGHTTHEME}`,
-    // Add any additional input styles you need
   },
   inputLight: {
     width: '100%',
@@ -46,7 +44,6 @@ const styles = StyleSheet.create({
     color: `${process.env.REACT_APP_LIGHTACCENT}`, 
     // backgroundColor: '#42ffea', //teal
     borderRadius: 5,
-    // Add any additional input styles you need
   },
 });
 

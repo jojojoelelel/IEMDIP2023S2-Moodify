@@ -24,26 +24,26 @@ const styles = StyleSheet.create({
    paddingVertical: 10,
    paddingHorizontal: 15,
    alignItems: 'center',
-   borderBottomWidth: 1,  // Subtle separator between items
-   borderBottomColor: '#6D6D6D', // Dark separator for a dark theme
-   backgroundColor: '#353535', // Background color for each item
+   borderBottomWidth: 1,  
+   borderBottomColor: '#6D6D6D', 
+   backgroundColor: '#353535', 
   },
   itemContainerLight: {
     flexDirection: 'row',
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignItems: 'center',
-    borderBottomWidth: 1,  // Subtle separator between items
-    borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`, // Dark separator for a dark theme
-    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`, // Background color for each item
+    borderBottomWidth: 1, 
+    borderBottomColor: `${process.env.REACT_APP_LIGHTACCENT}`,
+    backgroundColor: `${process.env.REACT_APP_LIGHTTHEME}`, 
    },
   coverImage: {
     width: 60,
     height: 60,
     borderRadius: 4,
-    marginRight: 15,  // Increase space between the cover and text
-    borderWidth: 1,   // Add border around the album cover
-    borderColor: '#cccccc', // Set border color for the album cover
+    marginRight: 15, 
+    borderWidth: 1,  
+    borderColor: '#cccccc', 
   },
   textContainer: {
     justifyContent: 'center',
@@ -51,16 +51,16 @@ const styles = StyleSheet.create({
   playlistTitleDark: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white', // Light text color for the dark theme
+    color: 'white', 
   },
   playlistTitleLight: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: `${process.env.REACT_APP_DARKTHEME}`, // Light text color for the dark theme
+    color: `${process.env.REACT_APP_DARKTHEME}`, 
   },
   playlistCreatorDark: {
     fontSize: 14,
-    color: '#B3B3B3', // Light grey for secondary text
+    color: '#B3B3B3', 
   },
   playlistCreatorLight: {
     fontSize: 14,

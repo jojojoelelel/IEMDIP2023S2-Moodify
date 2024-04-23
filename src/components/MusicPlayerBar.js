@@ -16,15 +16,6 @@ const MusicPlayerBar = () => {
     skipToPrevious,
   } = useContext(MusicPlayerContext);
 
-  /*   const togglePlayPause = () => {
-    const newIsPlaying = !isPlaying;
-    setIsPlaying(newIsPlaying);
-    if (onPlayPausePress) {
-      onPlayPausePress(newIsPlaying);
-    }
-  }; */
-
-  // Render guard
   if (!currentTrack) {
     // If there is no current track, render nothing or a placeholder
     return null;
@@ -102,7 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   playButton: {
-    marginRight: 20, // Increase padding to enhance the touch area
+    marginRight: 20, 
     justifyContent: 'center',
     alignItems: 'center',
   },

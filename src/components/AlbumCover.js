@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 150, // To ensure the edges of the album cover are also rounded
-    overflow: 'hidden', // This is necessary to ensure the LinearGradient doesn't bleed outside the edges
+    borderRadius: 150,
+    overflow: 'hidden', 
   },
   albumCover: {
     width: '100%',
     height: '100%',
-    borderRadius: 150, // This matches your borderRadius in the album cover style
+    borderRadius: 150,
   },
   fadeOutEdge: {
     position: 'absolute',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    borderRadius: 150, // Match the border radius to maintain the shape of the album cover
+    borderRadius: 150,
   },
 });
 
